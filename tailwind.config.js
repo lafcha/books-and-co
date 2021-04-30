@@ -5,15 +5,17 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+    },
   },
   plugins: [],
   theme: {
     fontFamily: {
      'serif': 'ui-serif',
-     'display': 'Lily Script One', cursive,
-     'body': 'Raleway',
-    }
+     'sans': 'ui-sans-serif',
+     'lily': ['"Lily Script One"'],
+     'raleway': ['Raleway']
   }
-
+  
+  }
 }
