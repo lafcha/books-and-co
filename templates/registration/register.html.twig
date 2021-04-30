@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="assets/js/county.js"></script>
+    <script src="assets/js/city.js"></script>
+    <script src="assets/js/countyAndCityApp.js"></script>
+{% endblock %}
+
+{% block body %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+    <h1>Register</h1>
+
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.pseudo) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.password, {
+            label: 'Password'
+            })
+        }}
+        <div id="county-error"></div>
+        <div>
+            <label for="registration_form_county">Département</label>
+            <select name="registration_form[county]" id="registration_form_county">
+            <option value="00">-- Veuillez séléctionner un département</option></select>
+        </div>
+        <div id="city-error"></div>
+        <div>
+            <label for="registration_form_city">Ville</label>
+            <select name="registration_form[city]" id="registration_form_city"></select>
+        </div>
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}
