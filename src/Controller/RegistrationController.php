@@ -31,9 +31,9 @@ class RegistrationController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-            $user->setCity('Toulon');
+            $user->setcounty($form->getExtraData()['county']); // get extra data of county and set it in the user object
+            $user->setCity($form->getExtraData()['city']); // get extra data of city and set it in the user object
             $user->setAvatar('/assets/img/user/base.png');
-            $user->setCounty(83);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

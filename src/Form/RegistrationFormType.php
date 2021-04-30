@@ -53,11 +53,6 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('avatar', FileType::class,[
-                'required' => false,
-            ])
-            ->add('county', ChoiceType::class)
-            ->add('city', ChoiceType::class)
         ;
     }
 
@@ -65,6 +60,7 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            "allow_extra_fields" => true
         ]);
     }
 }
