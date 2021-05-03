@@ -20,7 +20,7 @@ class Book
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=128)
      */
     private $title;
 
@@ -50,7 +50,7 @@ class Book
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=128)
      */
     private $slug;
 
