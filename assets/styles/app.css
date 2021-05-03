@@ -12,11 +12,25 @@ body {
     text-transform: uppercase;
     padding: 0.5rem 1.5rem;
     border-radius: 50px;
+    color:white;
+}
+
+.custom-btn-y{
+    background-color: var(--third-accent-color);
+    color: var(--main-color);
+    text-transform: uppercase;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px; 
+}
+
+custom-btn-y:hover{
+    background-color: var(--first-accent-color);
 }
 
 .custom-btn:hover{
     background-color: var(--main-color);
 }
+
 
 
 /* VARIABLES COULEURS */
