@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LibraryController!{% endblock %}
+
+{% block main %}
+    {% for book in libraryArray %}
+        {{ dump(book) }}
+    {% endfor %}
+{% endblock %}

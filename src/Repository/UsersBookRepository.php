@@ -19,22 +19,24 @@ class UsersBookRepository extends ServiceEntityRepository
         parent::__construct($registry, UsersBook::class);
     }
 
-    // /**
-    //  * @return UsersBook[] Returns an array of UsersBook objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return UsersBook[] Returns an array of UsersBook objects
+      */
+    
+    public function findAllByUserId($userId)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('ub')
+            ->andWhere('ub.user = :userId')
+            ->setParameter('userId', $userId)
+            ->leftJoin('ub.user', 'u')
+            ->addSelect('u')
+            ->leftJoin('ub.book', 'b')
+            ->addSelect('b')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?UsersBook
