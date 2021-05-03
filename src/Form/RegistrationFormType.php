@@ -37,9 +37,10 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class )
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Les deux mots de passe doivent etre identiques.',
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Répétez le mot de passe'],
+                'invalid_message' => 'Les deux mots de passe doivent être identiques.',
+                'options' => ['attr' => ['class' => 'block rounded-full w-full p-2 bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent']],
+                'first_options'  => ['label' => 'MOT DE PASSE'],
+                'second_options' => ['label' => 'REPETEZ LE MOT DE PASSE'],
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([

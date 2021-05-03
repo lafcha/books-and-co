@@ -1,42 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Se connecter{% endblock %}
+{% block title %}Se connecter
+{% endblock %}
 
-{% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+{% block main %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+	<body class="bg-white">
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputPseudo">Pseudo</label>
-    <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+		<div class="flex bg-white items-center">
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+			<div class="bg-no-repeat bg-right bg-cover max-w-max h-auto overflow-hidden">
+				<img src="{{ asset('/assets/img/illustrations/') }}login.png" alt="Login image">
+			</div>
 
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
+			<div class="md:w-1/2 max-w-lg mx-auto my-24 px-4 py-5 shadow-none">
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+				<div class="text-center p-0 font-sans">
+
+					<h1 class="text-gray-800 text-3xl font-medium font-cursive">Je me connecte</h1>
+					<h3 class="p-1 text-green-500">Connectez-vous pour accéder à votre compte !</h3>
+				</div>
+				<form method="post" class="p-0">
+
+					{% if error %}
+						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					{% endif %}
+
+					{% if app.user %}
+						<div class="mb-3">
+							Vous êtes connecté en tant que
+							{{ app.user.username }},
+							<a href="{{ path('app_logout') }}">Se déconnecter</a>
+						</div>
+					{% endif %}
+
+					<div class="mt-5 flex justify-between items-center">
+						<label for="inputPseudo" class="w-1/2">Mon pseudo</label>
+						<input type="text" class="block rounded-full w-full p-2 bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent " value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control" required autofocus>
+					</div>
+					<div class="mt-5 flex justify-between items-center">
+						<label for="inputPassword" class="w-1/2">Mon mot de passe</label>
+						<input type="password" class="block rounded-full w-full p-2 bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent" name="password" id="inputPassword" class="form-control" required>
+					</div>
+
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+					<div class="flex flex-col-reverse sm:flex-row sm:justify-between items-center justify-between mt-10">
+						<a href="#" class="inline-block text-blue-500 hover:text-blue-800 hover:underline">Vous n'avez pas de compte ?</a>
+						<button type="submit" class="inline-flex custom-btn items-center focus:outline-none text-base mt-4 md:mt-0 text-white">Connexion</button>
+					</div>
+
+				</form>
+			</div>
+
+
+		</div>
+	</body>
+
 {% endblock %}
