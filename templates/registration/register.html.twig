@@ -9,7 +9,7 @@
     <script src="assets/js/countyAndCityApp.js"></script>
 {% endblock %}
 
-{% block body %}
+{% block main %}
     {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}

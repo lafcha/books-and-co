@@ -13,15 +13,13 @@
 
 		{#FONTS#}
 		<link rel="preconnect" href="https://fonts.gstatic.com">
-		<link
-		href="https://fonts.googleapis.com/css2?family=Lily+Script+One&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Lily+Script+One&display=swap" rel="stylesheet">
 
 		{#CSS#}
-		<link href="../src/tailwind.css" rel="stylesheet">
-		<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-		<link href="../public/assets/css/style.css" rel="stylesheet" href="style.css">
+             {{ encore_entry_link_tags('app') }}
+		{# <link href="../public/assets/css/style.css" rel="stylesheet" href="style.css"> #}
 		{% block javascripts %}
-			{#{{ encore_entry_script_tags('app') }}#}
+			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
 	<body>
