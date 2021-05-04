@@ -22,21 +22,14 @@
 	<body>
 		<div class="container mx-auto">
 			{% block header%}
-				<header class="py-6">
-					<div class="flex items-center justify-between flex-wrap">
-						<a href=" {{ path('accueil_browse') }}"class="flex title-font font-medium items-center mb-4 md:mb-0">
-							<img src="{{asset("assets/img/illustrations")}}/logo.svg" alt="Logo de BooksAndCo">
-							<span class="font-cursive ml-3 text-xl logo text-pink">Books&amp;Co</span>
-						</a>
-						<div>
-							<a href="{{ path('app_register') }}" class="text-sm underline mr-1 hover:text-pink">Créer un compte</a>
-						<a href="{{ path('app_login') }}"><button class="inline-flex rounded-full items-center bg-yellow font-semibold px-4 py-2 hover:bg-green bg-whitefocus:outline-none text-base mt-4 md:mt-0">Connexion</button></a>
-						</div>						
-						</div>
-					</header>
+				{% if app.user %}
+					{% include 'header-co.html.twig' %}	
+				{% else %}
+					{% include 'header.html.twig' %}	
+				{% endif %}
 			{% endblock %}
 
-			{% block main %} {% endblock %}
+			{% block main %}{% endblock %}
 
 			{% include 'footer.html.twig' %}			
 		</div>
