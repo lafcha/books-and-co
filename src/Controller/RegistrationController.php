@@ -33,7 +33,6 @@ class RegistrationController extends AbstractController
             );
             $user->setcounty($form->getExtraData()['county']); // get extra data of county and set it in the user object
             $user->setCity($form->getExtraData()['city']); // get extra data of city and set it in the user object
-            $user->setAvatar('/assets/img/user/base.png');
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

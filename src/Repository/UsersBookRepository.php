@@ -23,17 +23,32 @@ class UsersBookRepository extends ServiceEntityRepository
       * @return UsersBook[] Returns an array of UsersBook objects
       */
     
-    public function findAllByUserId($userId)
+    public function findAllByUserId($userId, $page, $limit)
     {
         return $this->createQueryBuilder('ub')
             ->andWhere('ub.user = :userId')
             ->setParameter('userId', $userId)
-            ->leftJoin('ub.user', 'u')
-            ->addSelect('u')
             ->leftJoin('ub.book', 'b')
             ->addSelect('b')
+            ->setFirstResult(($page * $limit) -$limit)
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
+        ;
+    }
+
+    /**
+     * Returns number of usersBookById
+     * @return int 
+     */
+    public function getUsersBookById($userId){
+        
+        return $this->createQueryBuilder('ub')
+            ->select('COUNT(ub)')
+            ->andWhere('ub.user = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getSingleScalarResult()
         ;
     }
     
