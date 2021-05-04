@@ -55,18 +55,18 @@ class Book
     private $slug;
 
     /**
-     * @ORM\ManyToMany(targetEntity=UsersBook::class, inversedBy="book")
-     */
-    private $bookHasUser;
-
-    /**
      * @ORM\Column(type="bigint")
      */
     private $isbn;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UsersBook::class, mappedBy="book")
+     */
+    private $bookBelongsToUser;
+
     public function __construct()
     {
-        $this->bookHasUser = new ArrayCollection();
+        $this->bookBelongsToUser = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,30 +158,6 @@ class Book
         return $this;
     }
 
-    /**
-     * @return Collection|UsersBook[]
-     */
-    public function getBookHasUser(): Collection
-    {
-        return $this->bookHasUser;
-    }
-
-    public function addBookHasUser(UsersBook $bookHasUser): self
-    {
-        if (!$this->bookHasUser->contains($bookHasUser)) {
-            $this->bookHasUser[] = $bookHasUser;
-        }
-
-        return $this;
-    }
-
-    public function removeBookHasUser(UsersBook $bookHasUser): self
-    {
-        $this->bookHasUser->removeElement($bookHasUser);
-
-        return $this;
-    }
-
     public function getIsbn(): ?string
     {
         return $this->isbn;
@@ -190,6 +166,36 @@ class Book
     public function setIsbn(string $isbn): self
     {
         $this->isbn = $isbn;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UsersBook[]
+     */
+    public function getBookBelongsToUser(): Collection
+    {
+        return $this->bookBelongsToUser;
+    }
+
+    public function addBookBelongsToUser(UsersBook $bookBelongsToUser): self
+    {
+        if (!$this->bookBelongsToUser->contains($bookBelongsToUser)) {
+            $this->bookBelongsToUser[] = $bookBelongsToUser;
+            $bookBelongsToUser->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookBelongsToUser(UsersBook $bookBelongsToUser): self
+    {
+        if ($this->bookBelongsToUser->removeElement($bookBelongsToUser)) {
+            // set the owning side to null (unless already changed)
+            if ($bookBelongsToUser->getBook() === $this) {
+                $bookBelongsToUser->setBook(null);
+            }
+        }
 
         return $this;
     }
