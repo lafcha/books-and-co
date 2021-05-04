@@ -51,6 +51,21 @@ class UsersBookRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
         ;
     }
+
+        /**
+     * Returns number of usersBookById
+     * @return int 
+     */
+    public function getUsersBookByBookIdAndUserId($userId){
+        
+        return $this->createQueryBuilder('ub')
+            ->select('COUNT(ub)')
+            ->andWhere('ub.user = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
     
 
     /*

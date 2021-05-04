@@ -5,10 +5,16 @@
 {% block main %}
     <div>
         <ul>
-            {% for usersBook in usersBooks %}
-                {# usersBook contains all books of a user, use usersBook.book to get all data from a book #}
-                <li><a href="{{ path('library_book_read', {'slug': usersBook.book.slug}) }}">{{ usersBook.book.title }}</a></li>
-            {% endfor %}
+            {# if the user connected is equal to the library's user AND if usersBooks is not null #}
+            {% if usersBooks == null and app.user.slug == app.request.attributes.all['userSlug'] %}
+                <p>Vous n'avez aucun livre dans votre bibliothèque</p>
+            {% else %}
+
+                {% for usersBook in usersBooks %}
+                    {# usersBook contains all books of a user, use usersBook.book to get all data from a book #}
+                    <li><a href="{{ path('library_book_read', {'userSlug': usersBook.user.slug, 'slug': usersBook.book.slug }) }}">{{ usersBook.book.title }}</a></li>
+                {% endfor %}
+            {% endif %}
         </ul>
     </div>
     <ul class="pagination">

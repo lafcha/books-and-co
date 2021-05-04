@@ -13,6 +13,9 @@
     <p>{{ book.description }}</p>
 </div>
 <div>
-<a href="{{ path('library_book_edit', {'slug': book.slug}) }}">edit</a>
+    {% if app.user.slug == app.request.attributes.all['userSlug'] %}
+        <a href="{{  path('library_book_edit', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}">modifier</a>
+        <a href="{{  path('library_book_delete', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}">supprimer</a>
+    {% endif %}
 </div>
 {% endblock %}
