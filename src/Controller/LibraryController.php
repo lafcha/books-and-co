@@ -58,4 +58,16 @@ class LibraryController extends AbstractController
             'book' => $book
         ]);
     }
+
+    /**
+     * @Route("/{slug}", name="book_edit")
+     */
+    public function book_edit($slug, BookRepository $bookRepository): Response
+    {
+        //get the book by slug
+        $book = $bookRepository->findOneBy(['slug' => $slug]);
+        return $this->render('library/book/read.html.twig', [
+            'book' => $book
+        ]);
+    }
 }
