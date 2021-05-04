@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
+use App\Repository\BookRepository;
 use App\Repository\UsersBookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,6 +41,21 @@ class LibraryController extends AbstractController
             'currentPage' => $page,
             'usersBookTotal' => $usersBookTotal,
             'usersBookLimit' => $limit,
+        ]);
+    }
+    /**
+     * @Route("/{slug}", name="book_read")
+     */
+    public function book_read($slug, BookRepository $bookRepository): Response
+    {
+        //get the book by slug
+        $book = $bookRepository->findOneBy(['slug' => $slug]);
+        if (!$slug) {
+            // throw 404 if the book doesn't exist
+            throw $this->createNotFoundException('Ce livre n\'existe pas');
+        }
+        return $this->render('library/book/read.html.twig', [
+            'book' => $book
         ]);
     }
 }
