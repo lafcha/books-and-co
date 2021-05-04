@@ -26,13 +26,13 @@
         <div id="county-error"></div>
         <div>
             <label for="registration_form_county">Département</label>
-            <select name="registration_form[county]" id="registration_form_county">
+            <select name="registration_form[county]" class='.county-form' id="registration_form_county">
             <option value="00">-- Veuillez séléctionner un département</option></select>
         </div>
         <div id="city-error"></div>
         <div>
             <label for="registration_form_city">Ville</label>
-            <select name="registration_form[city]" id="registration_form_city"></select>
+            <select name="registration_form[city]" class='.city-form' id="registration_form_city"></select>
         </div>
         <button type="submit" class="btn">Register</button>
     {{ form_end(registrationForm) }}
