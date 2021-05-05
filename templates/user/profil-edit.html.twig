@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte
+{% endblock %}
+
+{% block javascripts %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="assets/js/county.js"></script>
+	<script src="assets/js/city.js"></script>
+	<script src="assets/js/countyAndCityApp.js"></script>
+{% endblock %}
+
+{% block main %}
+	<div class="text-center p-0 font-sans">
+
+		<h1 class="text-blue text-3xl font-medium font-cursive">Mon compte</h1>
+		<h3 class="p-1 text-green">Modifiez les informations relative à votre compte</h3>
+	</div>
+
+	<div class="md:w-1/2 max-w-lg mx-auto my-24 px-4 py-5 shadow-none">
+		{{ form_start(form) }}
+		<div class="mt-5 flex justify-between items-center">
+			{{ form_label(form.pseudo, null, {
+                    'label_attr': {'class': 'w-1/2'}    
+                })  }}
+			{{ form_widget(form.pseudo, {
+                    'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
+                })   }}
+		</div>
+		<div class="mt-5 flex justify-between items-center">
+			{{ form_label(form.email, null, {
+                    'label_attr': {'class': 'w-1/2'}    
+                })  }}
+			{{ form_widget(form.email, {
+                    'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
+                })   }}
+		</div>
+		<div class="mt-5 flex justify-between items-center">
+			<p class="w-1/2">Mon mot de passe</p>
+			<button class="rounded-full bg-blue p-2 text-white">
+				<a href="{{ path('account_edit_password') }}">Modifier mon mot de passe</a>
+			</button>
+		</div>
+		<div class="mt-5 flex justify-between items-center">
+			{{ form_label(form.imageFile)  }}
+			<img class="object-scale-down rounded-full inline-block h-12 w-12" src="{{ app.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ app.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="Avatar">
+			<div class="flex items-center justify-center bg-grey-lighter ml-6">
+				<label class="flex flex-col items-center bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+					<svg width="50" height="50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20">
+						<path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z"/>
+					</svg>
+					<span class="mt-2 text-sm">Selectionner un fichier</span>
+					{{ form_widget(form.imageFile, {
+                    'attr': {'class': 'hidden'}    
+                })   }}
+				</label>
+			</div>
+		</div>
+		<div class="mt-5 flex justify-between items-center">
+			<div id="county-error" class="hidden"></div>
+			<p class="w-1/2">Mon département</p>
+			<div class="relative inline-flex">
+				<svg class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fill-rule="nonzero"/></svg>
+				<select name="edit_profil_form[county]" class="bg-blue rounded-full text-white h-10 pl-5 pr-10 focus:outline-none appearance-none county-form" id="edit_profil_form_county">
+					<option value="00">Département</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="mt-5 flex justify-between items-center">
+			<div id="city-error" class="hidden"></div>
+			<p class="w-1/2">Ma ville</p>
+			<div class="relative inline-flex mr-5">
+				<svg class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fill-rule="nonzero"/></svg>
+				<select name="edit_profil_form[city]" class="bg-blue rounded-full text-white h-10 pl-5 pr-10 focus:outline-none appearance-none city-form" id="edit_profil_form_city">
+					<option value="00">Ville</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="flex justify-between w-full mt-10">
+			<div></div>
+			<button class="custom-btn inline-block focus:outline-none text-base text-white">Modifier</button>
+		</div>
+
+		{{ form_end(form) }}
+	</div>
+{% endblock %}
