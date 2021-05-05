@@ -104,9 +104,7 @@ class LibraryController extends AbstractController
         
         //create a form for UsersBook in action to method 'form' in the BorrowingController
         $form = $this->createForm(UsersBookType::class, $usersBook, [
-            'action' => $this->generateUrl('library_browse', [
-                'userSlug' => $userSlug,
-            ]),
+            'action' => $this->generateUrl('borrowing_form'),
             'method' => 'POST',
         ]);
 

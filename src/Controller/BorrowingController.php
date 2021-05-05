@@ -25,13 +25,17 @@ class BorrowingController extends AbstractController
         $lending = new Lending();
         $message = new Message;
 
+  
         $form = $this->createForm(BorrowingFormType::class, $message);
         $form->handleRequest($request);
+
+        dd($request->request->all(['users_book']));
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             // Récupérer le users book id
-            $usersBookId = 3;
+            
+        
 
             // Récupérer le message du formulaire
             $messageContent = $form['message']->getData();
