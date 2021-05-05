@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "build/app.css": "/build/app.57c54532.css",
+=======
+  "build/app.css": "/build/app.93e38e1c.css",
+>>>>>>> 1960be2964fa8f8775da00d9fb4a82c425e25d2e
   "build/app.js": "/build/app.24107c6b.js",
   "build/runtime.js": "/build/runtime.f799512a.js",
   "build/758.a7f3471b.js": "/build/758.a7f3471b.js"
