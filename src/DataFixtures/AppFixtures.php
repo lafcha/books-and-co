@@ -39,7 +39,8 @@ class AppFixtures extends Fixture
                 ->setPassword($faker->password())
                 ->setAvatar('assets/img/user/base.png')
                 ->setCounty($faker->numberBetween(1,95))
-                ->setCity($faker->city());
+                ->setCity($faker->city())
+                ->setSlug($slugify->slugify($user->getPseudo()));
             $manager->persist($user);
         }
        
