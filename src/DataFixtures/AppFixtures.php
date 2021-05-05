@@ -2,12 +2,13 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
 use App\Entity\Book;
 use App\Entity\User;
+use App\Entity\UsersBook;
 use Cocur\Slugify\Slugify;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
@@ -42,7 +43,7 @@ class AppFixtures extends Fixture
                 ->setSlug($slugify->slugify($user->getPseudo()));
             $manager->persist($user);
         }
-        
+       
 
         $manager->flush();
     }

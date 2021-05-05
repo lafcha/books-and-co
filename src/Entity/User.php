@@ -47,7 +47,9 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=128)
      */
+
     private $avatar = 'assets/img/user/base.jpg';
+
 
     /**
      * @ORM\Column(type="integer")
@@ -84,6 +86,11 @@ class User implements UserInterface
         $this->makes = new ArrayCollection();
         $this->sends = new ArrayCollection();
         $this->userHasBook = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->pseudo;
     }
 
     public function getId(): ?int
