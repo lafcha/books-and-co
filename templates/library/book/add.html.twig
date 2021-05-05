@@ -3,12 +3,18 @@
 {% block title %}Livre{% endblock %}
 
 {% block main %}
-    <div>   
-        {{form_start(searchForm)}}
+    <div>
+        {{ form_start(searchForm) }}
             {{ form_row(searchForm.isbn) }}
+            {% if  searchForm.book is defined %}
+                <div class='{{ error ? 'hidden' : 'non' }}'>
+                    {{ form_label(searchForm.book) }}
+                    {{ form_widget(searchForm.book) }}
+                </div>
+            {% endif %}
             {{ form_row(searchForm.submit, { 'label': 'rechercher et ajouter'}) }}
-        {{form_end(searchForm)}}
-        {% if app.request.method == 'POST' and error != null %}
+        {{ form_end(searchForm) }}
+        {% if app.request.method == 'POST' and error == 'Ce livre n\'existe pas, ajoutez le !' %}
             <div>
                 {{ error }}
                 {{form_start(bookForm)}}

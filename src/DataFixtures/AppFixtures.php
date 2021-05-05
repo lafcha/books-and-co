@@ -27,7 +27,7 @@ class AppFixtures extends Fixture
                 ->setAuthor($faker->name())
                 ->setEditor($faker->words(3, true))
                 ->setYear($faker->numberBetween(1950,2021))
-                ->setSlug($slugify->slugify($book->getTitle()));
+                ->setSlug($slugify->slugify($book->getTitle() . '-' . $book->getIsbn()));
             $manager->persist($book);
         }
         for ($i=0; $i < 100 ; $i++) { 
