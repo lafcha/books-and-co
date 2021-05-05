@@ -26,29 +26,37 @@ class BorrowingController extends AbstractController
         $lending = new Lending();
         $message = new Message();
 
+        // Displaying the form
         if(isset($_POST['users_book'])){
+
+            //Retrieving the users book id
             $usersBookRequest = $request->request->all('users_book');
   
             $usersBookRequestId = $usersBookRequest['id'];
+
+            //sending the info to the
             $form = $this->createForm(BorrowingFormType::class, null, [
                 'usersBookId'=> $usersBookRequestId
             ]);
+            
             $form->handleRequest($request);
+            
             return $this->render('borrowing/form.html.twig', [
                 'borrowingForm' => $form->createView(),
                 ]
             );
-        }
-
+        } elseif (isset($_POST['borrowing_form'])){
+      
+        //Once the form is submitted
         $form = $_POST['borrowing_form'];
         
         //if ($form->isSubmitted() && $form->isValid()) {
 
             //Filling the new lending entity with the info collected
             
-            //Retrieving the UsersBook entity with the current usersbook_id 
-            
+            //Retrieving the UsersBook id from the form              
             $usersBookId = $_POST['borrowing_form']['id'];
+            
             $usersBookEntity = $usersbook->findOneBy(['id'=> $usersBookId]);
 
             $lending->setBorrower($user);
@@ -72,8 +80,9 @@ class BorrowingController extends AbstractController
     
         return $this->redirectToRoute('accueil_browse');             
         
-  
+        }
 
+        return $this->redirectToRoute('accueil_browse');
     } 
 
 }
