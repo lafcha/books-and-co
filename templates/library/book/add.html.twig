@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livre{% endblock %}
+
+{% block main %}
+    <div>   
+        {{form_start(searchForm)}}
+            {{ form_row(searchForm.isbn) }}
+            {{ form_row(searchForm.submit, { 'label': 'rechercher'}) }}
+        {{form_end(searchForm)}}
+        {% if app.request.method == 'POST'%}
+            <div>
+                Votre livre n'existe pas ? Ajoutez le !
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

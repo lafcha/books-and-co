@@ -18,4 +18,8 @@
         <a href="{{  path('library_book_delete', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}">supprimer</a>
     {% endif %}
 </div>
+<div>
+    {{ form_start(form) }}
+    {{ form_end(form) }}
+</div>
 {% endblock %}
