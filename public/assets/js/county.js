@@ -11,7 +11,7 @@ const county = {
 
     displayAllSelectElements: function(countyListing){
         // get the select county select element
-        let selectElement = document.querySelector('#registration_form_county');
+        let selectElement = document.querySelector('.county-form');
 
         for(let countyData of countyListing){
             // get the name and code of a county
@@ -28,6 +28,6 @@ const county = {
     },
 
     addAllEventListeners: function(){
-        document.querySelector("#registration_form_county").addEventListener('change', city.handleChangeCounty)
+        document.querySelector(".county-form").addEventListener('change', city.handleChangeCounty)
     },
 }

@@ -25,11 +25,6 @@ class Lending
     private $status;
 
     /**
-     * @ORM\OneToOne(targetEntity=UsersBook::class, mappedBy="usersBookIsLent", cascade={"persist", "remove"})
-     */
-    private $usersBook;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="makes")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -39,6 +34,13 @@ class Lending
      * @ORM\OneToMany(targetEntity=Message::class, mappedBy="lending")
      */
     private $linkedWith;
+
+    /**
+     * @ORM\OneToOne(targetEntity=UsersBook::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $usersBook;
+
 
     public function __construct()
     {
@@ -58,23 +60,6 @@ class Lending
     public function setStatus(int $status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    public function getUsersBook(): ?UsersBook
-    {
-        return $this->usersBook;
-    }
-
-    public function setUsersBook(UsersBook $usersBook): self
-    {
-        // set the owning side of the relation if necessary
-        if ($usersBook->getUsersBookIsLent() !== $this) {
-            $usersBook->setUsersBookIsLent($this);
-        }
-
-        $this->usersBook = $usersBook;
 
         return $this;
     }
@@ -117,6 +102,18 @@ class Lending
                 $linkedWith->setLending(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUsersBook(): ?UsersBook
+    {
+        return $this->usersBook;
+    }
+
+    public function setUsersBook(UsersBook $usersBook): self
+    {
+        $this->usersBook = $usersBook;
 
         return $this;
     }
