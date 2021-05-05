@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LibraryController!{% endblock %}
+
+{% block main %}
+    <div>
+        <ul>
+            {% for usersBook in usersBooks %}
+                {# usersBook contains all books of a user, use usersBook.book to get all data from a book #}
+                <li>{{ usersBook.book.title }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <ul class="pagination">
+        <li class="{{ (currentPage == 1) ? 'disabled' : '' }}">
+            <a href="?page=1">
+                <i class="fas fa-step-backward">début</i>
+            </a>
+        </li>    
+        <li class="{{ (currentPage == 1) ? 'disabled' : '' }}">
+            <a href="{{ (currentPage > 1) ? '?page=' ~ (currentPage - 1) : '' }}">
+                <i class="fas fa-angle-left">précédent</i>
+            </a>
+        </li>
+        {% set pages = (usersBookTotal / usersBookLimit)|round(0, 'ceil') %}
+        {% for item in 1..pages %}
+            <li class="{{ (currentPage == item) ? 'active' : '' }}">
+                <a href="?page={{ item }}">{{ item }}</a>
+            </li>
+        {% endfor %}
+        <li class="{{ (currentPage == pages) ? 'disabled' : '' }}">
+            <a href="{{ (currentPage < pages) ? '?page=' ~ (currentPage + 1) : '' }}">
+                <i class="fas fa-angle-right">suivant</i>
+            </a>
+        </li>
+        <li class="{{ (currentPage == pages) ? 'disabled' : '' }}">
+            <a href="?page={{ pages }}">
+                <i class="fas fa-step-forward">fin</i>
+            </a>
+        </li>
+
+    </ul>
+{% endblock %}

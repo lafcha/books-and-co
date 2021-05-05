@@ -17,7 +17,7 @@ const city = {
     },
 
     displayAllSelectElements: function(cityListing){
-        let selectElement = document.querySelector('#registration_form_city');
+        let selectElement = document.querySelector('.city-form');
         //Sort all cities by popluation DESC
         cityListing.sort(function (b, a) {
             return a.population - b.population;

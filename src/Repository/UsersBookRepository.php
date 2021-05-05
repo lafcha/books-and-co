@@ -19,22 +19,56 @@ class UsersBookRepository extends ServiceEntityRepository
         parent::__construct($registry, UsersBook::class);
     }
 
-    // /**
-    //  * @return UsersBook[] Returns an array of UsersBook objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return UsersBook[] Returns an array of UsersBook objects
+      */
+    
+    public function findAllByUserId($userId, $page, $limit)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('ub')
+            ->andWhere('ub.user = :userId')
+            ->setParameter('userId', $userId)
+            ->leftJoin('ub.book', 'b')
+            ->addSelect('b')
+            ->setFirstResult(($page * $limit) -$limit)
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
         ;
     }
+
+    /**
+    * return all avalaible books by city 
     */
+    public function findAllAvalaibleBooksByCity($criteria){
+        return $this->createQueryBuilder('ub')
+                    ->leftJoin('ub.user', 'u')
+                    ->leftJoin('ub.book', 'b')
+                    ->where('u.county = :county')
+                    ->andWhere('ub.isAvailable = 1')
+                    ->setParameter('county', $criteria)
+                    ->addSelect('b')
+                    ->addSelect('u')
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
+
+    /**
+     * Returns number of usersBookById
+     * @return int 
+     */
+    public function getUsersBookById($userId){
+        
+        return $this->createQueryBuilder('ub')
+            ->select('COUNT(ub)')
+            ->andWhere('ub.user = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+    
 
     /*
     public function findOneBySomeField($value): ?UsersBook

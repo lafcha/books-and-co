@@ -60,11 +60,6 @@ class User implements UserInterface
     private $city;
 
     /**
-     * @ORM\ManyToMany(targetEntity=UsersBook::class, inversedBy="user")
-     */
-    private $userHasBook;
-
-    /**
      * @ORM\OneToMany(targetEntity=Lending::class, mappedBy="borrower")
      */
     private $makes;
@@ -74,11 +69,16 @@ class User implements UserInterface
      */
     private $sends;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UsersBook::class, mappedBy="user")
+     */
+    private $userHasBook;
+
     public function __construct()
     {
-        $this->userHasBook = new ArrayCollection();
         $this->makes = new ArrayCollection();
         $this->sends = new ArrayCollection();
+        $this->userHasBook = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,8 +114,6 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
@@ -211,30 +209,6 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|UsersBook[]
-     */
-    public function getUserHasBook(): Collection
-    {
-        return $this->userHasBook;
-    }
-
-    public function addUserHasBook(UsersBook $userHasBook): self
-    {
-        if (!$this->userHasBook->contains($userHasBook)) {
-            $this->userHasBook[] = $userHasBook;
-        }
-
-        return $this;
-    }
-
-    public function removeUserHasBook(UsersBook $userHasBook): self
-    {
-        $this->userHasBook->removeElement($userHasBook);
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Lending[]
      */
     public function getMakes(): Collection
@@ -288,6 +262,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($send->getSender() === $this) {
                 $send->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UsersBook[]
+     */
+    public function getUserHasBook(): Collection
+    {
+        return $this->userHasBook;
+    }
+
+    public function addUserHasBook(UsersBook $userHasBook): self
+    {
+        if (!$this->userHasBook->contains($userHasBook)) {
+            $this->userHasBook[] = $userHasBook;
+            $userHasBook->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserHasBook(UsersBook $userHasBook): self
+    {
+        if ($this->userHasBook->removeElement($userHasBook)) {
+            // set the owning side to null (unless already changed)
+            if ($userHasBook->getUser() === $this) {
+                $userHasBook->setUser(null);
             }
         }
 
