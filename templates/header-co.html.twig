@@ -1,0 +1,22 @@
+<header class="py-6">
+    <div class="flex items-center justify-between flex-wrap">
+        <a href=" {{ path('accueil_browse') }}"class="flex title-font font-medium items-center mb-4 md:mb-0">
+            <img src="{{asset("assets/img/illustrations")}}/logo.svg" alt="Logo de BooksAndCo">
+            <span class="font-cursive ml-3 text-xl logo text-pink">Books&amp;Co</span>
+        </a>
+        <div>
+            <p class="text-center text-green text-lg">Bonjour Michelle !</p>
+            <div>
+                <img class="inline-block" src="{{asset("assets/img/illustrations")}}/bell.svg" alt="Icône alerte notification">
+                <a href="#"class= "inline-block text-center text-pink text-sm">Vous avez de nouvelles notifications</a>
+            </div>
+        </div>
+        <div class="flex flex-col">
+            <div class>
+                <a href="{{ path('app_logout')}}" class="text-sm underline inline-block text-center hover:text-pink mr-1">Déconnexion</a>
+                <img src="{{asset("assets/img/illustrations")}}/avatar.png" alt="Avatar" class="inline-block h-12 w-12 mr-4">
+            </div>
+            <a href="#" class="text-yellow-dark hover:text-pink text-sm text-right">Mon compte</a>
+        </div>						
+    </div>
+</header>

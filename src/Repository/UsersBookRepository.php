@@ -38,6 +38,23 @@ class UsersBookRepository extends ServiceEntityRepository
     }
 
     /**
+    * return all avalaible books by city 
+    */
+    public function findAllAvalaibleBooksByCity($criteria){
+        return $this->createQueryBuilder('ub')
+                    ->leftJoin('ub.user', 'u')
+                    ->leftJoin('ub.book', 'b')
+                    ->where('u.county = :county')
+                    ->andWhere('ub.isAvailable = 1')
+                    ->setParameter('county', $criteria)
+                    ->addSelect('b')
+                    ->addSelect('u')
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
+
+    /**
      * Returns number of usersBookById
      * @return int 
      */
