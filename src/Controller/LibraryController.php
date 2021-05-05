@@ -69,11 +69,8 @@ class LibraryController extends AbstractController
             $book = $bookRepository->findOneBy(['isbn' => $searchForm->getData()['isbn']]);
             if ($book !== null) {
                 $bookId = $book->getId();
-                dd($bookId);
             }
-            dd($book);
-
-            $this->getDoctrine()->getManager()->flush();
+                   $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('library_browse', [
                 'userSlug'=> $userSlug,
