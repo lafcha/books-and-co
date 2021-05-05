@@ -28,8 +28,6 @@ class SearchController extends AbstractController
             $criteria = $form->getExtraData()['county'];
             $book = $usersBookRepository->findAllAvalaibleBooksByCity($criteria);
         }
-        dump($form);
-        dump($book);
 
         return $this->render('search/search.html.twig', [
             'form' => $form->createView(),
