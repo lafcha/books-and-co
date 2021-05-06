@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints\Length;
@@ -25,9 +26,12 @@ class BorrowingFormType extends AbstractType
                 'label'=>'message',
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['min'=>50])
+                    new Length(['min'=>10])
                 ],
-                'mapped'=> false,
+                'mapped'=> true,
+            ])
+            ->add('id',HiddenType::class, [
+                'data' => $options['usersBookId']
             ])
             ->add('save', SubmitType::class);
         ;
@@ -37,6 +41,7 @@ class BorrowingFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => null,
+            'usersBookId'=> null
         ]);
     }
 }
