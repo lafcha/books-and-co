@@ -11,6 +11,14 @@ body {
     resize : none;
 }
 
+.margin {
+    margin-bottom : 2rem;
+}
+
+.spaces {
+    width : 25%;
+}
+
 .custom-btn{
     background-color: var(--first-accent-color);
     text-transform: uppercase;
