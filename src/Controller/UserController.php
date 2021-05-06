@@ -6,6 +6,7 @@ use App\Form\EditProfilType;
 use App\Entity\User;
 use Gedmo\Sluggable\Util\Urlizer;
 use App\Service\UploaderHelper;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +27,7 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, UserInterface $user, EntityManagerInterface $em, UploaderHelper $uploaderHelper): Response
     {
+        $slugger = new Slugify();
         $form = $this->createForm(EditProfilType::class, $user);
         $form->handleRequest($request);
 
@@ -38,7 +40,9 @@ class UserController extends AbstractController
                 
                 $profilData->setAvatar($newFilename);
             }
-
+            $user->setSlug($slugger->slugify($user->getPseudo()));
+            $user->setCounty($form->getExtraData()['county']);
+            $user->setCity($form->getExtraData()['city']);
             $em->persist($user);
             $em->flush();
             $this->addFlash('message', 'Profil mis à jour');
