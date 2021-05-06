@@ -7,6 +7,10 @@ body {
     color : var(--main-color);
 }
 
+.text-area-resize {
+    resize : none;
+}
+
 .custom-btn{
     background-color: var(--first-accent-color);
     text-transform: uppercase;

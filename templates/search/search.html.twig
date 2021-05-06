@@ -30,9 +30,9 @@
 		<section class="text-gray-600 body-font">
 			<div class="container px-5 py-24 mx-auto">
 				<div class="xl:w-1/2 lg:w-3/4 w-full mx-auto text-center">
-					<i class="fas fa-heart-broken text-red-500 text-4xl mb-5"></i>
+					<i class="fas fa-heart-broken text-pink text-4xl mb-5"></i>
 					<p class="leading-relaxed text-lg">Désolé, aucun livre n'est disponible dans ce département !</p>
-					<span class="inline-block h-1 w-10 rounded bg-indigo-500 mt-8 mb-6"></span>
+					<span class="inline-block h-1 w-10 rounded bg-blue mt-8 mb-6"></span>
 				</div>
 			</div>
 		</section>
@@ -54,7 +54,7 @@
 							</div>
 							<div class="flex flex-col justify-between">
 								<p class="text-yellow-dark"><i class="fas fa-map-marker-alt mr-3"></i>{{ usersbook.user.city }}</p>
-								<a href="" class="bg-pink h-10 px-6 md:px-8 py-2 rounded-full items-center focus:outline-none md:text-sm text-white">Voir plus</a>
+								<a href="{{ path('library_book_read', {'userSlug': usersBook.user.slug, 'slug': usersBook.book.slug }) }}" class="bg-pink h-10 px-6 md:px-8 py-2 rounded-full items-center focus:outline-none md:text-sm text-white">Voir plus</a>
 							</div>
 						</div>
 					</div>    
