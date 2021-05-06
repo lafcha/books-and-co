@@ -22,7 +22,7 @@ class Lending
     /**
      * @ORM\Column(type="smallint")
      */
-    private $status;
+    private $status = 1;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="makes")
