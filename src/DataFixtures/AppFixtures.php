@@ -2,12 +2,13 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
 use App\Entity\Book;
 use App\Entity\User;
+use App\Entity\UsersBook;
 use Cocur\Slugify\Slugify;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
@@ -26,7 +27,7 @@ class AppFixtures extends Fixture
                 ->setAuthor($faker->name())
                 ->setEditor($faker->words(3, true))
                 ->setYear($faker->numberBetween(1950,2021))
-                ->setSlug($slugify->slugify($book->getTitle()));
+                ->setSlug($slugify->slugify($book->getTitle() . '-' . $book->getIsbn()));
             $manager->persist($book);
         }
         for ($i=0; $i < 100 ; $i++) { 
@@ -38,10 +39,11 @@ class AppFixtures extends Fixture
                 ->setPassword($faker->password())
                 ->setAvatar('assets/img/user/base.png')
                 ->setCounty($faker->numberBetween(1,95))
-                ->setCity($faker->city());
+                ->setCity($faker->city())
+                ->setSlug($slugify->slugify($user->getPseudo()));
             $manager->persist($user);
         }
-        
+       
 
         $manager->flush();
     }
