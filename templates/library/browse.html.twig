@@ -3,12 +3,17 @@
 {% block title %}Hello LibraryController!{% endblock %}
 
 {% block main %}
+{% if usersBooks == null %}
+    <p>Vous n'avez aucun livre dans votre bibliothèque</p>
+{% else %}
     <div>
         <ul>
-            {% for usersBook in usersBooks %}
-                {# usersBook contains all books of a user, use usersBook.book to get all data from a book #}
-                <li>{{ usersBook.book.title }}</li>
-            {% endfor %}
+            {# if the user connected is equal to the library's user AND if usersBooks is not null #}
+
+                {% for usersBook in usersBooks %}
+                    {# usersBook contains all books of a user, use usersBook.book to get all data from a book #}
+                    <li><a href="{{ path('library_book_read', {'userSlug': usersBook.user.slug, 'slug': usersBook.book.slug }) }}">{{ usersBook.book.title }}</a></li>
+                {% endfor %}
         </ul>
     </div>
     <ul class="pagination">
@@ -38,6 +43,11 @@
                 <i class="fas fa-step-forward">fin</i>
             </a>
         </li>
-
     </ul>
+    {% if app.user.slug == app.request.attributes.all['userSlug'] %}
+        <div>
+            <a href="{{ path('library_book_add', {'userSlug': app.user.slug}) }}">ajouter un livre</a>
+        </div>
+    {% endif %}
+{% endif %}
 {% endblock %}

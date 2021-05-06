@@ -47,7 +47,9 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=128, nullable=true)
      */
-    private $avatar;
+
+    private $avatar = 'assets/img/user/base.jpg';
+
 
     /**
      * @ORM\Column(type="integer")
@@ -74,11 +76,21 @@ class User implements UserInterface
      */
     private $userHasBook;
 
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->makes = new ArrayCollection();
         $this->sends = new ArrayCollection();
         $this->userHasBook = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->pseudo;
     }
 
     public function getId(): ?int
@@ -294,6 +306,18 @@ class User implements UserInterface
                 $userHasBook->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

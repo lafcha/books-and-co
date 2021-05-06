@@ -43,6 +43,11 @@ class Message
      */
     private $lending;
 
+    public function __toString()
+    {
+        return $this->content;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
