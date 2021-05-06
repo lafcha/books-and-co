@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+
+{% block main %}
+
+{% if lendingDatas != null %}
+    <h1>Mes emprunts</h1>
+
+    {% for lendingData in lendingDatas %}
+    <div>
+    {#! To get a lenging : use lendingData[0] | To get the count of new messages : use lendingData[nbNewMessages] #}
+        {{ lendingData[0].usersBook.book.title ~ ' par ' ~ lendingData[0].usersBook.book.title }} <br>
+        {{ ' préteur : ' ~ lendingData[0].usersBook.user.pseudo }} <br>
+    </div>
+    <div>
+    {{'nouveaux messages :' ~ lendingData['nbNewMessages'] }}</div>
+    <hr>
+    <br>
+    {% endfor %}
+
+{% else %}
+    <h1>Vous n'avez pas de demande</h1>
+{% endif %}
+
+{% endblock %}

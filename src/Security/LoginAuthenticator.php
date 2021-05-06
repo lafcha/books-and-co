@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\User;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -95,8 +96,10 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
-
-        return new RedirectResponse($this->urlGenerator->generate('accueil_browse'));
+        $slugger = new Slugify;
+        return new RedirectResponse($this->urlGenerator->generate('library_browse', [
+            'userSlug'=> $slugger->slugify($request->request->all()['pseudo']),
+        ]));
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

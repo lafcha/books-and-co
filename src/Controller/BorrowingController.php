@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Lending;
 use App\Entity\Message;
-use App\Entity\User;
 use App\Form\BorrowingFormType;
+use App\Repository\LendingRepository;
 use App\Repository\UsersBookRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,12 +14,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @Route("/demande-de-pret/", name="borrowing_")
+ * @Route("", name="borrowing_")
  */
 class BorrowingController extends AbstractController
 {
     /**
-     * @Route("", name="form")
+     * @Route("/demande-de-pret", name="form")
      */
     public function form(Request $request, UserInterface $user, UsersBookRepository $usersbook): Response
     {
@@ -83,8 +83,17 @@ class BorrowingController extends AbstractController
             'borrowingForm' => $form->createView(),
             ]
         );
-    }   
+    }
+
+    /**
+     * @Route("/mes-emprunts", name="form")
+     */
+    public function browse(LendingRepository $lendingRepository, UserInterface $user): Response
+    {
+        $lendingDatas = $lendingRepository->findAllByBorrowerId($user->getId());
+        return $this->render('borrowing/browse.html.twig', [
+            'lendingDatas' => $lendingDatas,
+            ]
+        );
+    }
 }
-    
-
-
