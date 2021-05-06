@@ -19,6 +19,27 @@ class LendingRepository extends ServiceEntityRepository
         parent::__construct($registry, Lending::class);
     }
 
+    /**
+    * return all avalaible books by city 
+    */
+    public function findAllByBorrowerId($borrowerId){
+        return $this->createQueryBuilder('l')
+                    ->leftJoin('l.linkedWith', 'lw')
+                    ->leftJoin('l.usersBook', 'ub')
+                    ->addSelect('ub')
+                    ->leftJoin('ub.book', 'b')
+                    ->addSelect('b')
+                    ->leftJoin('ub.user', 'lender')
+                    ->addSelect('lender')
+                    ->groupBy('l.id')
+                    ->addSelect('COUNT(CASE WHEN lw.isRead = 0 and lw.sender != :borrowerId THEN 0 ELSE :null end) AS nbNewMessages')
+                    ->where('l.borrower = :borrowerId')
+                    ->setParameter('borrowerId', $borrowerId)
+                    ->setParameter('null', NULL)
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
     // /**
     //  * @return Lending[] Returns an array of Lending objects
     //  */
