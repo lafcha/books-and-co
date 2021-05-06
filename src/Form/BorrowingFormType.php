@@ -28,7 +28,7 @@ class BorrowingFormType extends AbstractType
                     new NotBlank(),
                     new Length(['min'=>10])
                 ],
-                'mapped'=> false,
+                'mapped'=> true,
             ])
             ->add('id',HiddenType::class, [
                 'data' => $options['usersBookId']

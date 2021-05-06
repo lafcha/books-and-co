@@ -26,36 +26,34 @@ class BorrowingController extends AbstractController
         $lending = new Lending();
         $message = new Message();
 
-        // Displaying the form
+        // Retriving the users book id from post through users_book
         if(isset($_POST['users_book'])){
-
+        
             //Retrieving the users book id
             $usersBookRequest = $request->request->all('users_book');
   
-            $usersBookRequestId = $usersBookRequest['id'];
+            $usersBookId = $usersBookRequest['id'];
+            
+        // Retriving the users book id from post through borrowing_from
+        } elseif (isset($_POST['borrowing_form'])){
 
-            //sending the info to the
+            $usersBookId =  $_POST['borrowing_form']['id'];
+
+        } else {
+            throw $this->createNotFoundException('Vous n\'avez pas sélectionné de livre'); 
+        }
+            
+
             $form = $this->createForm(BorrowingFormType::class, null, [
-                'usersBookId'=> $usersBookRequestId
+                'usersBookId'=> $usersBookId
             ]);
             
             $form->handleRequest($request);
-            
-            return $this->render('borrowing/form.html.twig', [
-                'borrowingForm' => $form->createView(),
-                ]
-            );
-        } elseif (isset($_POST['borrowing_form'])){
-      
-        //Once the form is submitted
-        $form = $_POST['borrowing_form'];
+    
         
-        //if ($form->isSubmitted() && $form->isValid()) {
-
-            //Filling the new lending entity with the info collected
+        if ($form->isSubmitted() && $form->isValid()) {
             
-            //Retrieving the UsersBook id from the form              
-            $usersBookId = $_POST['borrowing_form']['id'];
+            //Filling the new lending entity with the info collected
             
             $usersBookEntity = $usersbook->findOneBy(['id'=> $usersBookId]);
 
@@ -68,8 +66,7 @@ class BorrowingController extends AbstractController
 
             // Filling the new message entity with the info from the newly lending entity created, the form & the user
             
-            // Retrieving the message content from the form
-            $messageContent = $form['message'];
+            $messageContent = $form->getData()['message'];
 
             $message->setSender($user);
             $message->setLending($lending);
@@ -82,9 +79,11 @@ class BorrowingController extends AbstractController
         
         }
 
-        return $this->redirectToRoute('accueil_browse');
-    } 
-
+        return $this->render('borrowing/form.html.twig', [
+            'borrowingForm' => $form->createView(),
+            ]
+        );
+    }   
 }
     
 
