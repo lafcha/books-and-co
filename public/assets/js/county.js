@@ -25,6 +25,14 @@ const county = {
 
             countyAndCityApp.addSelectedElement(selectElement, optionElement); // implement the option element in the county select
         }
+        if (document.querySelector('.county-form').dataset.county != null) {
+            countyValue = document.querySelector('.county-form').dataset.county;
+            if (countyValue.length == 1) {
+                countyValue = 0 + countyValue;
+            }
+            countyAndCityApp.selectDatasetElement(countyValue, selectElement);
+            city.getAllSelectElementsByCounty(countyValue);
+        }
     },
 
     addAllEventListeners: function(){
