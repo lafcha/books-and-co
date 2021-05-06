@@ -4,7 +4,6 @@
 {% endblock %}
 
 {% block javascripts %}
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="assets/js/county.js"></script>
 	<script src="assets/js/city.js"></script>
 	<script src="assets/js/countyAndCityApp.js"></script>
@@ -84,7 +83,7 @@
 			</div>
 			<div class="flex justify-between items-center w-full mt-10">
 				<a href="{{ path('app_login') }}" class="inline-block">Vous avez déjà un compte ?</a>
-				<button type="submit" class="custom-btn inline-block focus:outline-none text-base text-white">CREER</button>
+				<button type="submit" class="custom-btn inline-block focus:outline-none text-base text-white submit">CREER</button>
 			</div>
 			{{ form_end(registrationForm) }}
 		</div>

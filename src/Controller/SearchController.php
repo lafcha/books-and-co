@@ -20,18 +20,18 @@ class SearchController extends AbstractController
     {   
         // For now, we want to show every book available in the department
         // We're not searching with keywords !
-        $book = [];
         $form = $this->createForm(SearchFormType::class, null, [
             'method' => 'GET',
         ]);
-        if($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
-            $criteria = $form->getExtraData()['county'];
-            $book = $usersBookRepository->findAllAvalaibleBooksByCity($criteria);
-        }
+
+        //get the county in URL
+        $countyValue = (isset($request->query->all()['search_form']['county'])) ? $request->query->all()['search_form']['county'] : false;
+        $book = $usersBookRepository->findAllAvalaibleBooksByCity($countyValue);
 
         return $this->render('search/search.html.twig', [
             'form' => $form->createView(),
             'book' => $book,
+            'countyValue' => $countyValue,
         ]);
     }
 
