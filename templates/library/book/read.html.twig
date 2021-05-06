@@ -3,23 +3,25 @@
 {% block title %}Livre{% endblock %}
 
 {% block main %}
-<div>
-    <p>{{ book.isbn }}</p>
-    <p>{{ book.title }}</p>
-    <p>{{ book.author }}</p>
-    <p>{{ book.cover }}</p>
-    <p>{{ book.editor }}</p>
-    <p>{{ book.year }}</p>
-    <p>{{ book.description }}</p>
-</div>
-<div>
+    <div>
+        <p>{{ book.isbn }}</p>
+        <p>{{ book.title }}</p>
+        <p>{{ book.author }}</p>
+        <p>{{ book.cover }}</p>
+        <p>{{ book.editor }}</p>
+        <p>{{ book.year }}</p>
+        <p>{{ book.description }}</p>
+    </div>
     {% if app.user.slug == app.request.attributes.all['userSlug'] %}
-        <a href="{{  path('library_book_edit', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}">modifier</a>
-        <a href="{{  path('library_book_delete', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}">supprimer</a>
+        <div>
+                <a href="{{  path('library_book_edit', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}">modifier</a>
+                <a href="{{  path('library_book_delete', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}">supprimer</a>
+        </div>
     {% endif %}
-</div>
-<div>
-    {{ form_start(form) }}
-    {{ form_end(form) }}
-</div>
+    {% if app.user.slug != app.request.attributes.all['userSlug']  %}
+        <div>
+            {{ form_start(form) }}
+            {{ form_end(form) }}
+        </div>
+    {% endif %}
 {% endblock %}

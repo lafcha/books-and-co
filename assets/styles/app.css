@@ -1,4 +1,44 @@
-
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+body {
+    font-family: sans, sans-serif;
+    color : var(--main-color);
+}
+
+.custom-btn{
+    background-color: var(--first-accent-color);
+    text-transform: uppercase;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    color:white;
+}
+
+.custom-btn-y{
+    background-color: var(--third-accent-color);
+    color: var(--main-color);
+    text-transform: uppercase;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px; 
+}
+
+custom-btn-y:hover{
+    background-color: var(--first-accent-color);
+}
+
+.custom-btn:hover{
+    background-color: var(--main-color);
+}
+
+
+
+/* VARIABLES COULEURS */
+
+body{
+    --main-color: #363C54;
+    --first-accent-color:#F4458D;
+    --second-accent-color: #26C6BA;
+    --third-accent-color: #F2B111;
+
+}

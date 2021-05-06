@@ -69,6 +69,11 @@ class Book
         $this->bookBelongsToUser = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->title . ' par ' . $this->author;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

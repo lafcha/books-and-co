@@ -16,7 +16,7 @@ class UsersBookType extends AbstractType
         $builder
             ->add('id', HiddenType::class)
             ->add('submit', SubmitType::class, [
-                'label' => 'ajouter un livre à votre bibliotheque'
+                'label' => 'faire une demande de prêt pour ce livre'
             ])
         ;
     }

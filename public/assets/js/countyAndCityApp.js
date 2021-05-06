@@ -15,8 +15,8 @@ const countyAndCityApp = {
       county.addAllEventListeners();
       document.querySelector("body > form > button").addEventListener('click', function(evt) {
         let errors = 0;
-        const countyElement = document.querySelector("#registration_form_county")
-        const cityElement = document.querySelector("#registration_form_city")
+        const countyElement = document.querySelector(".county-form")
+        const cityElement = document.querySelector(".city-form")
         countyValue = Number(countyElement.value);
         cityValue = cityElement.value;
 
