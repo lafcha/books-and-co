@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -29,13 +30,13 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $profilData = $form->getData();
              /** @var UploadedFile $uploadedFile */
             $uploadedFile = $form['imageFile']->getData();
             if ($uploadedFile){
-
-                $newFilename = $uploaderHelper->uploadImage($uploadedFile);
+                $newFilename = $uploaderHelper->uploadAvatar($uploadedFile);
                 
-                $user->setAvatar($newFilename);
+                $profilData->setAvatar($newFilename);
             }
 
             $em->persist($user);
