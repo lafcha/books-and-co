@@ -21,7 +21,14 @@
 		{% endblock %}
 	</head>
 	<body>
-		<div class="container mx-auto">
+
+	<div class="container mx-auto flex">
+		{#
+				{% if app.user %}
+					{% include 'nav.html.twig' %}
+				{% endif %}			
+#}
+	<div>
 			{% block header%}
 				{% if app.user %}
 					{% include 'header-co.html.twig' %}	
@@ -29,16 +36,23 @@
 					{% include 'header.html.twig' %}	
 				{% endif %}
 			{% endblock %}
-
+		
+	
+				
+		
+	
 			{% block main %}
-				{% if app.user %}
-					{% include 'nav.html.twig' %}
-				{% endif %}
-			
-			
 			{% endblock %}
 
-			{% include 'footer.html.twig' %}			
-		</div>
+			{% include 'footer.html.twig' %}		
+		</div>	
+
+
+
+
+					
+		
+		
+		</div>	
 	</body>
 </html>

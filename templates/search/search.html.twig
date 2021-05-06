@@ -38,32 +38,42 @@
 			</div>
 		</section>
 	{% else %}
-	<h1 class="text-blue font-cursive text-3xl flex justify-center mt-10">Résultat de la recherche</h1>
-			<section class="text-gray-600 body-font overflow-hidden">
-				<div class="container px-5 py-24 mx-auto">
-		{% for usersbook in book %}
+		<h1 class="text-blue font-cursive text-3xl flex justify-center mt-10">Résultat de la recherche</h1>
+		<section class="overflow-hidden">
+			<div class="container px-5 py-24 mx-auto">
+				{% for usersbook in book %}
 					<div class="-my-8 divide-y-2 divide-gray-100">
 						<div class="py-8 flex flex-wrap md:flex-nowrap">
 							<div class="md:w-1/12 md:mb-0 mb-6 flex-shrink-0 mr-10 flex flex-col">
 								<a href=""><img src="{{ asset('assets/img/bookcover/') ~ usersbook.book.cover }}"></a>
 							</div>
 							<div class="md:flex-grow">
-								<h2 class="text-2xl font-medium text-gray-900 title-font mb-2 uppercase text-pink"><a href="">{{ usersbook.book.title }}</a> <span class="text-sm text-yellow-dark"><i class="fas fa-user mr-3 ml-3"></i>{{ usersbook.user.pseudo }}</span></h2>
-								<p class="leading-relaxed">Auteur : {{ usersbook.book.author }}</p>
-								<p class="italic">Editeur : {{ usersbook.book.editor }}</p>
-								<p class="italic">ISBN : {{ usersbook.book.isbn }}</p>
+								<h2 class="text-2xl font-medium title-font mb-2 uppercase text-pink">
+									<a href="">{{ usersbook.book.title }}</a>
+									<span class="text-sm text-yellow-dark">
+										<i class="fas fa-user mr-3 ml-3"></i>
+										{{ usersbook.user.pseudo }}</span>
+								</h2>
+								<p class="leading-relaxed">Auteur :
+									{{ usersbook.book.author }}</p>
+								<p class="italic">Editeur :
+									{{ usersbook.book.editor }}</p>
+								<p class="italic">ISBN :
+									{{ usersbook.book.isbn }}</p>
 							</div>
 							<div class="flex flex-col justify-between">
-								<p class="text-yellow-dark"><i class="fas fa-map-marker-alt mr-3"></i>{{ usersbook.user.city }}</p>
+								<p class="text-yellow-dark">
+									<i class="fas fa-map-marker-alt mr-3"></i>
+									{{ usersbook.user.city }}</p>
 								<a href="" class="bg-pink h-10 px-6 md:px-8 py-2 rounded-full items-center focus:outline-none md:text-sm text-white">Voir plus</a>
 							</div>
 						</div>
-					</div>    
+					</div>
 					<hr class="my-10 border-1 border-blue-900">
-		{% endfor %}
-				</div>
-			</section>
-			
+				{% endfor %}
+			</div>
+		</section>
+
 	{% endif %}
 
 
