@@ -20,24 +20,46 @@ class LendingRepository extends ServiceEntityRepository
     }
 
     /**
-    * return all lendings with count of new messages
+    * return all lendings with count of new messages by borrowerId
     */
     public function findAllByBorrowerId($borrowerId){
         return $this->createQueryBuilder('l')
-                    ->leftJoin('l.linkedWith', 'lw')
-                    ->leftJoin('l.usersBook', 'ub')
-                    ->addSelect('ub')
-                    ->leftJoin('ub.book', 'b')
-                    ->addSelect('b')
-                    ->leftJoin('ub.user', 'lender')
-                    ->addSelect('lender')
-                    ->groupBy('l.id')
-                    ->addSelect('COUNT(CASE WHEN lw.isRead = 0 and lw.sender != :borrowerId THEN 0 ELSE :null end) AS nbNewMessages')
-                    ->where('l.borrower = :borrowerId')
-                    ->setParameter('borrowerId', $borrowerId)
-                    ->setParameter('null', NULL)
-                    ->getQuery()
-                    ->getResult()
+            ->leftJoin('l.linkedWith', 'lw')
+            ->leftJoin('l.usersBook', 'ub')
+            ->addSelect('ub')
+            ->leftJoin('ub.book', 'b')
+            ->addSelect('b')
+            ->leftJoin('ub.user', 'lender')
+            ->addSelect('lender')
+            ->groupBy('l.id')
+            ->addSelect('COUNT(CASE WHEN lw.isRead = 0 and lw.sender != :borrowerId THEN 0 ELSE :null end) AS nbNewMessages')
+            ->where('l.borrower = :borrowerId')
+            ->setParameter('borrowerId', $borrowerId)
+            ->setParameter('null', NULL)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+    * return all lendings with count of new messages by lenderId
+    */
+    public function findAllByLenderId($lenderId){
+        return $this->createQueryBuilder('l')
+            ->leftJoin('l.linkedWith', 'lw')
+            ->leftJoin('l.borrower', 'borrower')
+            ->addSelect('borrower')
+            ->leftJoin('l.usersBook', 'ub')
+            ->addSelect('ub')
+            ->leftJoin('ub.book', 'b')
+            ->addSelect('b')
+            ->groupBy('l.id')
+            ->addSelect('COUNT(CASE WHEN lw.isRead = 0 and lw.sender != :lenderId THEN 0 ELSE :null end) AS nbNewMessages')
+            ->where('ub.user = :lenderId')
+            ->setParameter('lenderId', $lenderId)
+            ->setParameter('null', NULL)
+            ->getQuery()
+            ->getResult()
         ;
     }
 
@@ -46,20 +68,20 @@ class LendingRepository extends ServiceEntityRepository
     */
     public function findAllLendingStats($lendingId){
         return $this->createQueryBuilder('l')
-                    ->leftJoin('l.linkedWith', 'lw')
-                    ->addSelect('lw')
-                    ->leftJoin('lw.sender', 'sender')
-                    ->addSelect('sender')
-                    ->leftJoin('l.usersBook', 'ub')
-                    ->addSelect('ub')
-                    ->leftJoin('ub.book', 'b')
-                    ->addSelect('b')
-                    ->leftJoin('ub.user', 'lender')
-                    ->addSelect('lender')
-                    ->where('l.id = :lendingId')
-                    ->setParameter('lendingId', $lendingId)
-                    ->getQuery()
-                    ->getSingleResult()
+            ->leftJoin('l.linkedWith', 'lw')
+            ->addSelect('lw')
+            ->leftJoin('lw.sender', 'sender')
+            ->addSelect('sender')
+            ->leftJoin('l.usersBook', 'ub')
+            ->addSelect('ub')
+            ->leftJoin('ub.book', 'b')
+            ->addSelect('b')
+            ->leftJoin('ub.user', 'lender')
+            ->addSelect('lender')
+            ->where('l.id = :lendingId')
+            ->setParameter('lendingId', $lendingId)
+            ->getQuery()
+            ->getSingleResult()
         ;
     }
     
