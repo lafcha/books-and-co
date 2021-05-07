@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+
+{% block main %}
+
+    <h1>Ma demande d'emprunts du livre {{ lendingData.usersBook.book.title }} au près de {{ lendingData.usersBook.user.pseudo }}</h1>
+    {# use lendingData.linkedWith to get an array of messages #}
+    {% for message in lendingData.linkedWith %}
+        <div class="{{ (message.sender == app.user ) ? 'droite' : 'gauche' }}">
+            {{ message.content }}
+            par {{ message.sender.pseudo }}
+        </div>
+    {% endfor %}
+    <div>
+        status du prêt :
+        {% if (lendingData.status == 0) %}
+            en attente
+        {% elseif (lendingData.status == 1) %}
+            en prêt
+        {% else %}
+            archivé
+        {% endif %}
+    </div>
+    <div>
+        {{ form_start(sendMessageForm) }}
+        {{ form_end(sendMessageForm) }}
+    </div>
+{% endblock %}

@@ -97,8 +97,10 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
             return new RedirectResponse($targetPath);
         }
         $slugger = new Slugify;
+        $userSlug = empty($request->request->all()['pseudo']) ? $request->request->all()['registration_form']['pseudo'] : $request->request->all()['pseudo'] ;
+        $slugger->slugify($userSlug);
         return new RedirectResponse($this->urlGenerator->generate('library_browse', [
-            'userSlug'=> $slugger->slugify($request->request->all()['pseudo']),
+            'userSlug'=> $userSlug,
         ]));
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }

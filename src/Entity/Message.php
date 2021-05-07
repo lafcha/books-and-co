@@ -30,7 +30,7 @@ class Message
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isRead = 1;
+    private $isRead = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sends")
@@ -42,15 +42,15 @@ class Message
      * @ORM\JoinColumn(nullable=false)
      */
     private $lending;
-
-    public function __toString()
-    {
-        return $this->content;
-    }
-
+    
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+    }
+    
+    public function __toString()
+    {
+        return $this->content;
     }
 
     public function getId(): ?int
