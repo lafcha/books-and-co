@@ -12,7 +12,7 @@
     {#! To get a lenging : use lendingData[0] | To get the count of new messages : use lendingData[nbNewMessages] #}
         {{ lendingData[0].usersBook.book.title ~ ' par ' ~ lendingData[0].usersBook.book.title }} <br>
         {{ ' préteur : ' ~ lendingData[0].usersBook.user.pseudo }} <br>
-        <a href="{{ path('borrowing_read', { 'id': lendingData[0].id}) }}">go to</a>
+        <a href="{{ path('lending_read', { 'id': lendingData[0].id}) }}">go to</a>
     </div>
     <div>
         {{'nouveaux messages :' ~ lendingData['nbNewMessages'] }}
