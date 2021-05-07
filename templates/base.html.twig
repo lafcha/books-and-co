@@ -21,10 +21,10 @@
 		{% endblock %}
 	</head>
 	<body>
-		<div class="container mx-auto flex nowrap h-screen">
+		<div class="container mx-auto grid grid-row-3 h-screen  static">
 
 			{#--Header--#}	
-			<div class = "w-full fixed mt-0 ">
+			<div class = "fixed  mt-0 container ">
 			
 				{% if app.user %}
 					{% include 'header-co.html.twig' %}	
@@ -33,23 +33,28 @@
 				{% endif %}
 			</div>
 			
-			<div>
-			{#--Navigation -- only when connected--#}
-				<div class="h">
+			<div class="flex flex-nowrap w-full mx-auto  ">
+			
+				<div class="  h-screen w-1/6 fixed">
+			
+
+			{#--Navigation -- only when connected#}
+
+				
 					{% if app.user %}
 					{% include 'nav.html.twig' %}
 				{% endif %}	
+				
 				</div>
-		
 			{#--Main--#}
-				<div class="overflow-hidden">
+				<div class="overflow-hidden w-5/6 bg-pink h-100 flex-grow top-50">
 				
 					
 					{% block main %}{% endblock %}			
 				</div>
 			
 			</div>
-			<div class=" container w-full  mb-0">
+			<div class=" container w-full ">
 	
 	
 			{#--Footer--#}
