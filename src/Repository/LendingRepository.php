@@ -84,7 +84,7 @@ class LendingRepository extends ServiceEntityRepository
             ->getSingleResult()
         ;
     }
-    
+
     // /**
     //  * @return Lending[] Returns an array of Lending objects
     //  */
