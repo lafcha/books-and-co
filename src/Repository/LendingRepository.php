@@ -20,7 +20,7 @@ class LendingRepository extends ServiceEntityRepository
     }
 
     /**
-    * return all avalaible books by city 
+    * return all lendings with count of new messages
     */
     public function findAllByBorrowerId($borrowerId){
         return $this->createQueryBuilder('l')
@@ -40,6 +40,29 @@ class LendingRepository extends ServiceEntityRepository
                     ->getResult()
         ;
     }
+
+    /**
+    * return all stats of one lending
+    */
+    public function findAllLendingStats($lendingId){
+        return $this->createQueryBuilder('l')
+                    ->leftJoin('l.linkedWith', 'lw')
+                    ->addSelect('lw')
+                    ->leftJoin('lw.sender', 'sender')
+                    ->addSelect('sender')
+                    ->leftJoin('l.usersBook', 'ub')
+                    ->addSelect('ub')
+                    ->leftJoin('ub.book', 'b')
+                    ->addSelect('b')
+                    ->leftJoin('ub.user', 'lender')
+                    ->addSelect('lender')
+                    ->where('l.id = :lendingId')
+                    ->setParameter('lendingId', $lendingId)
+                    ->getQuery()
+                    ->getSingleResult()
+        ;
+    }
+    
     // /**
     //  * @return Lending[] Returns an array of Lending objects
     //  */
