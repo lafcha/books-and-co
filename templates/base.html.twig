@@ -21,38 +21,40 @@
 		{% endblock %}
 	</head>
 	<body>
+		<div class="container mx-auto flex nowrap h-screen">
 
-	<div class="container mx-auto flex">
-		{#
-				{% if app.user %}
-					{% include 'nav.html.twig' %}
-				{% endif %}			
-#}
-	<div>
-			{% block header%}
+			{#--Header--#}	
+			<div class = "w-full fixed mt-0 ">
+			
 				{% if app.user %}
 					{% include 'header-co.html.twig' %}	
 				{% else %}
 					{% include 'header.html.twig' %}	
 				{% endif %}
-			{% endblock %}
+			</div>
+			
+			<div>
+			{#--Navigation -- only when connected--#}
+				<div class="h">
+					{% if app.user %}
+					{% include 'nav.html.twig' %}
+				{% endif %}	
+				</div>
 		
-	
+			{#--Main--#}
+				<div class="overflow-hidden">
 				
-		
-	
-			{% block main %}
-			{% endblock %}
-
-			{% include 'footer.html.twig' %}		
-		</div>	
-
-
-
-
 					
-		
-		
+					{% block main %}{% endblock %}			
+				</div>
+			
+			</div>
+			<div class=" container w-full  mb-0">
+	
+	
+			{#--Footer--#}
+				{% include 'footer.html.twig' %}		
+			</div>	
 		</div>	
 	</body>
 </html>
