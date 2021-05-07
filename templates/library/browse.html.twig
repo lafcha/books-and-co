@@ -12,9 +12,8 @@
 
 {% block main %}
 
-
 	{# ----------- Page title --------------#}
-	<div class="fixed w-full inset-0 bg-green">
+	<div class=" w-full inset-0">
 		<h1 class="text-blue font-cursive text-3xl flex justify-center mt-10">Bibliothèque de {{ user.pseudo }} </h1>
 		<p class="text-yellow-dark text-center mt-2">
 			<i class="fas fa-map-marker-alt mr-3"></i>
@@ -38,7 +37,7 @@
 	{% else %}
 
 	{# ------------Library books --------------#}
-	<div class="container px-5 py-24 mx-auto bg-pink-light">
+	<div class="container px-5 py-24 mx-auto">
 		{% for usersbook in usersBooks %}
 				<div class="my-8 border-b-2 ">
 					<div class="py-8 flex flex-wrap md:flex-nowrap">
@@ -46,15 +45,15 @@
 							<a href=""><img src="{{ asset('assets/img/bookcover/') ~ usersbook.book.cover }}"></a>
 						</div>
 						<div class="md:flex-grow">
-							<h2 class="text-2xl font-medium title-font mb-2 uppercase text-pink">
+							<h2 class="text-2xl title-font mb-2 uppercase text-pink">
 								<a href="">{{ usersbook.book.title }}</a>
 							</h2>
 							<p class="leading-relaxed">Auteur : {{ usersbook.book.author }}</p>
 							<p class="italic">Editeur : {{ usersbook.book.editor }}</p>
 							<p class="italic">ISBN : {{ usersbook.book.isbn }}</p>
 						</div>
-						<div class="flex flex-col justify-between">
-							<a href="" class="bg-pink px-2 w-4 py-2 text-center rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
+						<div class="">
+							<a href="" class="bg-pink w-4 px-2 py-2 text-center rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
 						</div>
 					</div>
 				</div>
