@@ -1,27 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Livre{% endblock %}
+{% block title %}
+	{{ book.title }}
+{% endblock %}
 
 {% block main %}
-    <div>
-        <p>{{ book.isbn }}</p>
-        <p>{{ book.title }}</p>
-        <p>{{ book.author }}</p>
-        <p>{{ book.cover }}</p>
-        <p>{{ book.editor }}</p>
-        <p>{{ book.year }}</p>
-        <p>{{ book.description }}</p>
-    </div>
-    {% if app.user.slug == app.request.attributes.all['userSlug'] %}
-        <div>
-                <a href="{{  path('library_book_edit', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}">modifier</a>
-                <a href="{{  path('library_book_delete', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}">supprimer</a>
-        </div>
-    {% endif %}
-    {% if app.user.slug != app.request.attributes.all['userSlug']  %}
-        <div>
-            {{ form_start(form) }}
-            {{ form_end(form) }}
-        </div>
-    {% endif %}
-{% endblock %}
+
+	<div class="flex flex-col items-center">
+		<h1 class="text-4xl text-blue font-cursive mb-2">{{ book.title }}</h1>
+		<h2 class="italic">{{ book.author }}</h2>
+	</div>
+	<div class="flex justify-center">
+	<div class="flex margin w-4/6 mt-10">
+		<img
+		class="object-cover rounded-lg book-cover" src="{{ asset("assets/img/uploads/book_cover/") ~ book.cover }}" alt="bag">
+		{# {{ dump(book) }} #}
+		<div class="md:w-2/3 px-4 rounded-lg">
+			<div class="grid grid-cols-4 gap-y-2">
+				<div class="font-semibold">Isbn</div>
+				<div class="col-span-3">{{ book.isbn }}</div>
+				<div class="font-semibold">Editeur</div>
+				<div class="col-span-3">{{ book.editor }}</div>
+				<div class="font-semibold">Année</div>
+				<div class="col-span-3">{{ book.year }}</div>
+				<div class="font-semibold">Description</div>
+				<div class="text-justify col-span-3 tracking-tight">{{ book.description }}</div>
+			</div>
+			<div class="">
+				{% if app.user.slug == app.request.attributes.all['userSlug'] %}
+					<div class="flex items-end justify-end mt-4 top-auto">
+						<a href="{{ path('library_book_edit', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-yellow text-white px-4 py-2 rounded hover:underline mr-5">modifier</a>
+						<a href="{{ path('library_book_delete', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-pink text-white px-2 py-2 rounded-md mr-2">supprimer</a>
+					</div>
+				{% endif %}
+				{% if app.user.slug != app.request.attributes.all['userSlug']  %}
+
+					<div class="flex items-end justify-end mt-4 top-auto">
+						{{ form_start(form) }}
+						{{ form_end(form) }}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	</div>
+</div>{% endblock %}
