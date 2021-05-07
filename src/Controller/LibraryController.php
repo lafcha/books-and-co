@@ -147,7 +147,7 @@ class LibraryController extends AbstractController
                  /** @var UploadedFile $uploadedFile */
                  $uploadedFile = $bookForm['coverFile']->getData();
                  if ($uploadedFile){
-                     $newFilename = $uploaderHelper->uploadAvatar($uploadedFile);
+                     $newFilename = $uploaderHelper->uploadBookCover($uploadedFile);
              
                      $book->setCover($newFilename);
                  }
@@ -238,7 +238,7 @@ class LibraryController extends AbstractController
                  /** @var UploadedFile $uploadedFile */
                  $uploadedFile = $form['coverFile']->getData();
                  if ($uploadedFile){
-                     $newFilename = $uploaderHelper->uploadAvatar($uploadedFile);
+                     $newFilename = $uploaderHelper->uploadBookCover($uploadedFile);
              
                      $book->setCover($newFilename);
                  }

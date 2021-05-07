@@ -13,10 +13,19 @@ body {
 
 .margin {
     margin-bottom : 2rem;
+    margin-right: 0px;
 }
 
 .spaces {
-    width : 25%;
+    margin-right: 4em;
+}
+
+.book-cover {
+    height: 60%;
+}
+
+.w-3-5 {
+    width: 60%;
 }
 
 .custom-btn{
