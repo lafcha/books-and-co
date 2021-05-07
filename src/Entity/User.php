@@ -50,7 +50,6 @@ class User implements UserInterface
 
     private $avatar;
 
-
     /**
      * @ORM\Column(type="integer")
      */

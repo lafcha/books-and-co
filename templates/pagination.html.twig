@@ -1,0 +1,71 @@
+	{# ------------Pagination --------------#}
+	<div class="flex justify-center space-x-10 items-center">
+
+		{# Arrows #}
+		<div class=" hover:text-yellow-dark {{ (currentPage == 1) ? 'text-grey' : '' }} mr-5">
+			<a href="{{ (currentPage == 1) ? 'disabled' : '?page=1' }}{{ ((status is defined) ? ('&status=' ~ status) : '') }}">
+				<i class="fas fa-angle-double-left text-3xl"></i>
+			</a>
+		</div>
+		<div class="{{ (currentPage == 1) ? 'text-grey' : '' }} mr-5">
+			<a href="{{ (currentPage > 1) ? '?page=' ~ (currentPage - 1) : '' }}{{ ((status is defined) ? ('&status=' ~ status) : '') }}">
+				<i class="fas fa-angle-left text-3xl"></i>
+			</a>
+		</div>
+		{# Page numbers #}
+		{% set pages = (elementsTotal / elementsLimit)|round(0, 'ceil') %}
+		{% set nearbyPagesLimit = 2 %}
+
+		{% if pages > 1 %}
+
+			{% for item in 1..pages %}
+				{% if 0 == (currentPage - nearbyPagesLimit) - loop.index %}
+					{# dot before #}
+
+					<div class=" bg-grey text-blue w-10 h-10 rounded-full flex justify-center items-center mr-4 ml-4">
+						<a href="?page=1{{ ((status is defined) ? ('&status=' ~ status) : '') }}" class="text-base font-medium ">1</a>
+					</div>
+					{% if currentPage != 3 %}
+						<div class="mr-4">
+							<i class="fas fa-ellipsis-h"></i>
+						</div>
+					{% endif %}
+
+				{% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %}
+					{# hide all before #}
+				{% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %}
+					{# hide all after #}
+				{% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %}
+					{# dot after #}
+
+					{% if currentPage != pages - 2 %}
+						<div class="mr-4">
+							<i class="fas fa-ellipsis-h"></i>
+						</div>
+					{% endif %}
+					<div class=" bg-grey text-blue w-10 h-10 rounded-full flex justify-center items-center mr-4 ml-4">
+						<a href="?page={{ pages }}{{ ((status is defined) ? ('&status=' ~ status) : '') }}" class="text-base font-medium ">{{ pages }}</a>
+					</div>
+
+				{% else %}
+					<div class=" {{ currentPage == item ? " bg-yellow-dark text-white" : " bg-grey text-blue"}} w-10 h-10 rounded-full flex justify-center items-center mr-4 ">
+						<a href="?page={{ item }}{{ ((status is defined) ? ('&status=' ~ status) : '') }}" class="text-base font-medium ">{{ (item )}}</a>
+					</div>
+				{% endif %}
+
+			{% endfor %}
+
+		{% endif %}
+
+			{# Arrows #}
+			<div class="{{ (currentPage == pages) ? 'text-grey' : '' }} mr-5">
+				<a href="{{ (currentPage < pages) ? '?page=' ~ (currentPage + 1) : '' }}{{ ((status is defined) ? ('&status=' ~ status) : '') }}">
+					<i class="fas fa-angle-right text-3xl"></i>
+				</a>
+			</div>
+			<div class="{{ (currentPage == pages) ? 'text-grey' : '' }}">
+				<a href="?page={{ pages }}{{ ((status is defined) ? ('&status=' ~ status) : '') }}">
+				<i class="fas fa-angle-double-right text-3xl"></i>
+				</a>
+			</div>
+	</div>

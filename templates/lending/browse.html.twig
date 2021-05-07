@@ -3,7 +3,24 @@
 {% block title %}Hello LendingController!{% endblock %}
 
 {% block main %}
-    
+{% set status = (app.request.query.all['status'] is defined) ? app.request.query.all['status'] : null %}
+
+filtrer par :
+<a href="{{ path('lending_browse') ~ '?page=1&status=attente'}}">
+    <button>
+        en attente
+    </button>
+</a>
+<a href="{{ path('lending_browse') ~ '?page=1&status=prete'}}">
+    <button>
+        prêtés
+    </button>
+</a>
+<a href="{{ path('lending_browse') ~ '?page=1&status=archive'}}">
+    <button>
+        archivés
+    </button>
+</a>
 {% if lendingDatas != null %}
     <h1>Mes prets</h1>
 
@@ -29,8 +46,8 @@
     <br>
     {% endfor %}
 
+    {% include 'pagination.html.twig' %}
 {% else %}
     <h1>Vous n'avez pas de demande</h1>
 {% endif %}
-
 {% endblock %}
