@@ -217,7 +217,7 @@ class LibraryController extends AbstractController
     /**
      * @Route("/{slug}/modifier", name="book_edit")
      */
-    public function book_edit($userSlug, $slug, UserRepository $userRepository, BookRepository $bookRepository, Request $request): Response
+    public function book_edit($userSlug, $slug, UserRepository $userRepository, BookRepository $bookRepository, Request $request, UploaderHelper $uploaderHelper): Response
     {
         //get the user by slug
         $libraryUser = $userRepository->findOneBy(['slug' => $userSlug]);
@@ -234,6 +234,14 @@ class LibraryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slugger = new Slugify();
+            //edit the book cover if there's one
+                 /** @var UploadedFile $uploadedFile */
+                 $uploadedFile = $form['coverFile']->getData();
+                 if ($uploadedFile){
+                     $newFilename = $uploaderHelper->uploadAvatar($uploadedFile);
+             
+                     $book->setCover($newFilename);
+                 }
             // set slug with title and isbn
             $book->setSlug($slugger->slugify($book->getTitle() . '-' . $book->getIsbn()));
             $this->getDoctrine()->getManager()->flush();

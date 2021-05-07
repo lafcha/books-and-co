@@ -7,7 +7,11 @@
         "/build/app.24107c6b.js"
       ],
       "css": [
+<<<<<<< HEAD
         "/build/app.05d71516.css"
+=======
+        "/build/app.4436cc75.css"
+>>>>>>> 2ad712862e56913ecd2972bb7844f851fadc3ad4
       ]
     }
   }
