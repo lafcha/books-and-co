@@ -22,8 +22,8 @@ class LendingRepository extends ServiceEntityRepository
     /**
     * return all lendings with count of new messages by borrowerId
     */
-    public function findAllByBorrowerId($borrowerId){
-        return $this->createQueryBuilder('l')
+    public function findAllByBorrowerId($borrowerId, $page, $limit, $statusFilter){
+        $qb = $this->createQueryBuilder('l')
             ->leftJoin('l.linkedWith', 'lw')
             ->leftJoin('l.usersBook', 'ub')
             ->addSelect('ub')
@@ -32,11 +32,20 @@ class LendingRepository extends ServiceEntityRepository
             ->leftJoin('ub.user', 'lender')
             ->addSelect('lender')
             ->groupBy('l.id')
+            ->orderBy('lw.createdAt', 'DESC')
             ->addSelect('COUNT(CASE WHEN lw.isRead = 0 and lw.sender != :borrowerId THEN 0 ELSE :null end) AS nbNewMessages')
             ->where('l.borrower = :borrowerId')
             ->setParameter('borrowerId', $borrowerId)
             ->setParameter('null', NULL)
-            ->getQuery()
+            ->setFirstResult(($page * $limit) -$limit)
+            ->setMaxResults($limit)
+            ;
+        if ($statusFilter !== null) {
+            $qb->andWhere('l.status = :statusFilter')
+            ->setParameter('statusFilter', $statusFilter)
+            ;
+        }
+        return $qb->getQuery()
             ->getResult()
         ;
     }
@@ -44,8 +53,8 @@ class LendingRepository extends ServiceEntityRepository
     /**
     * return all lendings with count of new messages by lenderId
     */
-    public function findAllByLenderId($lenderId){
-        return $this->createQueryBuilder('l')
+    public function findAllByLenderId($lenderId, $page, $limit, $statusFilter){
+        $qb =  $this->createQueryBuilder('l')
             ->leftJoin('l.linkedWith', 'lw')
             ->leftJoin('l.borrower', 'borrower')
             ->addSelect('borrower')
@@ -54,11 +63,20 @@ class LendingRepository extends ServiceEntityRepository
             ->leftJoin('ub.book', 'b')
             ->addSelect('b')
             ->groupBy('l.id')
+            ->orderBy('lw.createdAt', 'DESC')
             ->addSelect('COUNT(CASE WHEN lw.isRead = 0 and lw.sender != :lenderId THEN 0 ELSE :null end) AS nbNewMessages')
             ->where('ub.user = :lenderId')
             ->setParameter('lenderId', $lenderId)
             ->setParameter('null', NULL)
-            ->getQuery()
+            ->setFirstResult(($page * $limit) -$limit)
+            ->setMaxResults($limit)
+        ;
+        if ($statusFilter !== null) {
+            $qb->andWhere('l.status = :statusFilter')
+            ->setParameter('statusFilter', $statusFilter)
+            ;
+        }
+        return $qb->getQuery()
             ->getResult()
         ;
     }
@@ -82,6 +100,52 @@ class LendingRepository extends ServiceEntityRepository
             ->setParameter('lendingId', $lendingId)
             ->getQuery()
             ->getSingleResult()
+        ;
+    }
+
+    /**
+     * Returns number of lending
+     * @return int 
+     */
+    public function getLendingCountByBorrowerId($borrowerId, $statusFilter){
+        
+        $qb = $this->createQueryBuilder('l')
+            ->select('COUNT(l)')
+            ->leftJoin('l.borrower', 'ub')
+            ->andWhere('l.borrower = :borrowerId')
+            ->setParameter('borrowerId', $borrowerId)
+        ;
+
+        if ($statusFilter) {
+            $qb->andWhere('l.status = :statusFilter')
+            ->setParameter('statusFilter', $statusFilter)
+            ;
+        }
+        return $qb->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    /**
+     * Returns number of lending
+     * @return int 
+     */
+    public function getLendingCountByLenderId($lenderId, $statusFilter){
+        
+        $qb =  $this->createQueryBuilder('l')
+            ->select('COUNT(l)')
+            ->leftJoin('l.usersBook', 'ub')
+            ->andWhere('ub.user = :lenderId')
+            ->setParameter('lenderId', $lenderId)
+            ;
+            if ($statusFilter) {
+                $qb->andWhere('l.status = :statusFilter')
+                ->setParameter('statusFilter', $statusFilter)
+                ;
+            }
+            return $qb->getQuery()
+                ->getSingleScalarResult()
+            ;
         ;
     }
 

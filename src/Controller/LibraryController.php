@@ -31,7 +31,7 @@ class LibraryController extends AbstractController
     public function browse($userSlug, UsersBookRepository $usersBookRepository, UserRepository $userRepository, Request $request): Response
     {
         // set the limit of elements by page
-        $limit = 10;
+        $elementsLimit = 10;
         // get the page in url
         $page = (int)$request->query->get("page", 1);
         if ($page < 1) {
@@ -44,12 +44,12 @@ class LibraryController extends AbstractController
         }
         $userId = $user->getId();
         // get the count of usersBook
-        $usersBookTotal = (int)$usersBookRepository->getUsersBookById($userId);
+        $elementsTotal = (int)$usersBookRepository->getUsersBookCountById($userId);
         
         // find all books of a user with a $limit of element by page
-        $usersBooks = $usersBookRepository->findAllByUserId($userId, $page, $limit);
+        $usersBooks = $usersBookRepository->findAllByUserId($userId, $page, $elementsLimit);
 
-        if (empty($usersBooks) && $usersBookTotal != 0) {
+        if (empty($usersBooks) && $elementsTotal != 0) {
             // throw 404 if the page returns an empty array
             throw $this->createNotFoundException('Cette page n\'existe pas');
         }
@@ -57,8 +57,8 @@ class LibraryController extends AbstractController
         return $this->render('library/browse.html.twig', [
             'usersBooks' => $usersBooks,
             'currentPage' => $page,
-            'usersBookTotal' => $usersBookTotal,
-            'usersBookLimit' => $limit,
+            'elementsTotal' => $elementsTotal,
+            'elementsLimit' => $elementsLimit,
         ]);
     }
 

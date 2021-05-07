@@ -92,11 +92,44 @@ class BorrowingController extends AbstractController
     /**
      * @Route("/mes-emprunts", name="browse")
      */
-    public function browse(LendingRepository $lendingRepository, UserInterface $user): Response
+    public function browse(Request $request, LendingRepository $lendingRepository, UserInterface $user): Response
     {
-        $lendingDatas = $lendingRepository->findAllByBorrowerId($user->getId());
+        // set the limit of elements by page
+        $elementsLimit = 10;
+        // get the page in url
+        $page = (int)$request->query->get("page", 1);
+        if ($page < 1) {
+            $page = 1;
+        }
+
+        $userId = $user->getId();
+
+        //get status in url to filter lendings
+        $statusFilter = $request->query->get("status", null);
+        switch ($statusFilter) {
+            case 'attente':
+                $statusFilter = 0;
+                break;
+            case 'prete':
+                $statusFilter = 1;
+                break;
+            case 'archive':
+                $statusFilter = 2;
+                break;
+            default:
+                $statusFilter = null;
+                break;
+        }
+
+        $elementsTotal = (int)$lendingRepository->getLendingCountByBorrowerId($userId, $statusFilter);
+        //lending list
+        $lendingDatas = $lendingRepository->findAllByBorrowerId($userId, $page, $elementsLimit, $statusFilter);
+
         return $this->render('borrowing/browse.html.twig', [
             'lendingDatas' => $lendingDatas,
+            'currentPage' => $page,
+            'elementsTotal' => $elementsTotal,
+            'elementsLimit' => $elementsLimit,
             ]
         );
     }

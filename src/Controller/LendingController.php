@@ -21,13 +21,49 @@ class LendingController extends AbstractController
     /**
      * @Route("", name="browse")
      */
-    public function browse(LendingRepository $lendingRepository, UserInterface $user): Response
+    public function browse(Request $request, LendingRepository $lendingRepository, UserInterface $user): Response
     {
+        // set the limit of elements by page
+        $elementsLimit = 10;
+        // get the page in url
+        $page = (int)$request->query->get("page", 1);
+        if ($page < 1) {
+            $page = 1;
+        }
+
+        //get status in url to filter lendings
+        $statusFilter = $request->query->get("status", null);
+        switch ($statusFilter) {
+            case 'attente':
+                $statusFilter = 0;
+                break;
+            case 'prete':
+                $statusFilter = 1;
+                break;
+            case 'archive':
+                $statusFilter = 2;
+                break;
+            default:
+                $statusFilter = null;
+                break;
+        }
+        
+        $userId = $user->getId();
+
+        $elementsTotal = (int)$lendingRepository->getLendingCountByLenderId($userId, $statusFilter);
         //lending list
-        $lendingDatas = $lendingRepository->findAllByLenderId($user->getId());
+        $lendingDatas = $lendingRepository->findAllByLenderId($userId, $page, $elementsLimit, $statusFilter);
+
+        if (empty($lendingDatas) && $elementsTotal != 0) {
+            // throw 404 if the page returns an empty array
+            throw $this->createNotFoundException('Cette page n\'existe pas');
+        }
 
         return $this->render('lending/browse.html.twig', [
             'lendingDatas' => $lendingDatas,
+            'currentPage' => $page,
+            'elementsTotal' => $elementsTotal,
+            'elementsLimit' => $elementsLimit,
             ]
         );
     }

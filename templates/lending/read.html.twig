@@ -10,6 +10,7 @@
         <div class="{{ (message.sender == app.user ) ? 'droite' : 'gauche' }}">
             {{ message.content }}
             par {{ message.sender.pseudo }}
+            à {{ message.createdAt|format_datetime(pattern="hh:mm:ss', le' dd/MM/YYYY") }}
         </div>
     {% endfor %}
 
