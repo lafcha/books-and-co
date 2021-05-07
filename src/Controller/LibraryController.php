@@ -42,6 +42,8 @@ class LibraryController extends AbstractController
         $userId = $user->getId();
         // get the count of usersBook
         $usersBookTotal = (int)$usersBookRepository->getUsersBookById($userId);
+
+
         
         // find all books of a user with a $limit of element by page
         $usersBooks = $usersBookRepository->findAllByUserId($userId, $page, $limit);
@@ -56,6 +58,7 @@ class LibraryController extends AbstractController
             'currentPage' => $page,
             'usersBookTotal' => $usersBookTotal,
             'usersBookLimit' => $limit,
+            'user'=> $user,
         ]);
     }
 
