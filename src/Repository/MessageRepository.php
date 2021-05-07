@@ -24,13 +24,13 @@ class MessageRepository extends ServiceEntityRepository
     */
     public function findAllUnreadMessagesByLendingIdAndUserId($lendingId, $userId){
         return $this->createQueryBuilder('m')
-                    ->where('m.lending = :lendingId')
-                    ->andWhere('m.sender != :userId')
-                    ->andWhere('m.isRead != 1')
-                    ->setParameter('lendingId', $lendingId)
-                    ->setParameter('userId', $userId)
-                    ->getQuery()
-                    ->getResult()
+            ->where('m.lending = :lendingId')
+            ->andWhere('m.sender != :userId')
+            ->andWhere('m.isRead != 1')
+            ->setParameter('lendingId', $lendingId)
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult()
         ;
     }
 
