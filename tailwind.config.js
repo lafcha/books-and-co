@@ -50,5 +50,6 @@ module.exports = {
       borderColor: ['focus-visible'],
       opacity: ['disabled'],
     }
-  }
+  },
+  plugins: [],
 }
