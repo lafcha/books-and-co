@@ -21,24 +21,36 @@
 		{% endblock %}
 	</head>
 	<body>
-		<div class="container mx-auto">
-			{% block header%}
+		<div class="container mx-auto h-full grid grid-rows-3">
+
+			{#--Header--#}	
+			<div class = "fixed mt-0 container z-50">			
 				{% if app.user %}
 					{% include 'header-co.html.twig' %}	
 				{% else %}
 					{% include 'header.html.twig' %}	
 				{% endif %}
-			{% endblock %}
-
-			{% block main %}
-				{% if app.user %}
-					{% include 'nav.html.twig' %}
-				{% endif %}
+			</div>
 			
-			
-			{% endblock %}
-
-			{% include 'footer.html.twig' %}			
+		<div class="flex w-full pt-28 h-full">
+			{#--Navigation -- only when connected#}	
+				<div class=" bg-yellow-dark">
+					{% if app.user %}
+						{% include 'nav.html.twig' %}
+					{% endif %}					
+				</div>
+			{#--Main--#}
+				<div class=" h-full w-full">			
+					{% block main %}{% endblock %}			
+				</div>
 		</div>
+
+			
+
+			{#--Footer--#}
+			<div class="w-full">			
+				{% include 'footer.html.twig' %}		
+			</div>	
+		</div>	
 	</body>
 </html>

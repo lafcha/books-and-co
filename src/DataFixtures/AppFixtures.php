@@ -43,6 +43,7 @@ class AppFixtures extends Fixture
                 ->setSlug($slugify->slugify($user->getPseudo()));
             $manager->persist($user);
         }
+        
        
 
         $manager->flush();
