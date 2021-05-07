@@ -7,6 +7,27 @@ body {
     color : var(--main-color);
 }
 
+.text-area-resize {
+    resize : none;
+}
+
+.margin {
+    margin-bottom : 2rem;
+    margin-right: 0px;
+}
+
+.spaces {
+    margin-right: 4em;
+}
+
+.book-cover {
+    height: 60%;
+}
+
+.w-3-5 {
+    width: 60%;
+}
+
 .custom-btn{
     background-color: var(--first-accent-color);
     text-transform: uppercase;

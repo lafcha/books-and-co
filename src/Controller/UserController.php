@@ -6,6 +6,7 @@ use App\Form\EditProfilType;
 use App\Entity\User;
 use Gedmo\Sluggable\Util\Urlizer;
 use App\Service\UploaderHelper;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -25,19 +27,22 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, UserInterface $user, EntityManagerInterface $em, UploaderHelper $uploaderHelper): Response
     {
+        $slugger = new Slugify();
         $form = $this->createForm(EditProfilType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $profilData = $form->getData();
              /** @var UploadedFile $uploadedFile */
             $uploadedFile = $form['imageFile']->getData();
             if ($uploadedFile){
-
-                $newFilename = $uploaderHelper->uploadImage($uploadedFile);
+                $newFilename = $uploaderHelper->uploadAvatar($uploadedFile);
                 
-                $user->setAvatar($newFilename);
+                $profilData->setAvatar($newFilename);
             }
-
+            $user->setSlug($slugger->slugify($user->getPseudo()));
+            $user->setCounty($form->getExtraData()['county']);
+            $user->setCity($form->getExtraData()['city']);
             $em->persist($user);
             $em->flush();
             $this->addFlash('message', 'Profil mis à jour');

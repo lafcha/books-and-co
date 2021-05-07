@@ -2,20 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Book;
-use App\Entity\UsersBook;
-use App\Form\BookSearchType;
 use App\Form\BookType;
+use App\Entity\UsersBook;
+use Cocur\Slugify\Slugify;
 use App\Form\UsersBookType;
+use App\Form\BookSearchType;
+use App\Service\UploaderHelper;
 use App\Repository\BookRepository;
 use App\Repository\UserRepository;
 use App\Repository\UsersBookRepository;
-use Cocur\Slugify\Slugify;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/bibliotheque/{userSlug}", name="library_")
@@ -65,7 +68,7 @@ class LibraryController extends AbstractController
     /**
      * @Route("/ajout", name="book_add")
      */
-    public function book_add($userSlug, UserRepository $userRepository, BookRepository $bookRepository, UserInterface $user, Request $request): Response
+    public function book_add($userSlug, UserRepository $userRepository, BookRepository $bookRepository, UserInterface $user, Request $request, UploaderHelper $uploaderHelper): Response
     {
         //get the user by slug
         $libraryUser = $userRepository->findOneBy(['slug' => $userSlug]);
@@ -121,7 +124,7 @@ class LibraryController extends AbstractController
             //if the books exists
             if ($book !== null) {
                 $usersBook->setBook($book);
-                
+
                 //Add the book in DB
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($usersBook);
@@ -143,6 +146,14 @@ class LibraryController extends AbstractController
                 $slugger = new Slugify();
                 // set slug with title and isbn
                 $book->setSlug($slugger->slugify($book->getTitle() . '-' . $book->getIsbn()));
+                 //add the book cover if there's one
+                 /** @var UploadedFile $uploadedFile */
+                 $uploadedFile = $bookForm['coverFile']->getData();
+                 if ($uploadedFile){
+                     $newFilename = $uploaderHelper->uploadBookCover($uploadedFile);
+             
+                     $book->setCover($newFilename);
+                 }
                 //Add the book in DB
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($book);
@@ -209,7 +220,7 @@ class LibraryController extends AbstractController
     /**
      * @Route("/{slug}/modifier", name="book_edit")
      */
-    public function book_edit($userSlug, $slug, UserRepository $userRepository, BookRepository $bookRepository, Request $request): Response
+    public function book_edit($userSlug, $slug, UserRepository $userRepository, BookRepository $bookRepository, Request $request, UploaderHelper $uploaderHelper): Response
     {
         //get the user by slug
         $libraryUser = $userRepository->findOneBy(['slug' => $userSlug]);
@@ -226,6 +237,14 @@ class LibraryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slugger = new Slugify();
+            //edit the book cover if there's one
+                 /** @var UploadedFile $uploadedFile */
+                 $uploadedFile = $form['coverFile']->getData();
+                 if ($uploadedFile){
+                     $newFilename = $uploaderHelper->uploadBookCover($uploadedFile);
+             
+                     $book->setCover($newFilename);
+                 }
             // set slug with title and isbn
             $book->setSlug($slugger->slugify($book->getTitle() . '-' . $book->getIsbn()));
             $this->getDoctrine()->getManager()->flush();

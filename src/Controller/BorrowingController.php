@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Lending;
 use App\Entity\Message;
-use App\Entity\User;
 use App\Form\BorrowingFormType;
+use App\Form\MessageType;
+use App\Repository\LendingRepository;
+use App\Repository\MessageRepository;
 use App\Repository\UsersBookRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,12 +16,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @Route("/demande-de-pret/", name="borrowing_")
+ * @Route("", name="borrowing_")
  */
 class BorrowingController extends AbstractController
 {
     /**
-     * @Route("", name="form")
+     * @Route("/demande-de-pret", name="form")
      */
     public function form(Request $request, UserInterface $user, UsersBookRepository $usersbook): Response
     {
@@ -75,7 +77,9 @@ class BorrowingController extends AbstractController
             $em->persist($message);
             $em->flush();
     
-        return $this->redirectToRoute('accueil_browse');             
+            return $this->redirectToRoute('borrowing_read', [
+                'id' => $lending->getId(),
+            ]);
         
         }
 
@@ -83,8 +87,65 @@ class BorrowingController extends AbstractController
             'borrowingForm' => $form->createView(),
             ]
         );
-    }   
+    }
+
+    /**
+     * @Route("/mes-emprunts", name="browse")
+     */
+    public function browse(LendingRepository $lendingRepository, UserInterface $user): Response
+    {
+        $lendingDatas = $lendingRepository->findAllByBorrowerId($user->getId());
+        return $this->render('borrowing/browse.html.twig', [
+            'lendingDatas' => $lendingDatas,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/mes-emprunts/{id}", name="read")
+     */
+    public function read(Request $request, Lending $lending, LendingRepository $lendingRepository, MessageRepository $messageRepository, UserInterface $user): Response
+    {
+        $lending = $lendingRepository->findAllLendingStats($lending->getId());
+
+        //TODO replace this with voters
+        if ($user->getId() != $lending->getBorrower()->getId()) {
+            throw $this->createNotFoundException('Ce prêt n\'est pas disponible');
+        }
+        // when the user arrives on the page, the unread messages becomes read
+        $unreadMessages = $messageRepository->findAllUnreadMessagesByLendingIdAndUserId($lending->getId(), $user->getId());
+        if ($unreadMessages != null) {
+            foreach ($unreadMessages as $unreadMessage) {
+                $unreadMessage->setIsRead(true);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($unreadMessage);
+            }
+            $em->flush();
+        }
+        $message = new Message();
+        $sendMessageForm = $this->createForm(MessageType::class, $message);
+
+        $sendMessageForm->handleRequest($request);
+
+        if ($sendMessageForm->isSubmitted() && $sendMessageForm->isValid()) {
+            // set the sender as the user interface and lending as current lending
+            $message->setSender($user);
+            $message->setLending($lending);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($message);
+            $em->flush();
+
+            return $this->redirectToRoute('borrowing_read', [
+                'id' => $lending->getId(),
+            ]);
+        }
+
+
+        return $this->render('borrowing/read.html.twig', [
+            'lendingData' => $lending,
+            'sendMessageForm' => $sendMessageForm->createView(),
+            ]
+        );
+    }
 }
-    
-
-

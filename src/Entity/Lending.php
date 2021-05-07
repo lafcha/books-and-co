@@ -22,7 +22,7 @@ class Lending
     /**
      * @ORM\Column(type="smallint")
      */
-    private $status = 1;
+    private $status = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="makes")
@@ -36,11 +36,10 @@ class Lending
     private $linkedWith;
 
     /**
-     * @ORM\OneToOne(targetEntity=UsersBook::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=UsersBook::class, inversedBy="usersBookLinkedTo")
      * @ORM\JoinColumn(nullable=false)
      */
     private $usersBook;
-
 
     public function __construct()
     {
@@ -111,7 +110,7 @@ class Lending
         return $this->usersBook;
     }
 
-    public function setUsersBook(UsersBook $usersBook): self
+    public function setUsersBook(?UsersBook $usersBook): self
     {
         $this->usersBook = $usersBook;
 

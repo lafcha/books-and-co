@@ -12,9 +12,22 @@ class UploaderHelper {
         $this->uploadsPath = $uploadsPath;
     }
 
-    public function uploadImage(UploadedFile $uploadedFile): string
+    public function uploadAvatar(UploadedFile $uploadedFile): string
     { 
         $destination = $this->uploadsPath.'/user_avatar';
+        $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+        $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$uploadedFile->guessExtension();
+        $uploadedFile->move(
+            $destination,
+            $newFilename
+        );
+
+        return $newFilename;
+    }
+
+    public function uploadBookCover(UploadedFile $uploadedFile): string
+    { 
+        $destination = $this->uploadsPath.'/book_cover';
         $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
         $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$uploadedFile->guessExtension();
         $uploadedFile->move(

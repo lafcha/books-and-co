@@ -19,6 +19,21 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
+    /**
+    * return all messages of a lending where the user is not the sender and where is_read is not 1
+    */
+    public function findAllUnreadMessagesByLendingIdAndUserId($lendingId, $userId){
+        return $this->createQueryBuilder('m')
+            ->where('m.lending = :lendingId')
+            ->andWhere('m.sender != :userId')
+            ->andWhere('m.isRead != 1')
+            ->setParameter('lendingId', $lendingId)
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Message[] Returns an array of Message objects
     //  */

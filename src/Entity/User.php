@@ -48,7 +48,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=128, nullable=true)
      */
 
-    private $avatar = 'assets/img/user/base.jpg';
+    private $avatar;
 
 
     /**

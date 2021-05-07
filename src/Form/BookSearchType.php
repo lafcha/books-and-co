@@ -22,9 +22,6 @@ class BookSearchType extends AbstractType
                     'message' => 'L\'isbn doit être de 13 chiffres',
                 ])
             ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'rechercher',
-            ])
             //this event listener add a checkboxtype field with the book name for the user to validate his choice
             ->get('isbn')->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) use ($options) {
                 $form = $event->getForm()->getParent(); // On récupère le formulaire

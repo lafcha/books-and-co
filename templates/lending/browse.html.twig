@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LendingController!{% endblock %}
+
+{% block main %}
+    
+{% if lendingDatas != null %}
+    <h1>Mes prets</h1>
+
+    {% for lendingData in lendingDatas %}
+    <div>
+    {#! To get a lenging : use lendingData[0] | To get the count of new messages : use lendingData[nbNewMessages] #}
+        {{ lendingData[0].usersBook.book.title ~ ' par ' ~ lendingData[0].usersBook.book.title }} <br>
+        {{ ' préteur : ' ~ lendingData[0].usersBook.user.pseudo }} <br>
+        <a href="{{ path('lending_read', { 'id': lendingData[0].id}) }}">go to</a>
+    </div>
+    <div>
+        {{'nouveaux messages :' ~ lendingData['nbNewMessages'] }}
+    </div>
+    status :
+    {% if (lendingData[0].status == 0) %}
+        en attente
+    {% elseif (lendingData[0].status == 1) %}
+        en prêt
+    {% else %}
+        archivé
+    {% endif %}
+    <hr>
+    <br>
+    {% endfor %}
+
+{% else %}
+    <h1>Vous n'avez pas de demande</h1>
+{% endif %}
+
+{% endblock %}
