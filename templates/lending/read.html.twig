@@ -3,7 +3,7 @@
 {% block title %}Hello LendingController!{% endblock %}
 
 {% block main %}
-    <h1>Ma demande d'emprunts du livre {{ lendingData.usersBook.book.title }} au près de {{ lendingData.usersBook.user.pseudo }}</h1>
+    <h1>Ma demande d'emprunts du livre {{ lendingData.usersBook.book.title }} auprès de {{ lendingData.usersBook.user.pseudo }}</h1>
 
     {# use lendingData.linkedWith to get an array of messages #}
     {% for message in lendingData.linkedWith %}

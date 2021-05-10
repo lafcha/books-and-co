@@ -20,9 +20,6 @@
 		<button type="submit" class="bg-blue h-10 px-6 md:px-8 py-2 rounded-full items-center focus:outline-none text-xs md:text-sm text-white submit">Rechercher</button>
 	</div>
 	{{ form_end(form) }}
-<pre>
-	{{ dump((app.request.query.all('search_form')['county'] is defined)) }}
-</pre>
 {# -- If no results--#}
 	{% if app.request.query.all != null and book == null %}
 		<section>
@@ -63,6 +60,7 @@
 							<div class="flex flex-col justify-between">
 								<p class="text-yellow-dark"><i class="fas fa-map-marker-alt mr-3"></i>{{ usersBook.user.city }}</p>
 								<a href="{{ path('library_book_read', {'userSlug': usersBook.user.slug, 'slug': usersBook.book.slug }) }}" class="bg-pink h-10 px-6 md:px-8 py-2 rounded-full items-center focus:outline-none md:text-sm text-white">Voir plus</a>
+
 							</div>
 						</div>
 					</div>    
@@ -70,6 +68,5 @@
 		{% endfor %}
 				</div>
 			</section>
-		
 	{% endif %}
 {% endblock %}

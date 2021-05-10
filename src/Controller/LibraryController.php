@@ -31,7 +31,7 @@ class LibraryController extends MainController
     public function browse($userSlug, UsersBookRepository $usersBookRepository, UserRepository $userRepository, Request $request): Response
     {
         // set the limit of elements by page
-        $elementsLimit = 10;
+        $limit = 10;
         // get the page in url
         $page = (int)$request->query->get("page", 1);
         if ($page < 1) {
@@ -44,12 +44,14 @@ class LibraryController extends MainController
         }
         $userId = $user->getId();
         // get the count of usersBook
-        $elementsTotal = (int)$usersBookRepository->getUsersBookCountById($userId);
+        $usersBookTotal = (int)$usersBookRepository->getUsersBookById($userId);
+
+
         
         // find all books of a user with a $limit of element by page
-        $usersBooks = $usersBookRepository->findAllByUserId($userId, $page, $elementsLimit);
+        $usersBooks = $usersBookRepository->findAllByUserId($userId, $page, $limit);
 
-        if (empty($usersBooks) && $elementsTotal != 0) {
+        if (empty($usersBooks) && $usersBookTotal != 0) {
             // throw 404 if the page returns an empty array
             throw $this->createNotFoundException('Cette page n\'existe pas');
         }
