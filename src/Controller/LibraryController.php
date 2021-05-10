@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * @Route("/bibliotheque/{userSlug}", name="library_")
  */
-class LibraryController extends AbstractController
+class LibraryController extends MainController
 {
     /**
      * @Route("", name="browse")
@@ -60,6 +60,7 @@ class LibraryController extends AbstractController
             'elementsTotal' => $elementsTotal,
             'elementsLimit' => $elementsLimit,
             'user' => $user,
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 

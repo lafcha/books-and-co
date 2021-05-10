@@ -94,6 +94,7 @@ class BorrowingController extends AbstractController
      */
     public function browse(Request $request, LendingRepository $lendingRepository, UserInterface $user): Response
     {
+        
         // set the limit of elements by page
         $elementsLimit = 10;
         // get the page in url

@@ -11,6 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
+    protected function navSearchForm(){
+        $searchForm = $this->createForm(SearchFormType::class, null, [
+            'action' => $this->generateUrl('search'),
+            'method' => 'GET',
+        ]);
+        return $searchForm;
+    }
+
     /**
      * @Route("/", name="accueil_browse")
      */

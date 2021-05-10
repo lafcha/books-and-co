@@ -3,12 +3,6 @@
 {% block title %}Recherche
 {% endblock %}
 
-{% block javascripts %}
-	<script src="assets/js/county.js"></script>
-	<script src="assets/js/city.js"></script>
-	<script src="assets/js/countyAndCityApp.js"></script>
-{% endblock %}
-
 {% block main %}
 
 {# -- Search Form --#}
@@ -40,7 +34,7 @@
 				</div>
 			</div>
 		</section>
-	{% else %}
+	{% elseif book != null %}
 
 {# -- Search results--#}
 	<h1 class="text-blue font-cursive text-3xl flex justify-center mt-10">Résultat de la recherche</h1>
