@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\Book;
 use App\Form\BookType;
 use App\Entity\UsersBook;
@@ -18,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/bibliotheque/{userSlug}", name="library_")
@@ -46,8 +44,6 @@ class LibraryController extends MainController
         // get the count of usersBook
         $elementsTotal = (int)$usersBookRepository->getUsersBookById($userId);
 
-
-        
         // find all books of a user with a $limit of element by page
         $usersBooks = $usersBookRepository->findAllByUserId($userId, $page, $elementsLimit);
 
@@ -63,6 +59,7 @@ class LibraryController extends MainController
             'elementsLimit' => $elementsLimit,
             'user' => $user,
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
         ]);
     }
 
@@ -178,6 +175,7 @@ class LibraryController extends MainController
             'libraryUser' => $libraryUser,
             'error' => $error,
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
         ]);
     }
 
@@ -217,6 +215,7 @@ class LibraryController extends MainController
             'libraryUser' => $libraryUser,
             'form' => $form->createView(),
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
         ]);
     }
 
@@ -262,6 +261,7 @@ class LibraryController extends MainController
             'book' => $book,
             'form' => $form->createView(),
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
         ]);
     }
 
@@ -292,6 +292,7 @@ class LibraryController extends MainController
         return $this->redirectToRoute('library_browse', [
             'userSlug'=> $userSlug,
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
         ]);
     }
 }

@@ -86,6 +86,7 @@ class BorrowingController extends MainController
         return $this->render('borrowing/form.html.twig', [
             'borrowingForm' => $form->createView(),
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
             ]
         );
     }
@@ -133,6 +134,7 @@ class BorrowingController extends MainController
             'elementsTotal' => $elementsTotal,
             'elementsLimit' => $elementsLimit,
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
             ]
         );
     }
@@ -182,6 +184,7 @@ class BorrowingController extends MainController
             'lendingData' => $lending,
             'sendMessageForm' => $sendMessageForm->createView(),
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
             ]
         );
     }
