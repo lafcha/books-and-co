@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @Route("/mes-prets", name="lending_")
  */
-class LendingController extends AbstractController
+class LendingController extends MainController
 {
     /**
      * @Route("", name="browse")
@@ -64,6 +64,7 @@ class LendingController extends AbstractController
             'currentPage' => $page,
             'elementsTotal' => $elementsTotal,
             'elementsLimit' => $elementsLimit,
+            'navSearchForm' => $this->navSearchForm()->createView(),
             ]
         );
     }
@@ -114,6 +115,7 @@ class LendingController extends AbstractController
         return $this->render('lending/read.html.twig', [
             'lendingData' => $lending,
             'sendMessageForm' => $sendMessageForm->createView(),
+            'navSearchForm' => $this->navSearchForm()->createView(),
             ]
         );
     }

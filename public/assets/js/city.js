@@ -17,31 +17,35 @@ const city = {
     },
 
     displayAllSelectElements: function(cityListing){
-        if (document.querySelector('.city-form') != null) {
-            let selectElement = document.querySelector('.city-form');
-            //Sort all cities by popluation DESC
-            cityListing.sort(function (b, a) {
-                return a.population - b.population;
-            });
-    
-            // We empty the content of the select
-            selectElement.textContent = "";
-    
-            // We reduce the number of cities to 20
-            cityListing = cityListing.slice(0, 20);
-            for(let cityData of cityListing){
-                let cityName = cityData.nom;
+        
+        let selectElements = document.querySelectorAll('.city-form');
+        for (const selectElement of selectElements) {
+            
+            if (selectElement != null) {
+                //Sort all cities by popluation DESC
+                cityListing.sort(function (b, a) {
+                    return a.population - b.population;
+                });
                 
-                // initialize the option element with data
-                const optionElement = document.createElement("option");
-                optionElement.value = cityName;
-                optionElement.textContent = cityName;
+                // We empty the content of the select
+                selectElement.textContent = "";
                 
-                countyAndCityApp.addSelectedElement(selectElement, optionElement); // implement the option element in the county select
-            }
-            if (document.querySelector('.city-form').dataset.city != null) {
-                cityValue = document.querySelector('.city-form').dataset.city;
-                countyAndCityApp.selectDatasetElement(cityValue, selectElement);
+                // We reduce the number of cities to 20
+                cityListing = cityListing.slice(0, 20);
+                for(let cityData of cityListing){
+                    let cityName = cityData.nom;
+                    
+                    // initialize the option element with data
+                    const optionElement = document.createElement("option");
+                    optionElement.value = cityName;
+                    optionElement.textContent = cityName;
+                    
+                    countyAndCityApp.addSelectedElement(selectElement, optionElement); // implement the option element in the county select
+                }
+                if (document.querySelector('.city-form').dataset.city != null) {
+                    cityValue = document.querySelector('.city-form').dataset.city;
+                    countyAndCityApp.selectDatasetElement(cityValue, selectElement);
+                }
             }
         }
     },

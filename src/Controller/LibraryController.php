@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * @Route("/bibliotheque/{userSlug}", name="library_")
  */
-class LibraryController extends AbstractController
+class LibraryController extends MainController
 {
     /**
      * @Route("", name="browse")
@@ -59,9 +59,10 @@ class LibraryController extends AbstractController
         return $this->render('library/browse.html.twig', [
             'usersBooks' => $usersBooks,
             'currentPage' => $page,
-            'usersBookTotal' => $usersBookTotal,
-            'usersBookLimit' => $limit,
-            'user'=> $user,
+            'elementsTotal' => $elementsTotal,
+            'elementsLimit' => $elementsLimit,
+            'user' => $user,
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 
@@ -176,6 +177,7 @@ class LibraryController extends AbstractController
             'bookForm' => $bookForm->createView(),
             'libraryUser' => $libraryUser,
             'error' => $error,
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 
@@ -214,6 +216,7 @@ class LibraryController extends AbstractController
             'book' => $book,
             'libraryUser' => $libraryUser,
             'form' => $form->createView(),
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 
@@ -258,6 +261,7 @@ class LibraryController extends AbstractController
         return $this->render('library/book/edit.html.twig', [
             'book' => $book,
             'form' => $form->createView(),
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 
@@ -287,6 +291,7 @@ class LibraryController extends AbstractController
 
         return $this->redirectToRoute('library_browse', [
             'userSlug'=> $userSlug,
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 }
