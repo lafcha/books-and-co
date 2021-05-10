@@ -53,7 +53,7 @@ class LendingController extends MainController
         $elementsTotal = (int)$lendingRepository->getLendingCountByLenderId($userId, $statusFilter);
         //lending list
         $lendingDatas = $lendingRepository->findAllByLenderId($userId, $page, $elementsLimit, $statusFilter);
-
+        dd($lendingDatas);
         if (empty($lendingDatas) && $elementsTotal != 0) {
             // throw 404 if the page returns an empty array
             throw $this->createNotFoundException('Cette page n\'existe pas');

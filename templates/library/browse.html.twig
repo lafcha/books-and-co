@@ -69,7 +69,7 @@
 			</a>
 		</div>
 		{# Page numbers #}
-		{% set pages = (usersBookTotal / usersBookLimit)|round(0, 'ceil') %}
+		{% set pages = (elementsTotal / elementsLimit)|round(0, 'ceil') %}
 		{% set nearbyPagesLimit = 2 %}
 
 		{% if pages > 1 %}

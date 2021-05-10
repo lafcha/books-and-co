@@ -9,7 +9,24 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
+    /**
+     * return nav bar form to search books
+     *
+     * @return form
+     */
     protected function navSearchForm(){
+        $searchForm = $this->createForm(SearchFormType::class, null, [
+            'action' => $this->generateUrl('search'),
+            'method' => 'GET',
+        ]);
+        return $searchForm;
+    }
+    /**
+     * return an array of 2 entries ( lend notification and borrow notification)
+     *
+     * @return Array
+     */
+    protected function getNotificationsArray(){
         $searchForm = $this->createForm(SearchFormType::class, null, [
             'action' => $this->generateUrl('search'),
             'method' => 'GET',
