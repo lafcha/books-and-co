@@ -15,42 +15,42 @@
 		<script src="https://kit.fontawesome.com/0434b5e439.js" crossorigin="anonymous"></script>
 
 		{#CSS#}
-             {{ encore_entry_link_tags('app') }}
+		{{ encore_entry_link_tags('app') }}
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
 	<body>
-		<div class="container mx-auto h-full grid grid-rows-3">
+		<div
+			class="container mx-auto h-full grid grid-rows-3">
 
-			{#--Header--#}	
-			<div class = "fixed mt-0 container z-50">			
+			{#--Header--#}
+			<div class="fixed mt-0 container z-50">
 				{% if app.user %}
-					{% include 'header-co.html.twig' %}	
+					{% include 'header-co.html.twig' %}
 				{% else %}
-					{% include 'header.html.twig' %}	
+					{% include 'header.html.twig' %}
 				{% endif %}
 			</div>
-			
-		<div class="flex w-full pt-28 h-full">
-			{#--Navigation -- only when connected#}	
-				<div class=" bg-yellow-dark">
+
+			<div
+				class="flex w-full pt-28 h-full">
+				{#--Navigation -- only when connected#}
+				<div class="bg-yellow-dark">
 					{% if app.user %}
 						{% include 'nav.html.twig' %}
-					{% endif %}					
+					{% endif %}
 				</div>
-			{#--Main--#}
-				<div class=" h-full w-full">			
-					{% block main %}{% endblock %}			
+				{#--Main--#}
+				<div class="w-full"> {% block main %}{% endblock %}
+					</div>
 				</div>
-		</div>
 
-			
 
-			{#--Footer--#}
-			<div class="w-full">			
-				{% include 'footer.html.twig' %}		
-			</div>	
-		</div>	
-	</body>
-</html>
+				{#--Footer--#}
+				<div class="">
+					{% include 'footer.html.twig' %}
+				</div>
+			</div>
+		</body>
+	</html>
