@@ -12,10 +12,10 @@
 				<h2 class="p-1 text-green">Modifier ici les infos du livre</h2>
 			</div>
 			{{ form_start(form) }}
-            <div class="mt-5 flex">
+            <div class="mt-5 flex flex justify-between items-center">
             <label for="book_isbn" class="w-1/2">Isbn</label>
             {{ form_widget(form.isbn, {
-                    'label_attr': {'class': 'w-1/2'}    
+                    'attr': {'class': 'w-1/2 block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
                 }) 
             }}
 			</div>
@@ -95,7 +95,7 @@
 			</div>
             <div class="flex justify-between items-center w-full mt-10">
 				<div></div>
-				<button type="submit" class="custom-btn inline-block focus:outline-none text-base text-white">Ajouter</button>
+				<button type="submit" class="custom-btn inline-block focus:outline-none text-base text-white">Modifier</button>
 			</div>
 			{{ form_end(form) }}
 

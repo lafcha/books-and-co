@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LibraryController!
+{% block title %}Ma bibliothèque
 {% endblock %}
 
 {% block javascripts %}
@@ -42,7 +42,7 @@
 				<div class="my-8 border-b-2 ">
 					<div class="py-8 flex flex-wrap md:flex-nowrap">
 						<div class="md:w-1/12 md:mb-0 mb-6 flex-shrink-0 mr-10 flex flex-col">
-							<a href=""><img src="{{ asset('assets/img/bookcover/') ~ usersbook.book.cover }}"></a>
+							<a href=""><img src="{{ asset('assets/img/uploads/book_cover/') ~ usersbook.book.cover }}"></a>
 						</div>
 						<div class="md:flex-grow">
 							<h2 class="text-2xl title-font mb-2 uppercase text-pink">
@@ -53,7 +53,7 @@
 							<p class="italic">ISBN : {{ usersbook.book.isbn }}</p>
 						</div>
 						<div class="">
-							<a href="" class="bg-pink w-4 px-2 py-2 text-center rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
+							<a href="{{ path('library_book_read', {'userSlug': usersbook.user.slug, 'slug': usersbook.book.slug }) }}" class="bg-pink w-4 px-2 py-2 text-center rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
 						</div>
 					</div>
 				</div>
