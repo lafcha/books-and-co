@@ -22,7 +22,7 @@
                     </p></a>
                 {% elseif notifications.borrowingNotifications and notifications.lendingNotifications %}
                     <p class= "inline-block text-center text-pink text-sm">
-                        <i class="fas fa-bell"> <a href="{{ path('lending_browse') }}"</i> Vous avez {{ notifications.lendingNotifications }} notification{{ (notifications.lendingNotifications > 1) ? 's' : '' }} de >prêt</a>
+                        <i class="fas fa-bell"></i> <a href="{{ path('lending_browse') }}"> Vous avez {{ notifications.lendingNotifications }} notification{{ (notifications.lendingNotifications > 1) ? 's' : '' }} de prêt</a>
                     </p></a>
                 {% endif %}
             </div>
