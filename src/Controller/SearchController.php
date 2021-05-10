@@ -34,6 +34,7 @@ class SearchController extends MainController
             'book' => $book,
             'countyValue' => $countyValue,
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
         ]);
     }
 
