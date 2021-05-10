@@ -28,7 +28,7 @@
 {% endif %}
     {% if app.user.slug == app.request.attributes.all['userSlug'] %}
         <div>
-            <a href="{{ path('library_book_add', {'userSlug': app.user.slug}) }}">ajouter un livre</a>
+            <a href="{{ path('library_book_add', {'userSlug': app.user.slug}) }}">Ajouter un livre</a>
         </div>
     {% endif %}
 {% endblock %}
