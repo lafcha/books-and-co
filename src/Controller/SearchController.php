@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class SearchController extends MainCOntroller
+class SearchController extends MainController
 {
     /**
      * @Route("/recherche", name="search")
@@ -33,6 +33,7 @@ class SearchController extends MainCOntroller
             'navSearchForm' => $form->createView(),
             'book' => $book,
             'countyValue' => $countyValue,
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 

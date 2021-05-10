@@ -175,6 +175,7 @@ class LibraryController extends MainController
             'bookForm' => $bookForm->createView(),
             'libraryUser' => $libraryUser,
             'error' => $error,
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 
@@ -213,6 +214,7 @@ class LibraryController extends MainController
             'book' => $book,
             'libraryUser' => $libraryUser,
             'form' => $form->createView(),
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 
@@ -257,6 +259,7 @@ class LibraryController extends MainController
         return $this->render('library/book/edit.html.twig', [
             'book' => $book,
             'form' => $form->createView(),
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 
@@ -286,6 +289,7 @@ class LibraryController extends MainController
 
         return $this->redirectToRoute('library_browse', [
             'userSlug'=> $userSlug,
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 }

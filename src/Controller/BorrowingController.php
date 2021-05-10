@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @Route("", name="borrowing_")
  */
-class BorrowingController extends AbstractController
+class BorrowingController extends MainController
 {
     /**
      * @Route("/demande-de-pret", name="form")
@@ -85,6 +85,7 @@ class BorrowingController extends AbstractController
 
         return $this->render('borrowing/form.html.twig', [
             'borrowingForm' => $form->createView(),
+            'navSearchForm' => $this->navSearchForm()->createView(),
             ]
         );
     }
@@ -131,6 +132,7 @@ class BorrowingController extends AbstractController
             'currentPage' => $page,
             'elementsTotal' => $elementsTotal,
             'elementsLimit' => $elementsLimit,
+            'navSearchForm' => $this->navSearchForm()->createView(),
             ]
         );
     }
@@ -179,6 +181,7 @@ class BorrowingController extends AbstractController
         return $this->render('borrowing/read.html.twig', [
             'lendingData' => $lending,
             'sendMessageForm' => $sendMessageForm->createView(),
+            'navSearchForm' => $this->navSearchForm()->createView(),
             ]
         );
     }
