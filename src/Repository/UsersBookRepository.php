@@ -42,15 +42,15 @@ class UsersBookRepository extends ServiceEntityRepository
     */
     public function findAllAvalaibleBooksByCity($criteria){
         return $this->createQueryBuilder('ub')
-            ->leftJoin('ub.user', 'u')
-            ->leftJoin('ub.book', 'b')
-            ->where('u.county = :county')
-            ->andWhere('ub.isAvailable = 1')
-            ->setParameter('county', $criteria)
-            ->addSelect('b')
-            ->addSelect('u')
-            ->getQuery()
-            ->getResult()
+                    ->leftJoin('ub.user', 'u')
+                    ->leftJoin('ub.book', 'b')
+                    ->where('u.county = :county')
+                    ->andWhere('ub.isAvailable = 1')
+                    ->setParameter('county', $criteria)
+                    ->addSelect('b')
+                    ->addSelect('u')
+                    ->getQuery()
+                    ->getResult()
         ;
     }
 
@@ -58,7 +58,7 @@ class UsersBookRepository extends ServiceEntityRepository
      * Returns number of usersBookById
      * @return int 
      */
-    public function getUsersBookCountById($userId){
+    public function getUsersBookById($userId){
         
         return $this->createQueryBuilder('ub')
             ->select('COUNT(ub)')

@@ -1,34 +1,130 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LibraryController!
+{% block title %}Ma bibliothèque
 {% endblock %}
 
-{% block javascripts %}
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="assets/js/county.js"></script>
-	<script src="assets/js/city.js"></script>
-	<script src="assets/js/countyAndCityApp.js"></script>
-{% endblock %}
 
 {% block main %}
-{% if usersBooks == null %}
-    <p>Vous n'avez aucun livre dans votre bibliothèque</p>
-{% else %}
-    <div>
-        <ul>
-            {# if the user connected is equal to the library's user AND if usersBooks is not null #}
 
-                {% for usersBook in usersBooks %}
-                    {# usersBook contains all books of a user, use usersBook.book to get all data from a book #}
-                    <li><a href="{{ path('library_book_read', {'userSlug': usersBook.user.slug, 'slug': usersBook.book.slug }) }}">{{ usersBook.book.title }}</a></li>
-                {% endfor %}
-        </ul>
-    </div>
-   {% include 'pagination.html.twig' %}
-{% endif %}
-    {% if app.user.slug == app.request.attributes.all['userSlug'] %}
-        <div>
-            <a href="{{ path('library_book_add', {'userSlug': app.user.slug}) }}">Ajouter un livre</a>
-        </div>
-    {% endif %}
+	{# ----------- Page title --------------#}
+	<div class=" w-full inset-0">
+		<h1 class="text-blue font-cursive text-3xl flex justify-center mt-10">Bibliothèque de {{ user.pseudo }} </h1>
+		<p class="text-yellow-dark text-center mt-2">
+			<i class="fas fa-map-marker-alt mr-3"></i>
+			{{ user.city }}
+		</p>
+	</div>		
+
+	{# ------------If library is empty --------------#}
+	{% if usersBooks == null %}
+
+		<p class="text-center text-pink italic mt-8">Oups ! Cette bibliothèque est vide !</p>
+		{# if the user connected is equal to the library's user AND if usersBooks is null #}
+		{% if app.user.slug == app.request.attributes.all['userSlug'] %}
+			<div class="items-center mb-10">
+				<a href="{{ path('library_book_add', {'userSlug': app.user.slug}) }}" role="button" class="bg-pink hover:bg-yellow-dark text-white px-4 py-3 rounded-full">
+					Ajouter un livre
+				</a>
+			</div>
+			
+		{% endif %}
+	{% else %}
+
+	{# ------------Library books --------------#}
+	<div class="container px-5 py-24 mx-auto">
+		{% for usersbook in usersBooks %}
+				<div class="my-8 border-b-2 ">
+					<div class="py-8 flex flex-wrap md:flex-nowrap">
+						<div class="md:w-1/12 md:mb-0 mb-6 flex-shrink-0 mr-10 flex flex-col">
+							<a href=""><img src="{{ asset('assets/img/uploads/book_cover/') ~ usersbook.book.cover }}"></a>
+						</div>
+						<div class="md:flex-grow">
+							<h2 class="text-2xl title-font mb-2 uppercase text-pink">
+								<a href="">{{ usersbook.book.title }}</a>
+							</h2>
+							<p class="leading-relaxed">Auteur : {{ usersbook.book.author }}</p>
+							<p class="italic">Editeur : {{ usersbook.book.editor }}</p>
+							<p class="italic">ISBN : {{ usersbook.book.isbn }}</p>
+						</div>
+						<div class="">
+							<a href="{{ path('library_book_read', {'userSlug': usersbook.user.slug, 'slug': usersbook.book.slug }) }}" class="bg-pink w-4 px-2 py-2 text-center rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+	</div>
+
+	{# ------------Pagination --------------#}
+	<div class="flex justify-center space-x-10 items-center">
+
+		{# Arrows #}
+		<div class=" hover:text-yellow-dark {{ (currentPage == 1) ? 'text-grey' : '' }} mr-5">
+			<a href="{{ (currentPage == 1) ? 'disabled' : '?page=1' }}">
+				<i class="fas fa-angle-double-left text-3xl"></i>
+			</a>
+		</div>
+		<div class="{{ (currentPage == 1) ? 'text-grey' : '' }} mr-5">
+			<a href="{{ (currentPage > 1) ? '?page=' ~ (currentPage - 1) : '' }}">
+				<i class="fas fa-angle-left text-3xl"></i>
+			</a>
+		</div>
+		{# Page numbers #}
+		{% set pages = (usersBookTotal / usersBookLimit)|round(0, 'ceil') %}
+		{% set nearbyPagesLimit = 2 %}
+
+		{% if pages > 1 %}
+
+			{% for item in 1..pages %}
+				{% if 0 == (currentPage - nearbyPagesLimit) - loop.index %}
+					{# dot before #}
+
+					<div class=" bg-grey text-blue w-10 h-10 rounded-full flex justify-center items-center mr-4 ml-4">
+						<a href="?page=1" class="text-base font-medium ">1</a>
+					</div>
+					{% if currentPage != 3 %}
+						<div class="mr-4">
+							<i class="fas fa-ellipsis-h"></i>
+						</div>
+					{% endif %}
+
+				{% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %}
+					{# hide all before #}
+				{% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %}
+					{# hide all after #}
+				{% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %}
+					{# dot after #}
+
+					{% if currentPage != pages - 2 %}
+						<div class="mr-4">
+							<i class="fas fa-ellipsis-h"></i>
+						</div>
+					{% endif %}
+					<div class=" bg-grey text-blue w-10 h-10 rounded-full flex justify-center items-center mr-4 ml-4">
+						<a href="?page={{ pages }}" class="text-base font-medium ">{{ pages }}</a>
+					</div>
+
+				{% else %}
+					<div class=" {{ currentPage == item ? " bg-yellow-dark text-white" : " bg-grey text-blue"}} w-10 h-10 rounded-full flex justify-center items-center mr-4 ">
+						<a href="?page={{ item }}" class="text-base font-medium ">{{ (item )}}</a>
+					</div>
+				{% endif %}
+
+			{% endfor %}
+
+		{% endif %}
+
+			{# Arrows #}
+			<div class="{{ (currentPage == pages) ? 'text-grey' : '' }} mr-5">
+				<a href="{{ (currentPage < pages) ? '?page=' ~ (currentPage + 1) : '' }}">
+					<i class="fas fa-angle-right text-3xl"></i>
+				</a>
+			</div>
+			<div class="{{ (currentPage == pages) ? 'text-grey' : '' }}">
+				<a href="?page={{ pages }}">
+				<i class="fas fa-angle-double-right text-3xl"></i>
+				</a>
+			</div>
+	</div>
+		
+        {% endif %}
 {% endblock %}

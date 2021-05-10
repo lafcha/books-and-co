@@ -3,12 +3,6 @@
 {% block title %}Recherche
 {% endblock %}
 
-{% block javascripts %}
-	<script src="assets/js/county.js"></script>
-	<script src="assets/js/city.js"></script>
-	<script src="assets/js/countyAndCityApp.js"></script>
-{% endblock %}
-
 {% block main %}
 
 {# -- Search Form --#}
@@ -17,7 +11,7 @@
 		<div id="county-error"></div>
 		<div class="relative inline-flex mr-5">
 			<svg class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fill-rule="nonzero"/></svg>
-			<select name="search_form[county]" class="bg-yellow rounded-full text-blue h-10 pl-5 pr-10 focus:outline-none appearance-none county-form" id="search_form_county">
+			<select name="search_form[county]" class="bg-yellow rounded-full text-blue h-10 pl-5 pr-10 focus:outline-none appearance-none county-form" id="search_form_county" {{ (app.request.query.all('search_form')['county'] is defined) ? ('data-county=' ~ app.request.query.all('search_form')['county']) : ''}}>
 
 				<option value="00">Département</option>
 			</select>
@@ -26,9 +20,6 @@
 		<button type="submit" class="bg-blue h-10 px-6 md:px-8 py-2 rounded-full items-center focus:outline-none text-xs md:text-sm text-white submit">Rechercher</button>
 	</div>
 	{{ form_end(form) }}
-
-<h1 class="text-blue font-cursive text-3xl flex justify-center mt-10">Résultat de votre recherche</h1>
-
 {# -- If no results--#}
 	{% if app.request.query.all != null and book == null %}
 		<section>
@@ -40,35 +31,36 @@
 				</div>
 			</div>
 		</section>
-	{% else %}
+	{% elseif book != null %}
 
 {# -- Search results--#}
 	<h1 class="text-blue font-cursive text-3xl flex justify-center mt-10">Résultat de la recherche</h1>
 		<section class="overflow-hidden">
 			<div class="container px-5 py-24 mx-auto">
-				{% for usersbook in book %}
+				{% for usersBook in book %}
 					<div class="my-8 divide-y-2 divide-gray-100">
 						<div class="py-8 flex flex-wrap md:flex-nowrap">
 							<div class="md:w-1/12 md:mb-0 mb-6 flex-shrink-0 mr-10 flex flex-col">
-								<a href=""><img src="{{ asset('assets/img/bookcover/') ~ usersbook.book.cover }}"></a>
+								<a href=""><img src="{{ asset('assets/img/bookcover/') ~ usersBook.book.cover }}"></a>
 							</div>
 							<div class="md:flex-grow">
 								<h2 class="text-2xl font-medium title-font mb-2 uppercase text-pink">
-									<a href="">{{ usersbook.book.title }}</a>
+									<a href="">{{ usersBook.book.title }}</a>
 									<span class="text-sm text-yellow-dark">
 										<i class="fas fa-user mr-3 ml-3"></i>
-										{{ usersbook.user.pseudo }}</span>
+										{{ usersBook.user.pseudo }}</span>
 								</h2>
 								<p class="leading-relaxed">Auteur :
-									{{ usersbook.book.author }}</p>
+									{{ usersBook.book.author }}</p>
 								<p class="italic">Editeur :
-									{{ usersbook.book.editor }}</p>
+									{{ usersBook.book.editor }}</p>
 								<p class="italic">ISBN :
-									{{ usersbook.book.isbn }}</p>
+									{{ usersBook.book.isbn }}</p>
 							</div>
 							<div class="flex flex-col justify-between">
-								<p class="text-yellow-dark"><i class="fas fa-map-marker-alt mr-3"></i>{{ usersbook.user.city }}</p>
+								<p class="text-yellow-dark"><i class="fas fa-map-marker-alt mr-3"></i>{{ usersBook.user.city }}</p>
 								<a href="{{ path('library_book_read', {'userSlug': usersBook.user.slug, 'slug': usersBook.book.slug }) }}" class="bg-pink h-10 px-6 md:px-8 py-2 rounded-full items-center focus:outline-none md:text-sm text-white">Voir plus</a>
+
 							</div>
 						</div>
 					</div>    
@@ -76,8 +68,5 @@
 		{% endfor %}
 				</div>
 			</section>
-			
-	{% else %}
-		<h1 class="text-blue font-cursive text-3xl flex justify-center mt-10 py-24">Séléctionnez un livre !</h1>
 	{% endif %}
 {% endblock %}

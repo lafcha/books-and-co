@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * @Route("/bibliotheque/{userSlug}", name="library_")
  */
-class LibraryController extends AbstractController
+class LibraryController extends MainController
 {
     /**
      * @Route("", name="browse")
@@ -31,7 +31,7 @@ class LibraryController extends AbstractController
     public function browse($userSlug, UsersBookRepository $usersBookRepository, UserRepository $userRepository, Request $request): Response
     {
         // set the limit of elements by page
-        $elementsLimit = 10;
+        $limit = 10;
         // get the page in url
         $page = (int)$request->query->get("page", 1);
         if ($page < 1) {
@@ -44,12 +44,14 @@ class LibraryController extends AbstractController
         }
         $userId = $user->getId();
         // get the count of usersBook
-        $elementsTotal = (int)$usersBookRepository->getUsersBookCountById($userId);
+        $usersBookTotal = (int)$usersBookRepository->getUsersBookById($userId);
+
+
         
         // find all books of a user with a $limit of element by page
-        $usersBooks = $usersBookRepository->findAllByUserId($userId, $page, $elementsLimit);
+        $usersBooks = $usersBookRepository->findAllByUserId($userId, $page, $limit);
 
-        if (empty($usersBooks) && $elementsTotal != 0) {
+        if (empty($usersBooks) && $usersBookTotal != 0) {
             // throw 404 if the page returns an empty array
             throw $this->createNotFoundException('Cette page n\'existe pas');
         }
@@ -60,6 +62,7 @@ class LibraryController extends AbstractController
             'elementsTotal' => $elementsTotal,
             'elementsLimit' => $elementsLimit,
             'user' => $user,
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 
@@ -174,6 +177,7 @@ class LibraryController extends AbstractController
             'bookForm' => $bookForm->createView(),
             'libraryUser' => $libraryUser,
             'error' => $error,
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 
@@ -212,6 +216,7 @@ class LibraryController extends AbstractController
             'book' => $book,
             'libraryUser' => $libraryUser,
             'form' => $form->createView(),
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 
@@ -256,6 +261,7 @@ class LibraryController extends AbstractController
         return $this->render('library/book/edit.html.twig', [
             'book' => $book,
             'form' => $form->createView(),
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 
@@ -285,6 +291,7 @@ class LibraryController extends AbstractController
 
         return $this->redirectToRoute('library_browse', [
             'userSlug'=> $userSlug,
+            'navSearchForm' => $this->navSearchForm()->createView(),
         ]);
     }
 }
