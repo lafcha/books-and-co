@@ -36,7 +36,7 @@
 				<div class="my-8 border-b-2 ">
 					<div class="py-8 flex flex-wrap md:flex-nowrap">
 						<div class="md:w-1/12 md:mb-0 mb-6 flex-shrink-0 mr-10 flex flex-col">
-							<a href=""><img src="{{ asset('assets/img/uploads/book_cover/') ~ usersbook.book.cover }}"></a>
+							<a href=""><img src="{{ book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ usersbook.book.cover : asset("assets/img/illustrations/book-cover.jpg") }}"></a>
 						</div>
 						<div class="md:flex-grow">
 							<h2 class="text-2xl title-font mb-2 uppercase text-pink">
