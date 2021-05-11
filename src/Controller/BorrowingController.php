@@ -91,7 +91,7 @@ class BorrowingController extends MainController
             'borrowingForm' => $form->createView(),
             'navSearchForm' => $this->navSearchForm()->createView(),
             'userPseudo'=> $userPseudo,
-            'book'=> $book
+            'book'=> $book,
             'notifications' => $this->getNotificationsArray(),
             ]
         );
@@ -134,7 +134,7 @@ class BorrowingController extends MainController
         //lending list
         $lendingDatas = $lendingRepository->findAllByBorrowerId($userId, $page, $elementsLimit, $statusFilter);
 
-        return $this->render('borrowing/browse.html.twig', [
+        return $this->render('lending/browse.html.twig', [
             'lendingDatas' => $lendingDatas,
             'currentPage' => $page,
             'elementsTotal' => $elementsTotal,
