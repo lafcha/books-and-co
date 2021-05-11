@@ -65,6 +65,7 @@ class LendingController extends MainController
             'elementsTotal' => $elementsTotal,
             'elementsLimit' => $elementsLimit,
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
             ]
         );
     }
@@ -116,6 +117,7 @@ class LendingController extends MainController
             'lendingData' => $lending,
             'sendMessageForm' => $sendMessageForm->createView(),
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
             ]
         );
     }

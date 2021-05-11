@@ -92,6 +92,7 @@ class BorrowingController extends MainController
             'navSearchForm' => $this->navSearchForm()->createView(),
             'userPseudo'=> $userPseudo,
             'book'=> $book
+            'notifications' => $this->getNotificationsArray(),
             ]
         );
     }
@@ -139,6 +140,7 @@ class BorrowingController extends MainController
             'elementsTotal' => $elementsTotal,
             'elementsLimit' => $elementsLimit,
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
             ]
         );
     }
@@ -188,6 +190,7 @@ class BorrowingController extends MainController
             'lendingData' => $lending,
             'sendMessageForm' => $sendMessageForm->createView(),
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
             ]
         );
     }
