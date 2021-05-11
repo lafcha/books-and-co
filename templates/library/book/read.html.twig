@@ -35,13 +35,13 @@
 				{% endif %}
 				{% if app.user.slug != app.request.attributes.all['userSlug']  %}
 
-					<div class="flex items-end justify-end mt-4 top-auto">
-						{{ form_start(form) }}
-						{{ form_end(form) }}
-					</div>
-				{% endif %}
+						<div class="flex items-end justify-end mt-4 top-auto">
+							{{ form_start(form) }}
+							{{ form_end(form) }}
+						</div>
+					{% endif %}
+				</div>
 			</div>
 		</div>
 	</div>
-	</div>
-</div>{% endblock %}
+{% endblock %}

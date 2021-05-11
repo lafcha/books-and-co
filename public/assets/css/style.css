@@ -5,3 +5,8 @@ body{
 .logo{
     font-family: 'Lily Script One', cursive;
 }
+
+.center-div {
+    position : absolute;
+    bottom : 0;
+}
