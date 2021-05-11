@@ -25,8 +25,12 @@
 
 			{#--Header--#}
 				<div class="fixed mt-0 container z-50">
+				{% if app.user %}
+					{% include 'header-co.html.twig' %}
+				{% else %}
 					{% include 'header.html.twig' %}
-				</div>
+				{% endif %}
+			</div>
 
 				<div class="w-full pt-28 pb-44"> 
 					{% block main %}{% endblock %}
