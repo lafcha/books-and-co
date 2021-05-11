@@ -91,7 +91,7 @@ class BorrowingController extends MainController
             'borrowingForm' => $form->createView(),
             'navSearchForm' => $this->navSearchForm()->createView(),
             'userPseudo'=> $userPseudo,
-            'book'=> $book
+            'book'=> $book,
             'notifications' => $this->getNotificationsArray(),
             ]
         );

@@ -77,6 +77,9 @@ class UserController extends MainController
             }
         }
 
-        return $this->render('user/profil-edit-password.html.twig');
+        return $this->render('user/profil-edit-password.html.twig', [
+            'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
+        ]);
     }
 }

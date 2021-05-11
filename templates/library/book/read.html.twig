@@ -11,7 +11,7 @@
 		<h2 class="italic">{{ book.author }}</h2>
 	</div>
 	<div class="flex justify-center">
-	<div class="flex margin w-4/6 mt-10">
+	<div class="flex margin mt-10">
 		<img
 		class="object-cover rounded-lg book-cover" src="{{ book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ book.cover : asset("assets/img/illustrations/book-cover.jpg") }}" alt="Couverture du livre">
 		{# {{ dump(book) }} #}
