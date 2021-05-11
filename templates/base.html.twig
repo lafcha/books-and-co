@@ -21,7 +21,7 @@
 		{% endblock %}
 	</head>
 	<body class="h-full m-0 p-0">
-		<div class="container mx-auto flex flex-col min-h-full relative">
+		<div class="container mx-auto flex flex-col min-h-screen relative">
 
 			{#--Header--#}
 			<div class="fixed mt-0 container z-50">
@@ -35,7 +35,7 @@
 			<div class="w-full pt-28 pb-44">
 				{#--Navigation -- only when connected#}
 					{% if app.user %}
-				<div class="fixed">
+				<div class="fixed ">
 						{% include 'nav.html.twig' %}
 				</div>
 				{#--Main--#}

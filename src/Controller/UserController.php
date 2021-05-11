@@ -52,6 +52,7 @@ class UserController extends MainController
             'user' => $user,
             'form' => $form->createView(),
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
         ]);
     }
 
