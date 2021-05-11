@@ -24,8 +24,10 @@ body {
     height: 60%;
 }
 
-.w-3-5 {
-    width: 60%;
+.position {
+    position : absolute;
+    bottom : 0 !important;
+    height: 11rem;
 }
 
 .custom-btn{

@@ -3,12 +3,6 @@
 {% block title %}Ma bibliothèque
 {% endblock %}
 
-{% block javascripts %}
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="assets/js/county.js"></script>
-	<script src="assets/js/city.js"></script>
-	<script src="assets/js/countyAndCityApp.js"></script>
-{% endblock %}
 
 {% block main %}
 
@@ -75,7 +69,7 @@
 			</a>
 		</div>
 		{# Page numbers #}
-		{% set pages = (usersBookTotal / usersBookLimit)|round(0, 'ceil') %}
+		{% set pages = (elementsTotal / elementsLimit)|round(0, 'ceil') %}
 		{% set nearbyPagesLimit = 2 %}
 
 		{% if pages > 1 %}
