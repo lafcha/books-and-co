@@ -16,10 +16,10 @@
 				<img src="{{asset("assets/img/illustrations")}}/books-w.svg" alt="Icône Bibliothèque" class=" h-12 hidden md:block mx-auto">
 				<span class="pb-1 md:pb-0 text-xs md:text-sm block  pt-1 md:inline-block text-white uppercase tracking-wide md:pt-3">Ma Bibiliothèque</span>
 				<ul class="underline text-xs md:text-sm text-left md:pt-3 md:ml-2">
-					<a href="#" class="my-2">
+					<a href="{{ path('library_browse', {'userSlug' : app.user.slug}) }}" class="my-2">
 						<li>Mes livres</li>
 					</a>
-					<a href="#" class="my-2">
+					<a href="{{ path('library_book_add', {'userSlug' : app.user.slug}) }}" class="my-2">
 						<li>Ajouter un livre</li>
 					</a>
 				</ul>
@@ -28,10 +28,10 @@
 				<img src="{{asset("assets/img/illustrations")}}/lending-w.svg" alt="Icône Prêt" class=" h-12 hidden md:block mx-auto">
 				<span class="pb-1 md:pb-0 text-xs md:text-sm block md:inline-block pt-1 text-white uppercase tracking-wide md:pt-3">Mes prêts</span>
 				<ul class="underline text-xs md:text-sm text-left md:pt-3">
-					<a href="#" class="my-2">
+					<a href="{{ path('borrowing_browse') }}" class="my-2">
 						<li>Mes emprunts</li>
 					</a>
-					<a href="#" class="my-2">
+					<a href="{{ path('lending_browse') }}" class="my-2">
 						<li>Mes livres prêtés</li>
 					</a>
 				</ul>
