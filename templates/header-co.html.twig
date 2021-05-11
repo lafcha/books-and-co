@@ -1,6 +1,6 @@
 <header class="py-6 bg-white">
     <div class="flex items-center justify-between flex-wrap">
-        <a href=" {{ path('accueil_browse') }}"class="flex title-font font-medium items-center mb-4 md:mb-0">
+        <a href=" {{ path('library_browse', {'userSlug' : app.user.slug}) }}"class="flex title-font font-medium items-center mb-4 md:mb-0">
             <img src="{{asset("assets/img/illustrations")}}/logo.svg" alt="Logo de BooksAndCo">
             <span class="font-cursive ml-3 text-xl logo text-pink">Books&amp;Co</span>
         </a>
