@@ -34,14 +34,26 @@
 
 			<div class="w-full pt-28 pb-44">
 				{#--Navigation -- only when connected#}
-					{% if app.user %}
-				<div class="fixed ">
-						{% include 'nav.html.twig' %}
-				</div>
-				{#--Main--#}
-				<div class="w-3/4 float-right"> {% block main %}{% endblock %}
-				</div>
+				{% if app.user %}
+					{#--Some tests to set the wanted color used in nav and some pages#}
+					{% if app.request.attributes.all._route == "borrowing_form" or app.request.attributes.all._route == "borrowing_browse" or app.request.attributes.all._route == "borrowing_read" %}
+						{% set color_wanted = 'yellow-dark' %}
+						{% set nav_button = 'green' %}
+					{% elseif app.request.attributes.all._route == "lending_form" or app.request.attributes.all._route == "lending_browse" or app.request.attributes.all._route == "lending_read" %}
+						{% set color_wanted = 'green' %}
+						{% set nav_button = 'pink' %}
+					{% else %}
+						{% set color_wanted = 'pink' %}
+						{% set nav_button = 'yellow-dark' %}
 					{% endif %}
+					<div class="fixed ">
+						{% include 'nav.html.twig' %}
+					</div>
+					{#--Main--#}
+					<div class="w-3/4 float-right"> 
+						{% block main %}{% endblock %}
+					</div>
+				{% endif %}
 			</div>
 
 			{#--Footer--#}

@@ -1,13 +1,3 @@
-{% if app.request.attributes.all._route == "borrowing_form" or app.request.attributes.all._route == "borrowing_browse" or app.request.attributes.all._route == "borrowing_read" %}
-	{% set color_wanted = 'yellow-dark' %}
-	{% set nav_button = 'green' %}
-{% elseif app.request.attributes.all._route == "lending_form" or app.request.attributes.all._route == "lending_browse" or app.request.attributes.all._route == "lending_read" %}
-	{% set color_wanted = 'green' %}
-	{% set nav_button = 'pink' %}
-{% else %}
-	{% set color_wanted = 'pink' %}
-	{% set nav_button = 'yellow-dark' %}
-{% endif %}
 <nav class="bg-{{ color_wanted }} shadow-lg px-5 rounded-lg text-blue text-center">
 	<div class="">
 	<div class="mx-auto">
