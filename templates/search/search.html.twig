@@ -40,7 +40,7 @@
 				<div class="my-8 divide-y-2 divide-gray-100">
 					<div class="py-8 flex flex-wrap md:flex-nowrap">
 						<div class="md:w-1/12 md:mb-0 mb-6 flex-shrink-0 mr-10 flex flex-col">
-							<a href=""><img src="{{ asset('assets/img/bookcover/') ~ usersBook.book.cover }}"></a>
+							<a href=""><img src="{{ usersBook.book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ usersBook.book.cover : asset("assets/img/illustrations/book-cover.jpg") }}"></a>
 						</div>
 						<div class="md:flex-grow">
 							<h2 class="text-2xl font-medium title-font mb-2 uppercase text-pink">
