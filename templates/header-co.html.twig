@@ -7,8 +7,24 @@
         <div>
             <p class="text-center text-green text-lg">Bonjour {{ app.user.pseudo }} !</p>
             <div>
-                <img class="inline-block" src="{{asset("assets/img/illustrations")}}/bell.svg" alt="Icône alerte notification">
-                <a href="#"class= "inline-block text-center text-pink text-sm">Vous avez de nouvelles notifications</a>
+                {% if notifications.borrowingNotifications and notifications.lendingNotifications %}
+                
+                    <p class= "inline-block text-center text-pink text-sm">
+                    <i class="fas fa-bell"></i>
+                        <a href="{{ path('lending_browse') }}">Vous avez {{ notifications.lendingNotifications }} notification{{ (notifications.lendingNotifications > 1) ? 's' : '' }} de prêt</a>
+                    </p>
+                    <p class= "text-center text-pink text-sm">
+                        <a href="{{ path('borrowing_browse') }}"> et {{ notifications.borrowingNotifications }} notification{{ (notifications.borrowingNotifications > 1) ? 's' : '' }} d'emprunt</a>
+                    </p> 
+                {% elseif notifications.borrowingNotifications %}
+                    <p class= "inline-block text-center text-pink text-sm">
+                        <i class="fas fa-bell"></i> <a href="{{ path('borrowing_browse') }}">Vous avez {{ notifications.borrowingNotifications }} notification{{ (notifications.borrowingNotifications > 1) ? 's' : '' }} d'emprunt
+                    </p></a>
+                {% elseif notifications.borrowingNotifications and notifications.lendingNotifications %}
+                    <p class= "inline-block text-center text-pink text-sm">
+                        <i class="fas fa-bell"></i> <a href="{{ path('lending_browse') }}"> Vous avez {{ notifications.lendingNotifications }} notification{{ (notifications.lendingNotifications > 1) ? 's' : '' }} de prêt</a>
+                    </p></a>
+                {% endif %}
             </div>
         </div>
         <div class="flex flex-col h-3">
@@ -17,6 +33,6 @@
                 <img class="object-scale-down rounded-full inline-block h-10 w-10 mr-4" src="{{ app.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ app.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="Avatar">
             </div>
             <a href="{{ path('account_edit') }}" class="text-yellow-dark hover:text-pink text-sm text-right">Mon compte</a>
-        </div>						
+        </div>
     </div>
 </header>

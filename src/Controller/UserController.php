@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
      * @Route("/mon-compte", name="account_")
      */
-class UserController extends AbstractController
+class UserController extends MainController
 {
     /**
      * @Route("/edit", name="edit"), methods={"GET", "POST"})
@@ -51,6 +51,8 @@ class UserController extends AbstractController
         return $this->render('user/profil-edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
         ]);
     }
 

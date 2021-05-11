@@ -6,8 +6,10 @@ use App\Entity\Lending;
 use App\Entity\Message;
 use App\Form\BorrowingFormType;
 use App\Form\MessageType;
+use App\Repository\BookRepository;
 use App\Repository\LendingRepository;
 use App\Repository\MessageRepository;
+use App\Repository\UserRepository;
 use App\Repository\UsersBookRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +20,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @Route("", name="borrowing_")
  */
-class BorrowingController extends AbstractController
+class BorrowingController extends MainController
 {
     /**
      * @Route("/demande-de-pret", name="form")
@@ -46,21 +48,23 @@ class BorrowingController extends AbstractController
         }
             
 
-            $form = $this->createForm(BorrowingFormType::class, null, [
-                'usersBookId'=> $usersBookId
-            ]);
-            
-            $form->handleRequest($request);
-    
+        $form = $this->createForm(BorrowingFormType::class, null, [
+            'usersBookId'=> $usersBookId
+        ]);
         
+        $form->handleRequest($request);
+        
+        // Retrieving the user pseudo & book title to display in the form page title
+        $userPseudo = $usersbook->findUserByUsersBookId($usersBookId)[0]['pseudo'];
+        $book = $usersbook->findBookByUsersBookId($usersBookId)[0]['title'];
+     
         if ($form->isSubmitted() && $form->isValid()) {
             
-            //Filling the new lending entity with the info collected
-            
-            $usersBookEntity = $usersbook->findOneBy(['id'=> $usersBookId]);
-
+            $usersBookEntity = $usersbook->find($usersBookId);
+             //Filling the new lending entity with the info collected
             $lending->setBorrower($user);
             $lending->setUsersBook($usersBookEntity);
+    
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($lending);
@@ -85,6 +89,10 @@ class BorrowingController extends AbstractController
 
         return $this->render('borrowing/form.html.twig', [
             'borrowingForm' => $form->createView(),
+            'navSearchForm' => $this->navSearchForm()->createView(),
+            'userPseudo'=> $userPseudo,
+            'book'=> $book
+            'notifications' => $this->getNotificationsArray(),
             ]
         );
     }
@@ -94,6 +102,7 @@ class BorrowingController extends AbstractController
      */
     public function browse(Request $request, LendingRepository $lendingRepository, UserInterface $user): Response
     {
+        
         // set the limit of elements by page
         $elementsLimit = 10;
         // get the page in url
@@ -130,6 +139,8 @@ class BorrowingController extends AbstractController
             'currentPage' => $page,
             'elementsTotal' => $elementsTotal,
             'elementsLimit' => $elementsLimit,
+            'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
             ]
         );
     }
@@ -178,6 +189,8 @@ class BorrowingController extends AbstractController
         return $this->render('borrowing/read.html.twig', [
             'lendingData' => $lending,
             'sendMessageForm' => $sendMessageForm->createView(),
+            'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
             ]
         );
     }

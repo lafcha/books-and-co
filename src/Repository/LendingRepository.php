@@ -32,7 +32,7 @@ class LendingRepository extends ServiceEntityRepository
             ->leftJoin('ub.user', 'lender')
             ->addSelect('lender')
             ->groupBy('l.id')
-            ->orderBy('lw.createdAt', 'DESC')
+            ->orderBy('max(lw.createdAt)', 'DESC')
             ->addSelect('COUNT(CASE WHEN lw.isRead = 0 and lw.sender != :borrowerId THEN 0 ELSE :null end) AS nbNewMessages')
             ->where('l.borrower = :borrowerId')
             ->setParameter('borrowerId', $borrowerId)
@@ -62,8 +62,9 @@ class LendingRepository extends ServiceEntityRepository
             ->addSelect('ub')
             ->leftJoin('ub.book', 'b')
             ->addSelect('b')
+            ->addSelect('lw')
             ->groupBy('l.id')
-            ->orderBy('lw.createdAt', 'DESC')
+            ->orderBy('max(lw.createdAt)', 'DESC')
             ->addSelect('COUNT(CASE WHEN lw.isRead = 0 and lw.sender != :lenderId THEN 0 ELSE :null end) AS nbNewMessages')
             ->where('ub.user = :lenderId')
             ->setParameter('lenderId', $lenderId)
@@ -149,32 +150,25 @@ class LendingRepository extends ServiceEntityRepository
         ;
     }
 
-    // /**
-    //  * @return Lending[] Returns an array of Lending objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
+    /**
+    * return all lendings with count of new messages by lenderId
+    */
+    public function findNotificationNumber($lenderId, $userType){
+        $qb = $this->createQueryBuilder('l')
+            ->leftJoin('l.linkedWith', 'lw')
+            ->leftJoin('l.usersBook', 'ub')
+            ->addSelect('COUNT(CASE WHEN lw.isRead = 0 and lw.sender != :lenderId THEN 0 ELSE :null end) AS nbNewMessages')
+
+            ->setParameter('lenderId', $lenderId)
+            ->setParameter('null', NULL)
+        ;
+        if ($userType === 'borrower') {
+            $qb->where('l.borrower = :lenderId');
+        } elseif ($userType === 'lender') {
+            $qb->where('ub.user = :lenderId');
+        }
+        return $qb->getQuery()
             ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Lending
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

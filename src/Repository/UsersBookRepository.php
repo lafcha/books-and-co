@@ -69,7 +69,7 @@ class UsersBookRepository extends ServiceEntityRepository
         ;
     }
 
-        /**
+    /**
      * Returns number of usersBookById
      * @return int 
      */
@@ -84,6 +84,39 @@ class UsersBookRepository extends ServiceEntityRepository
         ;
     }
     
+    /**
+     * Returns an array with the pseudo of the user  linked to the users_book corresponding to users_book id
+     * @return array
+     */
+
+    public function findUserByUsersBookId($usersBookId){
+        return $this->createQueryBuilder('ub')
+        -> leftJoin('ub.user','u')
+        -> addSelect('u.pseudo')
+        -> addSelect('ub.id')
+        -> where('ub.id = :usersbookid')
+        -> setParameter('usersbookid', $usersBookId)
+        -> getQuery()
+        -> getResult()
+        ;
+    }
+
+    /**
+     * Returns an array with the title of the book linked to the users_book corresponding to users_book id
+     * @return array
+     */
+
+    public function findBookByUsersBookId($usersBookId){
+        return $this->createQueryBuilder('ub')
+        -> leftJoin('ub.book','b')
+        -> addSelect('b.title')
+        -> addSelect('ub.id')
+        -> where('ub.id = :usersbookid')
+        -> setParameter('usersbookid', $usersBookId)
+        -> getQuery()
+        -> getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?UsersBook

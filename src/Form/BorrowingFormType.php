@@ -33,7 +33,6 @@ class BorrowingFormType extends AbstractType
             ->add('id',HiddenType::class, [
                 'data' => $options['usersBookId']
             ])
-            ->add('save', SubmitType::class);
         ;
     }
 

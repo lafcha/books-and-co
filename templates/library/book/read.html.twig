@@ -13,7 +13,7 @@
 	<div class="flex justify-center">
 	<div class="flex margin w-4/6 mt-10">
 		<img
-		class="object-cover rounded-lg book-cover" src="{{ asset("assets/img/uploads/book_cover/") ~ book.cover }}" alt="bag">
+		class="object-cover rounded-lg book-cover" src="{{ book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ book.cover : asset("assets/img/illustrations/book-cover.jpg") }}" alt="Couverture du livre">
 		{# {{ dump(book) }} #}
 		<div class="md:w-2/3 px-4 rounded-lg">
 			<div class="grid grid-cols-4 gap-y-2">
@@ -35,13 +35,13 @@
 				{% endif %}
 				{% if app.user.slug != app.request.attributes.all['userSlug']  %}
 
-					<div class="flex items-end justify-end mt-4 top-auto">
-						{{ form_start(form) }}
-						{{ form_end(form) }}
-					</div>
-				{% endif %}
+						<div class="flex items-end justify-end mt-4 top-auto">
+							{{ form_start(form) }}
+							{{ form_end(form) }}
+						</div>
+					{% endif %}
+				</div>
 			</div>
 		</div>
 	</div>
-	</div>
-</div>{% endblock %}
+{% endblock %}

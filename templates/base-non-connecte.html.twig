@@ -24,38 +24,23 @@
 		<div class="container mx-auto flex flex-col min-h-screen relative">
 
 			{#--Header--#}
-			<div class="fixed mt-0 container z-50">
-				{% if app.user %}
-					{% include 'header-co.html.twig' %}
-				{% else %}
+				<div class="fixed mt-0 container z-50">
 					{% include 'header.html.twig' %}
-				{% endif %}
-			</div>
-
-			<div class="w-full pt-28 pb-44">
-				{#--Navigation -- only when connected#}
-					{% if app.user %}
-				<div class="fixed ">
-						{% include 'nav.html.twig' %}
 				</div>
-				{#--Main--#}
-				<div class="w-3/4 float-right"> {% block main %}{% endblock %}
-				</div>
-					{% endif %}
-			</div>
 
+				<div class="w-full pt-28 pb-44"> 
+					{% block main %}{% endblock %}
+				</div>
 
 
 			{#--Footer--#}
 			<div class="position w-full">
 				{% include 'footer.html.twig' %}
 			</div>
-		
 		</div>
-		<script src="{{ asset("assets/js/city.js") }}"></script>
-		<script src="{{ asset('assets/js/county.js') }}"></script>
-		<script src="{{ asset('assets/js/countyAndCityApp.js') }}"></script>
-
-	</body>
-
-</html>
+		</body>
+	</html>
+</div>
+<script src="{{ asset("assets/js/city.js") }}"></script>
+<script src="{{ asset('assets/js/county.js') }}"></script>
+<script src="{{ asset('assets/js/countyAndCityApp.js') }}"></script></body></html>

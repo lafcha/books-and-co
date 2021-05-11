@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class SearchController extends AbstractController
+class SearchController extends MainController
 {
     /**
      * @Route("/recherche", name="search")
@@ -30,8 +30,11 @@ class SearchController extends AbstractController
 
         return $this->render('search/search.html.twig', [
             'form' => $form->createView(),
+            'navSearchForm' => $form->createView(),
             'book' => $book,
             'countyValue' => $countyValue,
+            'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
         ]);
     }
 
