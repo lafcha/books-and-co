@@ -2,7 +2,7 @@
 	<div class="flex justify-center space-x-10 items-center">
 
 		{# Arrows #}
-		<div class=" hover:text-yellow-dark {{ (currentPage == 1) ? 'text-grey' : '' }} mr-5">
+		<div class=" hover:text-{{ (color_wanted is defined) ? color_wanted : 'pink' }} {{ (currentPage == 1) ? 'text-grey' : '' }} mr-5">
 			<a href="{{ (currentPage == 1) ? 'disabled' : '?page=1' }}{{ ((status is defined) ? ('&status=' ~ status) : '') }}">
 				<i class="fas fa-angle-double-left text-3xl"></i>
 			</a>
@@ -48,7 +48,7 @@
 					</div>
 
 				{% else %}
-					<div class=" {{ currentPage == item ? " bg-yellow-dark text-white" : " bg-grey text-blue"}} w-10 h-10 rounded-full flex justify-center items-center mr-4 ">
+					<div class=" {{ currentPage == item ? " bg-" ~ ((color_wanted is defined) ? color_wanted : 'pink') ~ " text-white" : " bg-grey text-blue"}} w-10 h-10 rounded-full flex justify-center items-center mr-4 ">
 						<a href="?page={{ item }}{{ ((status is defined) ? ('&status=' ~ status) : '') }}" class="text-base font-medium ">{{ (item )}}</a>
 					</div>
 				{% endif %}
