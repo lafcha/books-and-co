@@ -9,6 +9,7 @@
 			<p class="my-2">Books&amp;Co vous permet de prêter ou d’emprunter des livres près de chez vous auprès de particuliers.</p>
 			<p class="my-2">Sélectionnez votre département pour voir les livres disponibles près de chez vous !
 			</p>
+			<div class="flex items-center">
             <div class="relative inline-flex my-2">
                 <svg class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fill-rule="nonzero"/></svg>
             {{ form_start(searchForm) }}
@@ -20,6 +21,7 @@
                 <button type="submit" class="bg-pink hover:bg-yellow-dark text-white px-4 py-3 ml-8 rounded-full submit">
                     Rechercher
                 </button>
+			</div>
             {{ form_end(searchForm) }}
 		</div>
 		<div class="item w-96 mx-auto">
