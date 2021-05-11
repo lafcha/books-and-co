@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route("/bibliotheque/{userSlug}", name="library_")
@@ -75,13 +76,15 @@ class LibraryController extends MainController
             throw $this->createNotFoundException('Cet utilisateur n\'existe pas');
         }
 
-
         //error will be displayed in twig if there is many error
         $error = '';
 
         $usersBook = new UsersBook;
         $usersBook->setUser($user);
-
+        if ($user->getSlug() !== $libraryUser->getSlug()) {
+            throw new AccessDeniedException();
+        }
+        
         //get the user by slug
         $libraryUser = $userRepository->findOneBy(['slug' => $userSlug]);
 
@@ -222,7 +225,7 @@ class LibraryController extends MainController
     /**
      * @Route("/{slug}/modifier", name="book_edit")
      */
-    public function book_edit($userSlug, $slug, UserRepository $userRepository, BookRepository $bookRepository, Request $request, UploaderHelper $uploaderHelper): Response
+    public function book_edit($userSlug, $slug, UserInterface $user, UserRepository $userRepository, UsersBookRepository $usersBookRepository, BookRepository $bookRepository, Request $request, UploaderHelper $uploaderHelper): Response
     {
         //get the user by slug
         $libraryUser = $userRepository->findOneBy(['slug' => $userSlug]);
@@ -232,6 +235,13 @@ class LibraryController extends MainController
         }
         //get the book by slug
         $book = $bookRepository->findOneBy(['slug' => $slug]);
+
+        // access validation
+        $userBook = $usersBookRepository->findOneBy([
+            'user' => $user->getId(),
+            'book' => $book->getId(),
+        ]);
+        $this->denyAccessUnlessGranted('BOOK_EDIT', $userBook);
 
         // create the form
         $form = $this->createForm(BookType::class, $book);
@@ -284,6 +294,7 @@ class LibraryController extends MainController
             'user' => $user->getId(),
             'book' => $book->getId(),
         ]);
+        $this->denyAccessUnlessGranted('BOOK_EDIT', $userBook);
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($userBook);

@@ -32,14 +32,12 @@
 						<a href="{{ path('library_book_edit', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-yellow text-white px-4 py-2 rounded hover:underline mr-5">modifier</a>
 						<a href="{{ path('library_book_delete', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-pink text-white px-2 py-2 rounded-md mr-2">supprimer</a>
 					</div>
-				{% endif %}
-				{% if app.user.slug != app.request.attributes.all['userSlug']  %}
-
+				{% else %}
 						<div class="flex items-end justify-end mt-4 top-auto">
 							{{ form_start(form) }}
 							{{ form_end(form) }}
 						</div>
-					{% endif %}
+				{% endif %}
 				</div>
 			</div>
 		</div>
