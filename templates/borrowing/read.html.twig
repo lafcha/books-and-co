@@ -26,18 +26,18 @@
     {% for message in lendingData.linkedWith %}
 
     {# For each message #}
-    <div class="flex mb-4 pl-4 {{ (message.sender == app.user ) ? 'ml': 'mr' }}-36 {{ (message.sender == app.user ) ? 'justify-end' : '' }}">
+    <div class="flex mb-10 pl-4 {{ (message.sender == app.user ) ? 'ml': 'mr' }}-36 {{ (message.sender == app.user ) ? 'justify-end' : '' }}">
             {# -- if the user != the sender the avatars is on the left --#}
             <div class="{{ (message.sender == app.user ) ? 'hidden': '' }} w-16 h-16">
                 <img class="object-scale-down rounded-full h-16 w-16" src=" {{ message.sender.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ message.sender.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="Avatar">
             </div>
             {#-- Message--#}
-            <div class="flex-grow max-w-md">
-                <div class="{{ (message.sender == app.user ) ? 'bg-yellow-light' : 'bg-green-light' }} py-4 px-4 border-none rounded-lg {{ (message.sender == app.user ) ? 'mr': 'ml' }}-12 whitespace-pre-line h-full break-words">
-                    {{ message.content }}           
+            <div class="flex-grow max-w-xl">
+                <div class=" shadow-lg {{ (message.sender == app.user ) ? 'bg-yellow-light' : 'bg-green-light' }} border-none rounded-lg {{ (message.sender == app.user ) ? 'mr': 'ml' }}-12  h-full ">
+                    <p class="pt-6 px-6 pb-2 whitespace-pre-line break-words">{{ message.content }}</p>
                 </div>
-                <div class = "w-full">
-                    <p class="text-xs italic">par {{ message.sender.pseudo }} le {{ message.createdAt|format_datetime(pattern="dd/MM/YYYY' à' hh:mm:ss") }}</p> 
+                <div class = "w-full pt-2">
+                    <p class="text-xs italic {{ (message.sender == app.user ) ? '': 'pl-12' }}">par {{ message.sender.pseudo }} le {{ message.createdAt|format_datetime(pattern="dd/MM/YYYY' à' hh:mm:ss") }}</p> 
                 </div>           
             </div>
 
