@@ -37,7 +37,7 @@ class UsersBook
     private $book;
 
     /**
-     * @ORM\OneToMany(targetEntity=Lending::class, mappedBy="usersBook")
+     * @ORM\OneToMany(targetEntity=Lending::class, mappedBy="usersBook", cascade={"remove"})
      */
     private $usersBookLinkedTo;
 

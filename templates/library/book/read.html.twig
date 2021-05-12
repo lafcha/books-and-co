@@ -1,4 +1,6 @@
-{% extends 'base.html.twig' %}
+{% extends 'base' ~ ((app.user) ? '' : '-non-connecte') ~ '.html.twig' %}
+
+{% set book = usersBook.book %}
 
 {% block title %}
 	{{ book.title }}
@@ -27,17 +29,27 @@
 				<div class="text-justify col-span-3 tracking-tight">{{ book.description }}</div>
 			</div>
 			<div class="">
+			{% if app.user %}
 				{% if app.user.slug == app.request.attributes.all['userSlug'] %}
 					<div class="flex items-end justify-end mt-4 top-auto">
 						<a href="{{ path('library_book_edit', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-yellow text-white px-4 py-2 rounded hover:underline mr-5">modifier</a>
 						<a href="{{ path('library_book_delete', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-pink text-white px-2 py-2 rounded-md mr-2">supprimer</a>
 					</div>
-				{% else %}
+				{% elseif usersBook.isAvailable == true and isBorrowingableByUser %}
 						<div class="flex items-end justify-end mt-4 top-auto">
 							{{ form_start(form) }}
 							{{ form_end(form) }}
 						</div>
+				{% else %}
+					<div class="flex items-end justify-end mt-4 top-auto italic text-pink">
+						<p>Ce livre n'est pas disponible pour un prêt</p>
+					</div>
 				{% endif %}
+			{% else %}
+				<div class="flex items-end justify-end mt-4 top-auto italic text-pink">
+					<p>Connectez vous pour emprunter ce livre !</p>
+				</div>
+			{% endif %}
 				</div>
 			</div>
 		</div>
