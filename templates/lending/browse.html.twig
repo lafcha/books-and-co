@@ -6,16 +6,16 @@
 {% set status = (app.request.query.all['status'] is defined) ? app.request.query.all['status'] : null %}
 {% set currentRoute = app.request.attributes.all['_route'] %}
 
-    <div class="container px-5 pb-24 mx-auto">
+    <div class="container pb-24 mx-auto">
         {# ----------- Page title --------------#}	
         <div class=" w-full inset-0">
             {% if currentRoute == 'borrowing_browse' %}
-            <h1 class="text-blue font-cursive text-3xl flex justify-center mt-5 mb-5">Mes emprunts</h1>
+            <h1 class="text-blue font-cursive text-3xl flex justify-center mb-5">Mes emprunts</h1>
             <p class="text-{{ color_wanted }} text-center mt-2">
                 Gérez les demandes de prêts que vous avez fait
             </p>
             {% elseif currentRoute == 'lending_browse' %}
-            <h1 class="text-blue font-cursive text-3xl flex justify-center mt-5 mb-5">Mes prêts</h1>
+            <h1 class="text-blue font-cursive text-3xl flex justify-center mb-5">Mes prêts</h1>
             <p class="text-{{ color_wanted }} text-center mt-2">
                 Gérez les demandes de prêts que l'ont vous a fait
             </p>

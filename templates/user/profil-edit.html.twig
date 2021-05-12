@@ -36,7 +36,7 @@
 		</div>
 		<div class="mt-5 flex justify-between items-center">
 			<p class="w-1/2">Mon mot de passe</p>
-			<button class="rounded-full bg-blue py-2 px-4 text-white">
+			<button class="rounded-full bg-blue py-2 px-4 text-white hover:bg-yellow-dark">
 				<a href="{{ path('account_edit_password') }}">Changer</a>
 			</button>
 		</div>
@@ -44,7 +44,7 @@
 			{{ form_label(form.imageFile)  }}
 			<img class="object-scale-down rounded-full inline-block h-12 w-12" src="{{ app.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ app.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="Avatar">
 			<div class="flex items-center justify-center bg-grey-lighter ml-6">
-				<label class="flex flex-col items-center bg-pink text-white rounded-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white px-3">
+				<label class="flex flex-col items-center bg-pink text-white rounded-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white p-3">
 					<svg width="50" height="50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20">
 						<path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z"/>
 					</svg>
