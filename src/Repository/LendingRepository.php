@@ -49,6 +49,23 @@ class LendingRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    /**
+    * return all lendings with count of new messages by borrowerId
+    */
+    public function findByUsersBookIdAndUserHasNoBorrowingOnIt($usersBookId, $borrowerId){
+        return $this->createQueryBuilder('l')
+            ->leftJoin('l.linkedWith', 'lw')
+            ->leftJoin('l.usersBook', 'ub')
+            ->addSelect('ub')
+            ->andWhere('l.borrower = :borrowerId')
+            ->andWhere('ub.id = :usersBookId')
+            ->andWhere('l.status != 2')
+            ->setParameter('borrowerId', $borrowerId)
+            ->setParameter('usersBookId', $usersBookId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /**
     * return all lendings with count of new messages by lenderId

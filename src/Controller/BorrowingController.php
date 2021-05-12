@@ -64,9 +64,10 @@ class BorrowingController extends MainController
              //Filling the new lending entity with the info collected
             $lending->setBorrower($user);
             $lending->setUsersBook($usersBookEntity);
-    
+            $usersBookEntity->setIsAvailable(false);
 
             $em = $this->getDoctrine()->getManager();
+            $em->persist($usersBookEntity);
             $em->persist($lending);
             $em->flush();
 
@@ -89,9 +90,9 @@ class BorrowingController extends MainController
 
         return $this->render('borrowing/form.html.twig', [
             'borrowingForm' => $form->createView(),
-            'navSearchForm' => $this->navSearchForm()->createView(),
             'userPseudo'=> $userPseudo,
             'book'=> $book,
+            'navSearchForm' => $this->navSearchForm()->createView(),
             'notifications' => $this->getNotificationsArray(),
             ]
         );
@@ -152,10 +153,8 @@ class BorrowingController extends MainController
     {
         $lending = $lendingRepository->findAllLendingStats($lending->getId());
 
-        //TODO replace this with voters
-        if ($user->getId() != $lending->getBorrower()->getId()) {
-            throw $this->createNotFoundException('Ce prêt n\'est pas disponible');
-        }
+        $this->denyAccessUnlessGranted('BORROWER_READ', $lending);
+
         // when the user arrives on the page, the unread messages becomes read
         $unreadMessages = $messageRepository->findAllUnreadMessagesByLendingIdAndUserId($lending->getId(), $user->getId());
         if ($unreadMessages != null) {

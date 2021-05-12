@@ -84,7 +84,12 @@
                         <p class="text-gray-900 whitespace-no-wrap text-center">{{ lendingData[0].usersBook.book.author }}</p>
                     </td>
                     <td class="px-5 py-5 bg-white text-sm italic w-1/8">
-                        <p class="text-gray-900 whitespace-no-wrap text-center">{{ lendingData[0].borrower.pseudo }}</p>
+                        <p class="text-gray-900 whitespace-no-wrap text-center">
+                        {% if currentRoute == 'borrowing_browse' %}
+                            {{ lendingData[0].usersBook.user.pseudo }}
+                        {% elseif currentRoute == 'lending_browse' %}
+                            {{ lendingData[0].borrower.pseudo }}
+                        {% endif %}</p>
                     </td>
                     <td class="px-5 py-5 bg-white text-sm text-center italic w-1/6">
                         {% if (lendingData[0].status == 0) %}
