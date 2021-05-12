@@ -6,8 +6,10 @@ use App\Entity\Lending;
 use App\Entity\Message;
 use App\Form\BorrowingFormType;
 use App\Form\MessageType;
+use App\Repository\BookRepository;
 use App\Repository\LendingRepository;
 use App\Repository\MessageRepository;
+use App\Repository\UserRepository;
 use App\Repository\UsersBookRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,21 +48,23 @@ class BorrowingController extends MainController
         }
             
 
-            $form = $this->createForm(BorrowingFormType::class, null, [
-                'usersBookId'=> $usersBookId
-            ]);
-            
-            $form->handleRequest($request);
-    
+        $form = $this->createForm(BorrowingFormType::class, null, [
+            'usersBookId'=> $usersBookId
+        ]);
         
+        $form->handleRequest($request);
+        
+        // Retrieving the user pseudo & book title to display in the form page title
+        $userPseudo = $usersbook->findUserByUsersBookId($usersBookId)[0]['pseudo'];
+        $book = $usersbook->findBookByUsersBookId($usersBookId)[0]['title'];
+     
         if ($form->isSubmitted() && $form->isValid()) {
             
-            //Filling the new lending entity with the info collected
-            
-            $usersBookEntity = $usersbook->findOneBy(['id'=> $usersBookId]);
-
+            $usersBookEntity = $usersbook->find($usersBookId);
+             //Filling the new lending entity with the info collected
             $lending->setBorrower($user);
             $lending->setUsersBook($usersBookEntity);
+    
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($lending);
@@ -86,6 +90,8 @@ class BorrowingController extends MainController
         return $this->render('borrowing/form.html.twig', [
             'borrowingForm' => $form->createView(),
             'navSearchForm' => $this->navSearchForm()->createView(),
+            'userPseudo'=> $userPseudo,
+            'book'=> $book,
             'notifications' => $this->getNotificationsArray(),
             ]
         );
@@ -128,7 +134,7 @@ class BorrowingController extends MainController
         //lending list
         $lendingDatas = $lendingRepository->findAllByBorrowerId($userId, $page, $elementsLimit, $statusFilter);
 
-        return $this->render('borrowing/browse.html.twig', [
+        return $this->render('lending/browse.html.twig', [
             'lendingDatas' => $lendingDatas,
             'currentPage' => $page,
             'elementsTotal' => $elementsTotal,

@@ -1,53 +1,134 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LendingController!{% endblock %}
+{% block title %}Mes prêts{% endblock %}
 
 {% block main %}
 {% set status = (app.request.query.all['status'] is defined) ? app.request.query.all['status'] : null %}
+{% set currentRoute = app.request.attributes.all['_route'] %}
 
-filtrer par :
-<a href="{{ path('lending_browse') ~ '?page=1&status=attente'}}">
-    <button>
-        en attente
-    </button>
-</a>
-<a href="{{ path('lending_browse') ~ '?page=1&status=prete'}}">
-    <button>
-        prêtés
-    </button>
-</a>
-<a href="{{ path('lending_browse') ~ '?page=1&status=archive'}}">
-    <button>
-        archivés
-    </button>
-</a>
-{% if lendingDatas != null %}
-    <h1>Mes prets</h1>
+    <div class="container px-5 pb-24 mx-auto">
+        {# ----------- Page title --------------#}	
+        <div class=" w-full inset-0">
+            {% if currentRoute == 'borrowing_browse' %}
+            <h1 class="text-blue font-cursive text-3xl flex justify-center mt-5 mb-5">Mes emprunts</h1>
+            <p class="text-{{ color_wanted }} text-center mt-2">
+                Gérez les demandes de prêts que vous avez fait
+            </p>
+            {% elseif currentRoute == 'lending_browse' %}
+            <h1 class="text-blue font-cursive text-3xl flex justify-center mt-5 mb-5">Mes prêts</h1>
+            <p class="text-{{ color_wanted }} text-center mt-2">
+                Gérez les demandes de prêts que l'ont vous a fait
+            </p>
+            {% endif %}
+        </div>
 
-    {% for lendingData in lendingDatas %}
-    <div>
-    {#! To get a lenging : use lendingData[0] | To get the count of new messages : use lendingData[nbNewMessages] #}
-        {{ lendingData[0].usersBook.book.title ~ ' par ' ~ lendingData[0].usersBook.book.title }} <br>
-        {{ ' préteur : ' ~ lendingData[0].usersBook.user.pseudo }} <br>
-        <a href="{{ path('lending_read', { 'id': lendingData[0].id}) }}">go to</a>
+        {# ----------- Filters --------------#}	
+        <div class="mb-8 mt-16">
+            <p class="inline-flex font-semibold">
+                Filtrer par :
+            </p>
+            <a href="?page=1">
+                <button class="inline-flex rounded-full items-center {{ (status == '' or status == null ) ? 'bg-' ~ color_wanted : 'border' }}  font-semibold px-4 py-2 hover:bg-pink bg-whitefocus:outline-none text-base mt-4 md:mt-0 ml-4">Aucun</button>
+            </a>
+            <a href="?page=1&status=attente">
+                <button class="inline-flex rounded-full items-center {{ (status == 'attente' ) ? 'bg-' ~ color_wanted : 'border' }} font-semibold px-4 py-2 hover:bg-pink bg-whitefocus:outline-none text-base mt-4 md:mt-0 ml-4">En attente</button>
+            </a>
+            <a href="?page=1&status=prete">
+                <button class="inline-flex rounded-full items-center {{ (status == 'prete' ) ? 'bg-' ~ color_wanted : 'border' }} font-semibold px-4 py-2 hover:bg-pink bg-whitefocus:outline-none text-base mt-4 md:mt-0 ml-4">Prêtés</button>
+            </a>
+            <a href="?page=1&status=archive">
+                <button class="inline-flex rounded-full items-center {{ (status == 'archive' ) ? 'bg-' ~ color_wanted : 'border' }} font-semibold px-4 py-2 hover:bg-pink bg-whitefocus:outline-none text-base mt-4 md:mt-0 ml-4">Archivés</button>
+            </a>
+        </div>
+
+        {# ----------- Content --------------#}
+    {% if lendingDatas != null %}
+        <table class="min-w-full leading-normal">
+            <thead class="border-b-2 border-{{ color_wanted }}">
+                <tr>
+                    <th
+                        class="px-5 py-3 text-center text-xs uppercase tracking-wider">
+                        Titre
+                    </th>
+                    <th
+                        class="px-5 py-3 text-center text-xs uppercase tracking-wider">
+                        Auteur
+                    </th>
+                    <th
+                        class="px-5 py-3 text-center text-xs uppercase tracking-wider">
+                        {% if currentRoute == 'borrowing_browse' %}
+                            Emprunteur
+                        {% elseif currentRoute == 'lending_browse' %}
+                            Prêteur
+                        {% endif %}
+                    </th>
+                    <th
+                        class="px-5 py-3 text-center text-xs uppercase tracking-wider">
+                        Status
+                    </th>
+                    <th
+                        class="px-5 py-3 text-center text-xs uppercase tracking-wider">
+                    </th>
+                    <th
+                        class="px-5 py-3 text-center text-xs uppercase tracking-wider">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for lendingData in lendingDatas %}
+                <tr class="border-b border-{{ color_wanted }}">
+                    <td class="px-5 py-4 bg-white text-sm italic w-5/24">
+                        <p class="text-xl mb-2 whitespace-no-wrap uppercase mt-1">{{ lendingData[0].usersBook.book.title }}</p>
+                    </td>
+                    <td class="px-5 py-5 bg-white text-sm italic w-1/8">
+                        <p class="text-gray-900 whitespace-no-wrap text-center">{{ lendingData[0].usersBook.book.author }}</p>
+                    </td>
+                    <td class="px-5 py-5 bg-white text-sm italic w-1/8">
+                        <p class="text-gray-900 whitespace-no-wrap text-center">{{ lendingData[0].borrower.pseudo }}</p>
+                    </td>
+                    <td class="px-5 py-5 bg-white text-sm text-center italic w-1/6">
+                        {% if (lendingData[0].status == 0) %}
+                                <p class="text-yellow-dark">
+                                    en attente
+                                </p>
+                            {% elseif (lendingData[0].status == 1) %}
+                                <p class="text-pink">
+                                    prêté
+                                </p>
+                            {% else %}
+                                <p class="text-grey-dark">
+                                    archivé
+                                </p>
+                            {% endif %}
+                    </td>
+                    <td class="px-5 py-5 bg-white text-sm w-1/24">
+                        {% if lendingData['nbNewMessages'] > 0 %}
+                        <div class="inline-block text-pink text-sm">
+                            <i class="fas fa-bell"></i> {{lendingData['nbNewMessages']}}
+                        </div>
+                        {% endif %}
+                    </td>
+                    <td class="px-5 py-5 bg-white text-sm w-1/8">
+                        <div class="flex items-center float-right">
+                            <div class="mr-3">
+                                <p class="text-gray-900 whitespace-no-wrap text-right">
+                                    {% if currentRoute == 'borrowing_browse' %}
+                                    <a href="{{ path('borrowing_read', {'id': lendingData[0].id }) }}" class="bg-pink w-4 px-2 py-2 text-center  rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
+                                    {% elseif currentRoute == 'lending_browse' %}
+                                    <a href="{{ path('lending_read', {'id': lendingData[0].id }) }}" class="bg-pink w-4 px-2 py-2 text-center  rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+        {% endfor %}
+            </tbody>
+        </table>
     </div>
-    <div>
-        {{'nouveaux messages :' ~ lendingData['nbNewMessages'] }}
-    </div>
-    status :
-    {% if (lendingData[0].status == 0) %}
-        en attente
-    {% elseif (lendingData[0].status == 1) %}
-        en prêt
-    {% else %}
-        archivé
-    {% endif %}
-    <hr>
-    <br>
-    {% endfor %}
-
     {% include 'pagination.html.twig' %}
-{% else %}
-    <h1>Vous n'avez pas de demande</h1>
-{% endif %}
+    {% else %}
+        {# empty research #}
+        <p class="text-center text-pink italic mt-8">Oups ! Il n'y a aucune demande !</p>
+    {% endif %}
 {% endblock %}

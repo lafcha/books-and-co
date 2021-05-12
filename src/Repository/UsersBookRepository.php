@@ -40,17 +40,35 @@ class UsersBookRepository extends ServiceEntityRepository
     /**
     * return all avalaible books by city 
     */
-    public function findAllAvalaibleBooksByCity($criteria){
+    public function findAllAvalaibleBooksByCity($county, $page, $limit){
         return $this->createQueryBuilder('ub')
-                    ->leftJoin('ub.user', 'u')
-                    ->leftJoin('ub.book', 'b')
-                    ->where('u.county = :county')
-                    ->andWhere('ub.isAvailable = 1')
-                    ->setParameter('county', $criteria)
-                    ->addSelect('b')
-                    ->addSelect('u')
-                    ->getQuery()
-                    ->getResult()
+            ->leftJoin('ub.user', 'u')
+            ->leftJoin('ub.book', 'b')
+            ->where('u.county = :county')
+            ->andWhere('ub.isAvailable = 1')
+            ->setParameter('county', $county)
+            ->addSelect('b')
+            ->addSelect('u')
+            ->setFirstResult(($page * $limit) -$limit)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * Returns number of usersBookById
+     * @return int 
+     */
+    public function findAllAvalaibleBooksByCityCount($county){
+        
+        return $this->createQueryBuilder('ub')
+            ->select('COUNT(ub)')
+            ->leftJoin('ub.user', 'u')
+            ->where('u.county = :county')
+            ->setParameter('county', $county)
+            ->getQuery()
+            ->getSingleScalarResult()
         ;
     }
 
@@ -69,7 +87,7 @@ class UsersBookRepository extends ServiceEntityRepository
         ;
     }
 
-        /**
+    /**
      * Returns number of usersBookById
      * @return int 
      */
@@ -84,6 +102,39 @@ class UsersBookRepository extends ServiceEntityRepository
         ;
     }
     
+    /**
+     * Returns an array with the pseudo of the user  linked to the users_book corresponding to users_book id
+     * @return array
+     */
+
+    public function findUserByUsersBookId($usersBookId){
+        return $this->createQueryBuilder('ub')
+        -> leftJoin('ub.user','u')
+        -> addSelect('u.pseudo')
+        -> addSelect('ub.id')
+        -> where('ub.id = :usersbookid')
+        -> setParameter('usersbookid', $usersBookId)
+        -> getQuery()
+        -> getResult()
+        ;
+    }
+
+    /**
+     * Returns an array with the title of the book linked to the users_book corresponding to users_book id
+     * @return array
+     */
+
+    public function findBookByUsersBookId($usersBookId){
+        return $this->createQueryBuilder('ub')
+        -> leftJoin('ub.book','b')
+        -> addSelect('b.title')
+        -> addSelect('ub.id')
+        -> where('ub.id = :usersbookid')
+        -> setParameter('usersbookid', $usersBookId)
+        -> getQuery()
+        -> getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?UsersBook

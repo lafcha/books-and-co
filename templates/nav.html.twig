@@ -1,4 +1,4 @@
-<nav class=" px-2 text-blue text-center">
+<nav class="bg-{{ color_wanted }} shadow-lg px-5 rounded-lg text-blue text-center">
 	<div class="">
 	<div class="mx-auto">
 		<ul class="list-reset flex flex-row md:flex-col text-center">
@@ -6,10 +6,10 @@
 				<img src="{{asset("assets/img/illustrations")}}/books-w.svg" alt="Icône Bibliothèque" class=" h-12 hidden md:block mx-auto">
 				<span class="pb-1 md:pb-0 text-xs md:text-sm block  pt-1 md:inline-block text-white uppercase tracking-wide md:pt-3">Ma Bibiliothèque</span>
 				<ul class="underline text-xs md:text-sm text-left md:pt-3 md:ml-2">
-					<a href="#" class="my-2">
+					<a href="{{ path('library_browse', {'userSlug' : app.user.slug}) }}" class="my-2">
 						<li>Mes livres</li>
 					</a>
-					<a href="#" class="my-2">
+					<a href="{{ path('library_book_add', {'userSlug' : app.user.slug}) }}" class="my-2">
 						<li>Ajouter un livre</li>
 					</a>
 				</ul>
@@ -18,10 +18,10 @@
 				<img src="{{asset("assets/img/illustrations")}}/lending-w.svg" alt="Icône Prêt" class=" h-12 hidden md:block mx-auto">
 				<span class="pb-1 md:pb-0 text-xs md:text-sm block md:inline-block pt-1 text-white uppercase tracking-wide md:pt-3">Mes prêts</span>
 				<ul class="underline text-xs md:text-sm text-left md:pt-3">
-					<a href="#" class="my-2">
+					<a href="{{ path('borrowing_browse') }}" class="my-2">
 						<li>Mes emprunts</li>
 					</a>
-					<a href="#" class="my-2">
+					<a href="{{ path('lending_browse') }}" class="my-2">
 						<li>Mes livres prêtés</li>
 					</a>
 				</ul>
@@ -39,7 +39,7 @@
 						</select>
 					</div>
 				</div>
-				<button type="submit" class=" bg-yellow-dark px-6 md:px-8 py-2 rounded-full items-center focus:outline-none text-xs md:text-sm mt-1 md:mt-3 text-white submit">Rerchercher</button>
+				<button type="submit" class=" bg-white border-2 border-white hover:border-blue px-6 md:px-8 py-2 mb-5 rounded-full items-center focus:outline-none text-xs md:text-sm mt-1 md:mt-3 text-blue submit">Rerchercher</button>
 			</li>
 			{{ form_end(navSearchForm)}}
 		</ul>

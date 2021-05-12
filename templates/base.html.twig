@@ -15,46 +15,57 @@
 		<script src="https://kit.fontawesome.com/0434b5e439.js" crossorigin="anonymous"></script>
 
 		{#CSS#}
-             {{ encore_entry_link_tags('app') }}
+		{{ encore_entry_link_tags('app') }}
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
-	<body>
-		<div class="container mx-auto h-full grid grid-rows-3">
+	<body class="h-full m-0 p-0">
+		<div class="container mx-auto flex flex-col min-h-screen relative">
 
-			{#--Header--#}	
-			<div class = "fixed mt-0 container z-50">			
+			{#--Header--#}
+			<div class="fixed mt-0 container z-50">
 				{% if app.user %}
-					{% include 'header-co.html.twig' %}	
+					{% include 'header-co.html.twig' %}
 				{% else %}
-					{% include 'header.html.twig' %}	
+					{% include 'header.html.twig' %}
 				{% endif %}
 			</div>
-			
-		<div class="flex w-full pt-28 h-full">
-			{#--Navigation -- only when connected#}	
-				<div class=" bg-yellow-dark">
-					{% if app.user %}
-						{% include 'nav.html.twig' %}
-					{% endif %}					
-				</div>
-			{#--Main--#}
-				<div class=" h-full w-full">			
-					{% block main %}{% endblock %}			
-				</div>
-		</div>
 
-			
+			<div class="w-full pt-28 pb-44">
+				{#--Navigation -- only when connected#}
+				{% if app.user %}
+					{#--Some tests to set the wanted color used in nav and some pages#}
+					{% if app.request.attributes.all._route == "borrowing_form" or app.request.attributes.all._route == "borrowing_browse" or app.request.attributes.all._route == "borrowing_read" %}
+						{% set color_wanted = 'yellow-dark' %}
+						{% set nav_button = 'green' %}
+					{% elseif app.request.attributes.all._route == "lending_form" or app.request.attributes.all._route == "lending_browse" or app.request.attributes.all._route == "lending_read" %}
+						{% set color_wanted = 'green' %}
+						{% set nav_button = 'pink' %}
+					{% else %}
+						{% set color_wanted = 'pink' %}
+						{% set nav_button = 'yellow-dark' %}
+					{% endif %}
+					<div class="fixed ">
+						{% include 'nav.html.twig' %}
+					</div>
+					{#--Main--#}
+					<div class="w-3/4 float-right"> 
+						{% block main %}{% endblock %}
+					</div>
+				{% endif %}
+			</div>
 
 			{#--Footer--#}
-			<div class="w-full">			
-				{% include 'footer.html.twig' %}		
-			</div>	
-		</div>
+			<div class="position w-full">
+				{% include 'footer.html.twig' %}
+			</div>
 		
+		</div>
 		<script src="{{ asset("assets/js/city.js") }}"></script>
 		<script src="{{ asset('assets/js/county.js') }}"></script>
 		<script src="{{ asset('assets/js/countyAndCityApp.js') }}"></script>
+
 	</body>
+
 </html>

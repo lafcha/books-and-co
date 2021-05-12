@@ -1,6 +1,6 @@
 <header class="py-6 bg-white">
     <div class="flex items-center justify-between flex-wrap">
-        <a href=" {{ path('accueil_browse') }}"class="flex title-font font-medium items-center mb-4 md:mb-0">
+        <a href=" {{ path('library_browse', {'userSlug' : app.user.slug}) }}"class="flex title-font font-medium items-center mb-4 md:mb-0">
             <img src="{{asset("assets/img/illustrations")}}/logo.svg" alt="Logo de BooksAndCo">
             <span class="font-cursive ml-3 text-xl logo text-pink">Books&amp;Co</span>
         </a>
@@ -20,7 +20,7 @@
                     <p class= "inline-block text-center text-pink text-sm">
                         <i class="fas fa-bell"></i> <a href="{{ path('borrowing_browse') }}">Vous avez {{ notifications.borrowingNotifications }} notification{{ (notifications.borrowingNotifications > 1) ? 's' : '' }} d'emprunt
                     </p></a>
-                {% elseif notifications.borrowingNotifications and notifications.lendingNotifications %}
+                {% elseif notifications.lendingNotifications %}
                     <p class= "inline-block text-center text-pink text-sm">
                         <i class="fas fa-bell"></i> <a href="{{ path('lending_browse') }}"> Vous avez {{ notifications.lendingNotifications }} notification{{ (notifications.lendingNotifications > 1) ? 's' : '' }} de prêt</a>
                     </p></a>
