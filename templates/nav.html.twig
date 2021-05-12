@@ -3,7 +3,7 @@
 	<div class="mx-auto">
 		<ul class="list-reset flex flex-row md:flex-col text-center">
 			<li class="mr-3 flex-1 md:mt-7">
-				<img src="{{asset("assets/img/illustrations")}}/books-w.svg" alt="Icône Bibliothèque" class=" h-12 hidden md:block mx-auto">
+				<img src="{{asset("assets/img/illustrations")}}/books-w.svg" alt="Icône Bibliothèque" class=" h-8 hidden md:block mx-auto">
 				<span class="pb-1 md:pb-0 text-xs md:text-sm block  pt-1 md:inline-block text-blue uppercase tracking-wide md:pt-3 font-semibold">Ma Bibiliothèque</span>
 				<ul class="underline text-xs md:text-sm md:pt-3 md:ml-2 text-{{ links }}">
 					<a href="{{ path('library_browse', {'userSlug' : app.user.slug}) }}" class="my-2">
@@ -15,7 +15,7 @@
 				</ul>
 			</li>
 			<li class="mr-3 flex-1 md:mt-7">
-				<img src="{{asset("assets/img/illustrations")}}/lending-w.svg" alt="Icône Prêt" class=" h-12 hidden md:block mx-auto">
+				<img src="{{asset("assets/img/illustrations")}}/lending-w.svg" alt="Icône Prêt" class=" h-8 hidden md:block mx-auto">
 				<span class="pb-1 md:pb-0 text-xs md:text-sm block md:inline-block pt-1 text-blue uppercase tracking-wide md:pt-3 font-semibold">Mes prêts</span>
 				<ul class="underline text-xs md:text-sm md:pt-3 text-{{ links }}">
 					<a href="{{ path('borrowing_browse') }}" class="my-2">
@@ -28,7 +28,7 @@
 			</li>
 			{{ form_start(navSearchForm)}}
 			<li class=" flex-1 md:mt-7">
-				<img src="{{asset("assets/img/illustrations")}}/looking-glass-w.svg" alt="Icône Recherche" class=" h-12 hidden md:block mx-auto">
+				<img src="{{asset("assets/img/illustrations")}}/looking-glass-w.svg" alt="Icône Recherche" class=" h-8 hidden md:block mx-auto">
 				<span class="pb-1 md:pb-0 text-xs md:text-sm block md:inline-block text-blue uppercase tracking-wide md:pt-3 pt-1 font-semibold">Rechercher un livre</span>
 				<div class="mt-5 lg:flex justify-center items-center hidden md:flex">
 					<div id="county-error"></div>
