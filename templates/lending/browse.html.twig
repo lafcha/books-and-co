@@ -11,14 +11,14 @@
         <div class=" w-full inset-0">
             {% if currentRoute == 'borrowing_browse' %}
             <h1 class="text-blue font-cursive text-3xl flex justify-center mb-5">Mes emprunts</h1>
-            <p class="text-{{ color_wanted }} text-center mt-2">
+            <h2 class="text-{{ color_wanted }} text-center pt-4">
                 Gérez les demandes de prêts que vous avez fait
-            </p>
+            </2>
             {% elseif currentRoute == 'lending_browse' %}
             <h1 class="text-blue font-cursive text-3xl flex justify-center mb-5">Mes prêts</h1>
-            <p class="text-{{ color_wanted }} text-center mt-2">
+            <h2 class="text-{{ color_wanted }} text-center mt-2">
                 Gérez les demandes de prêts que l'ont vous a fait
-            </p>
+            </h2>
             {% endif %}
         </div>
 

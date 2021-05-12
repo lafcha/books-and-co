@@ -5,6 +5,11 @@
 
 {% block main %}
 
+{#-- Title -- #}
+<h1 class="text-blue font-cursive text-3xl flex justify-center mb-2">Recherchez un livre</h1>
+<h2>Reche</h2>
+
+
 {# -- Search Form --#}
 	{{ form_start(form) }}
 	<div class="mt-5 flex items-center">
@@ -33,7 +38,6 @@
 	{% elseif book != null %}
 
 {# -- Search results--#}
-	<h1 class="text-blue font-cursive text-3xl flex justify-center mt-10">Résultat de la recherche</h1>
 	<section class="overflow-hidden">
 		<div class="container px-5 py-24 mx-auto">
 			{% for usersBook in book %}
