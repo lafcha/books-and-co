@@ -44,8 +44,8 @@ class MainController extends AbstractController
 
         $lengingRepository = $this->getDoctrine()->getRepository(Lending::class);
         $notifications = [
-            'lendingNotifications' => $lengingRepository->findNotificationNumber($user->getId(), 'lender')[0]['nbNewMessages'],
-            'borrowingNotifications' => $lengingRepository->findNotificationNumber($user->getId(), 'borrower')[0]['nbNewMessages'],
+            'lendingNotifications' => $user ? $lengingRepository->findNotificationNumber($user->getId(), 'lender')[0]['nbNewMessages'] : null,
+            'borrowingNotifications' => $user ? $lengingRepository->findNotificationNumber($user->getId(), 'borrower')[0]['nbNewMessages'] : null,
         ];
         return $notifications;
     }

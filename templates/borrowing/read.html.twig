@@ -3,27 +3,72 @@
 
 {% block main %}
 
-    <h1>Ma demande d'emprunts du livre {{ lendingData.usersBook.book.title }} auprès de {{ lendingData.usersBook.user.pseudo }}</h1>
+{#--PAGE TITLE--#}
+<div class="text-center mb-24">
+    <h1 class="text-3xl font-medium font-cursive">Ma demande d'emprunt du livre "{{ lendingData.usersBook.book.title }}"</h1>
+    <h3 class="py-4 text-green">Un livre prêté par <span class="text-pink italic">{{ lendingData.usersBook.user.pseudo }}</span></h3>
+
+      <div>
+        Status du prêt : 
+            {% if (lendingData.status == 0) %}
+                <span class ="bg-yellow w-4 px-4 py-2 text-center rounded-full focus:outline-none md:text-sm text-blue">En attente</span>
+            {% elseif (lendingData.status == 1) %}
+                <span class ="bg-pink w-4 px-4 py-2 text-center rounded-full focus:outline-none md:text-sm text-white">En prêt</span>
+            {% else %}
+                 <span class ="bg-grey w-4 px-4 py-2 text-center rounded-full focus:outline-none md:text-sm text-blue">Clôturé</span>
+            {% endif %}      
+    </div>
+</div>
+
+{#--MESSAGES--#}
+<div class="flex mx-auto flex-col">
     {# use lendingData.linkedWith to get an array of messages #}
     {% for message in lendingData.linkedWith %}
-        <div class="{{ (message.sender == app.user ) ? 'droite' : 'gauche' }}">
-            {{ message.content }}
-            par {{ message.sender.pseudo }}
-            à {{ message.createdAt|format_datetime(pattern="hh:mm:ss', le' dd/MM/YYYY") }}
+
+    {# For each message #}
+    <div class="flex mb-4 pl-4 {{ (message.sender == app.user ) ? 'ml': 'mr' }}-36 {{ (message.sender == app.user ) ? 'justify-end' : '' }}">
+            {# -- if the user != the sender the avatars is on the left --#}
+            <div class="{{ (message.sender == app.user ) ? 'hidden': '' }} w-16 h-16">
+                <img class="object-scale-down rounded-full h-16 w-16" src=" {{ message.sender.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ message.sender.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="Avatar">
+            </div>
+            {#-- Message--#}
+            <div class="flex-grow max-w-md">
+                <div class="{{ (message.sender == app.user ) ? 'bg-yellow-light' : 'bg-green-light' }} py-4 px-4 border-none rounded-lg {{ (message.sender == app.user ) ? 'mr': 'ml' }}-12 whitespace-pre-line h-full break-words">
+                    {{ message.content }}           
+                </div>
+                <div class = "w-full">
+                    <p class="text-xs italic">par {{ message.sender.pseudo }} le {{ message.createdAt|format_datetime(pattern="dd/MM/YYYY' à' hh:mm:ss") }}</p> 
+                </div>           
+            </div>
+
+            {# -- if the user == the sender the avatars is on the right --#}
+            <div class="{{ (message.sender == app.user ) ? '': 'hidden' }} w-16 h-16">
+                <img class="object-scale-down rounded-full h-16 w-16" src="{{ message.sender.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ message.sender.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="Avatar">
+            </div>  
+    </div>
+ {% endfor %}
+</div>      
+   
+{#--ANSWER FORM--#}
+    <div class="md:w-1/2 max-w-lg mx-auto my-4 px-4 py-5 shadow-none">
+     {{ form_start(sendMessageForm) }}
+        <div class="mt-5 flex justify-between">
+        		{{ form_label(sendMessageForm.content, null, {
+                    'label': 'Message',
+                    'label_attr': {'class': 'w-1/2'}    
+                }) 
+                }}
+            {{ form_widget(sendMessageForm.content, {
+                'attr': {'class': 'text-area-resize border-none rounded-lg w-full bg-grey h-40 text-base outline-none py-1 px-3 leading-6'}    
+                })  
+            }}
         </div>
-    {% endfor %}
-    <div>
-        status du prêt :
-        {% if (lendingData.status == 0) %}
-            en attente
-        {% elseif (lendingData.status == 1) %}
-            en prêt
-        {% else %}
-            archivé
-        {% endif %}
+        
     </div>
-    <div>
-        {{ form_start(sendMessageForm) }}
-        {{ form_end(sendMessageForm) }}
+    <div class="flex justify-between items-center w-full mt-10">
+            <div></div>
+            <button type="submit" class="custom-btn inline-block focus:outline-none text-base text-white">Envoyer</button>
     </div>
+    {{ form_end(sendMessageForm) }}
+</div>
 {% endblock %}
