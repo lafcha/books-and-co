@@ -12,8 +12,8 @@
 	<div class=" w-full inset-0 {{ (user.pseudo == app.user) ? '' : 'hidden'}}">
 		<h1 class="text-blue font-cursive text-3xl flex justify-center">Mes livres </h1>
 		<h2 class="text-pink text-center pt-4"> Retrouvez ici tous les livres de votre bibilothèque</h2>
-		<div class="items-center mb-10 text-center mt-4">
-			<a href="{{ path('library_book_add', {'userSlug': app.user.slug}) }}" role="button" class="bg-yellow-dark hover:bg-pink text-white px-4 py-3 rounded-full">
+		<div class="items-center mb-10 text-center mt-6">
+			<a href="{{ path('library_book_add', {'userSlug': app.user.slug}) }}" role="button" class="bg-yellow-dark hover:bg-pink text-white font-semibold px-4 py-3 rounded-full">
 				Ajouter un livre
 			</a>
 		</div>
@@ -22,48 +22,54 @@
 	<div class=" w-full inset-0 {{ (user.pseudo == app.user) ? 'hidden' : ''}}">
 		<h1 class="text-blue font-cursive text-3xl flex justify-center">Bibliothèque de {{ user.pseudo }} </h1>
 		<h2 class="text-yellow-dark text-center mt-2">
+			<i class="fas fa-map-marker-alt mr-3"></i>
 			{{ user.city }}
 		</h2>
 	</div>
 
 	{# ------------If library is empty --------------#}
 	{% if usersBooks == null %}
-
-		<p class="text-center text-pink italic mt-8">Oups ! Cette bibliothèque est vide !</p>
-		{# if the user connected is equal to the library's user AND if usersBooks is null #}
-		{% if app.user.slug == app.request.attributes.all['userSlug'] %}
-			<div class="items-center mb-10">
-				<a href="{{ path('library_book_add', {'userSlug': app.user.slug}) }}" role="button" class="bg-pink hover:bg-yellow-dark text-white px-4 py-3 rounded-full">
-					Ajouter un livre
-				</a>
-			</div>
-			
-		{% endif %}
+	<section>
+		<div class="xl:w-1/2 lg:w-3/4 w-full mx-auto text-center mt-12">
+			<i class="fas fa-heart-broken text-pink text-4xl mb-5"></i>
+			<p class="leading-relaxed text-lg">Oups ! {{ (app.user == user.pseudo) ? 'Votre' : 'Cette'}} bibliothèque est vide !</p>
+			<span class="inline-block h-1 w-10 rounded bg-blue mt-8 mb-6"></span>
+		</div>
+	</section>
+	
 	{% else %}
 
 	{# ------------Library books --------------#}
-	<div class="container px-5 py-12 mx-auto">
+	<section class="container px-5 py-12 mx-auto">
 		{% for usersbook in usersBooks %}
-				<div class="my-8 border-b-2 ">
+				<div class="my-8 border-b-2 border-grey-dark ">
 					<div class="py-8 flex flex-wrap md:flex-nowrap">
 						<div class="md:w-1/12 md:mb-0 mb-6 flex-shrink-0 mr-10 flex flex-col">
 							<a href=""><img src="{{ usersbook.book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ usersbook.book.cover : asset("assets/img/illustrations/book-cover.jpg") }}"></a>
 						</div>
 						<div class="md:flex-grow">
-							<h2 class="text-2xl title-font mb-2 uppercase text-pink">
+							<h2 class="text-2xl title-font mb-2 uppercase text-pink tracking-wider">
 								<a href="">{{ usersbook.book.title }}</a>
 							</h2>
 							<p class="leading-relaxed font-semibold">Auteur : {{ usersbook.book.author }}</p>
 							<p>Editeur : {{ usersbook.book.editor }}</p>
-							<p class="text-sm text-grey-dark">ISBN : {{ usersbook.book.isbn }}</p>
+							<p class="text-sm text-grey-dark italic">ISBN : {{ usersbook.book.isbn }}</p>
 						</div>
-						<div class="">
-							<a href="{{ path('library_book_read', {'userSlug': usersbook.user.slug, 'slug': usersbook.book.slug }) }}" class="bg-pink w-4 px-4 py-2 text-center rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
+						<div class="flex flex-col justify-between items-end">
+							{% if app.user == user.pseudo %}
+								{% if usersbook.isAvailable == 0  %}
+									<p class="text-green text-right"><i class="fas fa-bookmark mr-3"></i>Diponible au prêt</p>
+								{% else %}
+									<p class="text-yellow-dark text-right"><i class="far fa-bookmark mr-3"></i>En prêt ou en attente</p>
+								{% endif %}
+							{% endif %}
+							<button class="bg-pink font-semibold hover:bg-yellow-dark h-10 w-28 px-4 md:px-4 py-2 rounded-full items-center text-center focus:outline-none md:text-sm text-white"><a href="{{ path('library_book_read', {'userSlug': usersbook.user.slug, 'slug': usersbook.book.slug }) }}" >Voir plus</a></button>
+						
 						</div>
 					</div>
 				</div>
 			{% endfor %}
-	</div>
+	</section>
 
 	{# ------------Pagination --------------#}
 	{% include "pagination.html.twig" %}
