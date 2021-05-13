@@ -39,18 +39,24 @@
 					{% if app.request.attributes.all._route == "borrowing_form" or app.request.attributes.all._route == "borrowing_browse" or app.request.attributes.all._route == "borrowing_read" %}
 						{% set color_wanted = 'yellow-dark' %}
 						{% set nav_button = 'green' %}
+						{% set button_text = 'blue' %}
+						{% set links = 'blue' %}
 					{% elseif app.request.attributes.all._route == "lending_form" or app.request.attributes.all._route == "lending_browse" or app.request.attributes.all._route == "lending_read" %}
 						{% set color_wanted = 'green' %}
 						{% set nav_button = 'pink' %}
+						{% set button_text = 'white' %}
+						{% set links = 'blue' %}
 					{% else %}
 						{% set color_wanted = 'pink' %}
 						{% set nav_button = 'yellow-dark' %}
+						{% set button_text = 'blue' %}
+						{% set links = 'white' %}
 					{% endif %}
 					<div class="fixed ">
 						{% include 'nav.html.twig' %}
 					</div>
 					{#--Main--#}
-					<div class="w-3/4 float-right"> 
+					<div class="w-3/4 float-right pt-16"> 
 						{% block main %}{% endblock %}
 					</div>
 				{% endif %}

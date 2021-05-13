@@ -1,6 +1,6 @@
 	{# ------------Pagination --------------#}
 	{% set researchCountyValue = (app.request.query.all('search_form')['county'] is defined) ? ('&search_form%5Bcounty%5D=' ~ app.request.query.all('search_form')['county']) : '' %}
-	<div class="flex justify-center space-x-10 items-center">
+	<div class="flex justify-center space-x-10 items-center mb-4">
 		{# Arrows #}
 		<div class=" hover:text-{{ (color_wanted is defined) ? color_wanted : 'pink' }} {{ (currentPage == 1) ? 'text-grey' : '' }} mr-5">
 			<a href="{{ (currentPage == 1) ? 'disabled' : '?page=1' }}{{researchCountyValue}}{{ ((status is defined and status != '') ? ('&status=' ~ status) : '') }}">

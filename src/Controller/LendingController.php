@@ -55,11 +55,6 @@ class LendingController extends MainController
         //lending list
         $lendingDatas = $lendingRepository->findAllByLenderId($userId, $page, $elementsLimit, $statusFilter);
 
-        if (empty($lendingDatas) && $elementsTotal != 0) {
-            // throw 404 if the page returns an empty array
-            throw $this->createNotFoundException('Cette page n\'existe pas');
-        }
-
         return $this->render('lending/browse.html.twig', [
             'lendingDatas' => $lendingDatas,
             'currentPage' => $page,

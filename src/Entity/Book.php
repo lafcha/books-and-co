@@ -55,7 +55,7 @@ class Book
     private $slug;
 
     /**
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="bigint", unique=true)
      */
     private $isbn;
 

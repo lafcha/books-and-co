@@ -1,11 +1,11 @@
-<header class="py-6 bg-white">
+<header class="py-5 bg-white">
     <div class="flex items-center justify-between flex-wrap">
         <a href=" {{ path('library_browse', {'userSlug' : app.user.slug}) }}"class="flex title-font font-medium items-center mb-4 md:mb-0">
             <img src="{{asset("assets/img/illustrations")}}/logo.svg" alt="Logo de BooksAndCo">
             <span class="font-cursive ml-3 text-xl logo text-pink">Books&amp;Co</span>
         </a>
         <div>
-            <p class="text-center text-green text-lg">Bonjour {{ app.user.pseudo }} !</p>
+            <p class="text-center text-green text-lg font-semibold">Bonjour {{ app.user.pseudo }} !</p>
             <div>
                 {% if notifications.borrowingNotifications and notifications.lendingNotifications %}
                 
@@ -27,12 +27,12 @@
                 {% endif %}
             </div>
         </div>
-        <div class="flex flex-col h-3">
+        <div class="flex flex-col">
             <div class>
                 <a href="{{ path('app_logout') }}" class="text-sm underline inline-block text-center hover:text-pink mr-1">Déconnexion</a>
                 <img class="object-scale-down rounded-full inline-block h-10 w-10 mr-4" src="{{ app.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ app.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="Avatar">
             </div>
-            <a href="{{ path('account_edit') }}" class="text-yellow-dark hover:text-pink text-sm text-right">Mon compte</a>
+            <a href="{{ path('account_edit') }}" class="text-yellow-dark hover:text-pink text-sm text-right pt-2">Mon compte</a>
         </div>
     </div>
 </header>
