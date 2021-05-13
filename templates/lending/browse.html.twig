@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Books&amp;Co |Mes prêts ou mes emprunts
+{% set status = (app.request.query.all['status'] is defined) ? app.request.query.all['status'] : null %}
+{% set currentRoute = app.request.attributes.all['_route'] %}
+
+{% block title %}Books&amp;Co | 
+    {% if currentRoute == 'borrowing_browse' %} Mes emprunts{% endif %}
+    {% if currentRoute == 'lending_browse' %} Mes prêts{% endif %}
 {% endblock %}
 
 {% block main %}
-{% set status = (app.request.query.all['status'] is defined) ? app.request.query.all['status'] : null %}
-{% set currentRoute = app.request.attributes.all['_route'] %}
+
 
     <div class="container pb-24 mx-auto">
         {# ----------- Page title --------------#}	
@@ -13,7 +17,7 @@
             {% if currentRoute == 'borrowing_browse' %}
             <h1 class="text-blue font-cursive text-3xl flex justify-center mb-5">Mes emprunts</h1>
             <h2 class="text-{{ color_wanted }} text-center pt-4">
-                Gérez les demandes de prêts que vous avez fait
+                Gérez les demandes de prêts que vous avez faites
             </2>
             {% elseif currentRoute == 'lending_browse' %}
             <h1 class="text-blue font-cursive text-3xl flex justify-center mb-5">Mes prêts</h1>
