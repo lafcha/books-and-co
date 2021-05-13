@@ -3,8 +3,8 @@
 
 {% block main %}
 
-<h1 class="text-3xl font-medium font-cursive text-center">Demande d'emprunt de "{{book}}"</h1>
-<h3 class="p-1 text-green text-center">Vous souhaitez demander le prêt du livre de <span class="text-pink italic">{{userPseudo}}</span></h3>
+<h1 class="text-3xl font-cursive text-center">Demande d'emprunt de "{{book}}"</h1>
+<h3 class="pt-4 text-pink text-center">Vous souhaitez demander le prêt du livre de <span class="text-pink italic">{{ userPseudo }}</span></h2>
 
 <div class="md:w-1/2 max-w-lg mx-auto my-24 px-4 py-5 shadow-none">
     {{ form_start(borrowingForm) }}

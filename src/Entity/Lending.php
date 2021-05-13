@@ -31,12 +31,12 @@ class Lending
     private $borrower;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="lending")
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="lending", cascade={"remove"})
      */
     private $linkedWith;
 
     /**
-     * @ORM\ManyToOne(targetEntity=UsersBook::class, inversedBy="usersBookLinkedTo")
+     * @ORM\ManyToOne(targetEntity=UsersBook::class, inversedBy="usersBookLinkedTo", cascade={"remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $usersBook;

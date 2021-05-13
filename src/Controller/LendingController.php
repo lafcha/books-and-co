@@ -55,11 +55,6 @@ class LendingController extends MainController
         //lending list
         $lendingDatas = $lendingRepository->findAllByLenderId($userId, $page, $elementsLimit, $statusFilter);
 
-        if (empty($lendingDatas) && $elementsTotal != 0) {
-            // throw 404 if the page returns an empty array
-            throw $this->createNotFoundException('Cette page n\'existe pas');
-        }
-
         return $this->render('lending/browse.html.twig', [
             'lendingDatas' => $lendingDatas,
             'currentPage' => $page,
@@ -78,10 +73,8 @@ class LendingController extends MainController
     {
         $lending = $lendingRepository->findAllLendingStats($lending->getId());
 
-        //TODO replace this with voters
-        if ($user->getId() != $lending->getUsersBook()->getUser()->getId()) {
-            throw $this->createNotFoundException('Ce prêt n\'est pas disponible');
-        }
+        $this->denyAccessUnlessGranted('LENDER_READ', $lending);
+        
         // when the user arrives on the page, the unread messages becomes readed
         $unreadMessages = $messageRepository->findAllUnreadMessagesByLendingIdAndUserId($lending->getId(), $user->getId());
         if ($unreadMessages != null) {
@@ -133,7 +126,7 @@ class LendingController extends MainController
         switch ($action) {
             case 'waiting':
                 $newStatus = 0;
-                $usersBook->setIsAvailable(true);
+                $usersBook->setIsAvailable(false);
                 break;
             case 'lended':
                 $newStatus = 1;
