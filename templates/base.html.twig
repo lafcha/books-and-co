@@ -13,6 +13,9 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<link href="https://fonts.googleapis.com/css2?family=Lily+Script+One&display=swap" rel="stylesheet">
 		<script src="https://kit.fontawesome.com/0434b5e439.js" crossorigin="anonymous"></script>
+		<script src="{{ asset("assets/js/city.js") }}"></script>
+		<script src="{{ asset('assets/js/county.js') }}"></script>
+		<script src="{{ asset('assets/js/countyAndCityApp.js') }}"></script>
 
 		{#CSS#}
 		{{ encore_entry_link_tags('app') }}
@@ -24,7 +27,7 @@
 		<div class="container mx-auto flex flex-col min-h-screen relative">
 
 			{#--Header--#}
-			<div class="fixed mt-0 container z-50">
+			<div class="fixed h-28 mt-0 container z-50 bg-white">
 				{% if app.user %}
 					{% include 'header-co.html.twig' %}
 				{% else %}
@@ -32,7 +35,7 @@
 				{% endif %}
 			</div>
 
-			<div class="w-full pt-28 pb-44">
+			<div class="w-full pt-16 pb-44">
 				{#--Navigation -- only when connected#}
 				{% if app.user %}
 					{#--Some tests to set the wanted color used in nav and some pages#}

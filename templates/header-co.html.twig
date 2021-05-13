@@ -27,12 +27,12 @@
                 {% endif %}
             </div>
         </div>
-        <div class="flex flex-col h-3">
-            <div class>
+        <div class="flex flex-col h-3 lg:mr-5">
+            <div>
                 <a href="{{ path('app_logout') }}" class="text-sm underline inline-block text-center hover:text-pink mr-1">Déconnexion</a>
                 <img class="object-scale-down rounded-full inline-block h-10 w-10 mr-4" src="{{ app.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ app.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="Avatar">
             </div>
-            <a href="{{ path('account_edit') }}" class="text-yellow-dark hover:text-pink text-sm text-right">Mon compte</a>
+                <a href="{{ path('account_edit') }}" class="text-yellow-dark hover:text-pink text-sm text-right pb-5">Mon compte</a>
         </div>
     </div>
 </header>
