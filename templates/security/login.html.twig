@@ -1,4 +1,4 @@
-{% extends "base-non-connecte.html.twig" %}
+{% extends 'base' ~ ((app.user) ? '' : '-non-connecte') ~ '.html.twig' %}
 
 {% block title %}Se connecter
 {% endblock %}
