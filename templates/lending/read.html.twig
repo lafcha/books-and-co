@@ -12,12 +12,12 @@ Mes emprunts
     <div>
     <div class="flex flex-col flex-grow h-screen">
         {#--CHAT HEADER--#}
-        <div class="flex flex-row justify-between items-center w-full h-32 pb-4 pt-4 px-8">
+        <div class="flex flex-row {{ app.request.attributes.all._route =="borrowing_read" ? 'justify-center' : 'justify-between' }} items-center w-full h-32 pb-4 pt-4 px-8">
             <div class="">
             </div>
         {#--PAGE TITLE--#}
             <div class="text-center">
-                <h1 class="font-cursive text-3xl">Ma demande {{ app.request.attributes.all._route == "lending_read" ? 'prêt' : 'emprunt' }}du livre "{{ lendingData.usersBook.book.title }}"</h1>
+                <h1 class="font-cursive text-3xl">Ma demande {{ app.request.attributes.all._route == "lending_read" ? 'prêt' : 'emprunt' }} du livre "{{ lendingData.usersBook.book.title }}"</h1>
                 <h2 class="">Un livre prêté par <span class="">{{ lendingData.usersBook.user.pseudo }}</span></h2>
 
                 <div class="pt-3">
@@ -61,10 +61,10 @@ Mes emprunts
 
 
         {# CHAT BODY #}
-        <div class="w-full flex-grow">
+        <div class="w-full flex-grow overflow-y-scroll scrollable-element">
             {% for message in lendingData.linkedWith %}
                 {% if message.sender != app.user %}
-                    <div class="flex items-end mt-10">
+                    <div class="flex items-end mt-5 mb-5">
                         {# avatar #}
                         <div class="avatar avatar-sm ml-4 ml-lg-5 d-none d-lg-block">
                             <img class="rounded-full w-11 flex mr-4" src="{{ lendingData.usersBook.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ lendingData.usersBook.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="user avatar">
@@ -82,7 +82,7 @@ Mes emprunts
                         </div>
                     </div>
                 {% else %}
-                        <div class="flex justify-end items-end mt-10">
+                        <div class="flex justify-end items-end mb-5 mt-5">
                             {# message body #}
                             <div class="flex items-center rounded-t-lg rounded-bl-lg bg-yellow-light">
                                 {# message content #}
@@ -112,7 +112,7 @@ Mes emprunts
                 }) 
                 }}
                 {{ form_widget(sendMessageForm.content, {
-                'attr': {'class': 'w-11/12 text-area-resize py-auto ',
+                'attr': {'class': 'w-11/12 text-area-resize py-auto focus:outline-none',
                         'placeholder' : 'Insultez-lui sa grand-mère',}
                 })  
                 }}
