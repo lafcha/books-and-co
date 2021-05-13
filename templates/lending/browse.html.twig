@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes prêts{% endblock %}
+{% block title %}Books&amp;Co |Mes prêts ou mes emprunts
+{% endblock %}
 
 {% block main %}
 {% set status = (app.request.query.all['status'] is defined) ? app.request.query.all['status'] : null %}
@@ -17,7 +18,7 @@
             {% elseif currentRoute == 'lending_browse' %}
             <h1 class="text-blue font-cursive text-3xl flex justify-center mb-5">Mes prêts</h1>
             <h2 class="text-{{ color_wanted }} text-center mt-2">
-                Gérez les demandes de prêts que l'ont vous a fait
+                Gérez les demandes de prêts que l'ont vous a faites
             </h2>
             {% endif %}
         </div>
