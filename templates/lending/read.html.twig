@@ -40,4 +40,65 @@
         {{ form_start(sendMessageForm) }}
         {{ form_end(sendMessageForm) }}
     </div>
+
+
+    <div>
+    <div class="flex flex-col flex-grow h-screen">
+        {#--CHAT HEADER--#}
+        <div class="flex flex-row justify-between items-center w-full h-32 pb-4 pt-4 px-8">
+            <div class="">
+            </div>
+        {#--PAGE TITLE--#}
+            <div class="text-center">
+                <h1 class="font-cursive text-3xl">Ma demande d'emprunt du livre "{{ lendingData.usersBook.book.title }}"</h1>
+                <h2 class="">Un livre prêté par <span class="">{{ lendingData.usersBook.user.pseudo }}</span></h2>
+
+                <div class="pt-3">
+                    Status du prêt : 
+                        {% if (lendingData.status == 0) %}
+                            <span class ="bg-yellow w-4 px-4 py-2 text-center rounded-full focus:outline-none md:text-sm text-blue">En attente</span>
+                        {% elseif (lendingData.status == 1) %}
+                            <span class ="bg-pink w-4 px-4 py-2 text-center rounded-full focus:outline-none md:text-sm text-white">En prêt</span>
+                        {% else %}
+                            <span class ="bg-grey w-4 px-4 py-2 text-center rounded-full focus:outline-none md:text-sm text-blue">Clôturé</span>
+                        {% endif %}      
+                </div>
+            </div>
+        {# SMALL BUTTON FOR CHANGING THE STATUS #}
+            <div>
+                <div class="flex justify-center">
+                    <div x-data="{ dropdownOpen: false }" class="relative my-32">
+                    <button @click="dropdownOpen = !dropdownOpen" class="relative z-10 block rounded-md p-2 focus:outline-none">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+
+                    <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-10"></div>
+
+                    <div x-show="dropdownOpen" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20">
+                        <p class="block px-4 py-2 text-sm">Modifier le statut du prêt en :</p>
+                        {% if lendingData.status == 0 %}
+                        <a href="#" class="block px-4 py-2 text-sm capitalize text-yellow-dark hover:bg-blue hover:text-white">
+                        Prêté
+                        </a>
+                        {% endif %}
+                        <a href="#" class="block px-4 py-2 text-sm capitalize text-yellow-dark hover:bg-blue hover:text-white">
+                        Clôturée
+                        </a>
+                    </div>
+                    </div>
+                    </div>
+            </div>
+        </div> 
+
+
+        <div class="w-full flex-grow bg-yellow">
+            
+        
+        </div> 
+        <div class="w-full h-14 bg-blue">
+            
+        
+        </div> 
+    </div>
+</div>
 {% endblock %}
