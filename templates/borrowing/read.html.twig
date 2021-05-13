@@ -75,7 +75,7 @@
 <div>
     <div class="flex flex-col flex-grow h-screen">
         {#--CHAT HEADER--#}
-        <div class="flex flex-row justify-center items-center w-full h-32 pb-4 pt-4 px-8 mb-10">
+        <div class="flex flex-row justify-center items-center w-full h-32 pb-4 pt-4 px-8">
         {#--PAGE TITLE--#}
             <div class="text-center">
                 <h1 class="font-cursive text-3xl">Ma demande d'emprunt du livre "{{ lendingData.usersBook.book.title }}"</h1>
@@ -97,33 +97,64 @@
         {# CHAT BODY #}
         <div class="w-full flex-grow">
             {% for message in lendingData.linkedWith %}
-                    <div class="flex items-end">
-                {% if message.sender == app.user %}
+                {% if message.sender != app.user %}
+                    <div class="flex items-end mt-10">
                         {# avatar #}
-                        <img class="rounded-full w-11 flex mr-10" src="{{ (asset("assets/img/uploads/user_avatar/")) ~ message.sender.avatar }}" alt="user avatar">
+                        <div class="avatar avatar-sm ml-4 ml-lg-5 d-none d-lg-block">
+                            <img class="rounded-full w-11 flex mr-4" src="{{ lendingData.usersBook.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ lendingData.usersBook.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="user avatar">
+                        </div>
                         {# message body #}
-                        <div>
-                            <div class="flex flex-col">
-                                {# message content #}
-                                <div class="w-max-2/5 p-5 bg-yellow-light flex items-center">
-                                    <div class="text-base">{{ message.content }}
-                                    </div>
+                        <div class="flex items-center rounded-t-lg rounded-br-lg bg-green-light">
+                            {# message content #}
+                            <div class="w-max-2/5 p-5">
+                                <div class="text-base">{{ message.content }}
                                 </div>
                                 <div class="mt-1">
-                                    <small class="text-xs">le {{ message.createdAt|format_datetime(pattern="dd/MM/YYYY' à' hh:mm:ss") }}</small>
+                                <small class="text-xs">le {{ message.createdAt|format_datetime(pattern="dd/MM/YYYY' à' hh:mm:ss") }}</small>
                                 </div>
                             </div>
                         </div>
-                {% endif %}
                     </div>
-
+                {% else %}
+                        <div class="flex justify-end items-end mt-10">
+                            {# message body #}
+                            <div class="flex items-center rounded-t-lg rounded-bl-lg bg-yellow-light">
+                                {# message content #}
+                                <div class="w-max-2/5 p-5">
+                                    <div class="text-base">{{ message.content }}
+                                    </div>
+                                    <div class="mt-1">
+                                    <small class="text-xs">le {{ message.createdAt|format_datetime(pattern="dd/MM/YYYY' à' hh:mm:ss") }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            {# avatar #}
+                            <div class="avatar avatar-sm ml-4 ml-lg-5 d-none d-lg-block">
+                                <img class="rounded-full w-11 flex" src="{{ app.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ app.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="user avatar">
+                            </div>
+                        </div>
+                {% endif %}
             {% endfor %}
-        
+   
         </div> 
         {# CHAT FOOTER#}
-        <div class="w-full h-14 bg-pink">
-            
-        
+        <div class="flex w-full h-14 border-t-2 border-grey py-4 mb-2">
+            <div class="w-11/12">
+                {{ form_start(sendMessageForm) }}
+        		{{ form_label(sendMessageForm.content, null, {
+                    'label_attr': {'class': 'hidden'}    
+                }) 
+                }}
+                {{ form_widget(sendMessageForm.content, {
+                'attr': {'class': 'w-11/12 text-area-resize py-auto ',
+                        'placeholder' : 'Insultez-lui sa grand-mère',}
+                })  
+                }}
+            </div>
+            <div class="w-1/12 py-auto text-center">
+                <button type="submit"><i class="fas fa-paper-plane"></i></button>
+            </div>
+                {{ form_end(sendMessageForm) }}
         </div> 
     </div>
 </div>
