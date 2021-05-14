@@ -185,7 +185,7 @@ class BorrowingController extends MainController
         }
 
 
-        return $this->render('borrowing/read.html.twig', [
+        return $this->render('lending/read.html.twig', [
             'lendingData' => $lending,
             'sendMessageForm' => $sendMessageForm->createView(),
             'navSearchForm' => $this->navSearchForm()->createView(),

@@ -29,7 +29,7 @@
 {# -- If no results--#}
 	{% if app.request.query.all != null and book == null %}
 		<section>
-			<div class="container px-5 py-24 mx-auto">
+			<div class="container px-5 mx-auto">
 				<div class="xl:w-1/2 lg:w-3/4 w-full mx-auto text-center">
 					<i class="fas fa-heart-broken text-pink text-4xl mb-5"></i>
 					<p class="leading-relaxed text-lg">Désolé, aucun livre n'est disponible dans ce département !</p>
@@ -41,7 +41,7 @@
 
 {# -- Search results--#}
 	<section class="overflow-hidden">
-		<div class="container px-5 py-24 mx-auto">
+		<div class="container px-5 mx-auto">
 			{% for usersBook in book %}
 				<div class="my-8 border-b-2 border-grey-dark ">
 					<div class="py-8 flex flex-wrap md:flex-nowrap">

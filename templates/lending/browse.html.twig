@@ -123,9 +123,9 @@
                             <div class="mr-3">
                                 <p class="text-gray-900 whitespace-no-wrap text-right">
                                     {% if currentRoute == 'borrowing_browse' %}
-                                    <a href="{{ path('borrowing_read', {'id': lendingData[0].id }) }}" class="bg-pink w-4 px-4 py-2 text-center  rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
+                                    <a href="{{ path('borrowing_read', {'id': lendingData[0].id }) }}#last-message" class="bg-pink w-4 px-4 py-2 text-center  rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
                                     {% elseif currentRoute == 'lending_browse' %}
-                                    <a href="{{ path('lending_read', {'id': lendingData[0].id }) }}" class="bg-pink w-4 px-4 py-2 text-center  rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
+                                    <a href="{{ path('lending_read', {'id': lendingData[0].id }) }}#last-message" class="bg-pink w-4 px-4 py-2 text-center  rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
                                     {% endif %}
                                 </p>
                             </div>

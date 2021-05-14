@@ -30,6 +30,10 @@ body {
     height: 11rem;
 }
 
+.scrollable-element {
+    scrollbar-color : white rgb(1, 1, 29)
+}
+
 .custom-btn{
     background-color: var(--first-accent-color);
     text-transform: uppercase;
