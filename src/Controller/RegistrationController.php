@@ -51,6 +51,8 @@ class RegistrationController extends MainController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
         ]);
     }
 }
