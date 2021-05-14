@@ -36,25 +36,25 @@ Mes emprunts
             <div>
                 <div class="flex justify-center">
                     <div x-data="{ dropdownOpen: false }" class="relative my-32">
-                    <button @click="dropdownOpen = !dropdownOpen" class="relative z-10 block rounded-md p-2 focus:outline-none">
-                        <i class="fas fa-ellipsis-v"></i>
-                    </button>
+                        <button @click="dropdownOpen = !dropdownOpen" class="relative z-10 block rounded-md p-2 focus:outline-none">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
 
-                    <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-10"></div>
+                        <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-10"></div>
 
-                    <div x-show="dropdownOpen" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20">
-                        <p class="block px-4 py-2 text-sm">Modifier le statut du prêt en :</p>
-                        {% if lendingData.status == 0 %}
-                        <a href="#" class="block px-4 py-2 text-sm capitalize text-yellow-dark hover:bg-blue hover:text-white">
-                        Prêté
-                        </a>
-                        {% endif %}
-                        <a href="#" class="block px-4 py-2 text-sm capitalize text-yellow-dark hover:bg-blue hover:text-white">
-                        Clôturée
-                        </a>
+                        <div x-show="dropdownOpen" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20">
+                            <p class="block px-4 py-2 text-sm">Modifier le statut du prêt en :</p>
+                            {% if lendingData.status == 0 %}
+                            <a href="#" class="block px-4 py-2 text-sm capitalize text-yellow-dark hover:bg-blue hover:text-white">
+                            Prêté
+                            </a>
+                            {% endif %}
+                            <a href="#" class="block px-4 py-2 text-sm capitalize text-yellow-dark hover:bg-blue hover:text-white">
+                            Clôturée
+                            </a>
+                        </div>
                     </div>
-                    </div>
-                    </div>
+                </div>
             </div>
             {% endif %}
         </div> 
