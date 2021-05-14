@@ -1,8 +1,7 @@
 {% extends 'base' ~ ((app.user) ? '' : '-non-connecte') ~ '.html.twig' %}
 
-{% block title %}Recherche
+{% block title %}Books&amp;Co | Rechercher un livre
 {% endblock %}
-
 {% block main %}
 
 {#-- Title -- #}
@@ -44,32 +43,32 @@
 	<section class="overflow-hidden">
 		<div class="container px-5 mx-auto">
 			{% for usersBook in book %}
-				<div class="my-8 divide-y-2 divide-gray-100">
+				<div class="my-8 border-b-2 border-grey-dark ">
 					<div class="py-8 flex flex-wrap md:flex-nowrap">
 						<div class="md:w-1/12 md:mb-0 mb-6 flex-shrink-0 mr-10 flex flex-col">
 							<a href=""><img src="{{ usersBook.book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ usersBook.book.cover : asset("assets/img/illustrations/book-cover.jpg") }}"></a>
 						</div>
 						<div class="md:flex-grow">
-							<h2 class="text-2xl font-medium title-font mb-2 uppercase text-pink">
+							<h2 class="text-2xl title-font mb-2 uppercase text-pink tracking-wider">
 								<a href="">{{ usersBook.book.title }}</a>
 								<span class="text-sm text-yellow-dark">
 									<i class="fas fa-user mr-3 ml-3"></i>
 									{{ usersBook.user.pseudo }}</span>
 							</h2>
-							<p class="leading-relaxed">Auteur :
+							<p class="leading-relaxed font-semibold">Auteur :
 								{{ usersBook.book.author }}</p>
-							<p class="italic">Editeur :
+							<p >Editeur :
 								{{ usersBook.book.editor }}</p>
-							<p class="italic">ISBN :
+							<p class="text-sm text-grey-dark italic">ISBN :
 								{{ usersBook.book.isbn }}</p>
 						</div>
-						<div class="flex flex-col justify-between">
-							<p class="text-yellow-dark"><i class="fas fa-map-marker-alt mr-3"></i>{{ usersBook.user.city }}</p>
-							<a href="{{ path('library_book_read', {'userSlug': usersBook.user.slug, 'slug': usersBook.book.slug }) }}" class="bg-pink h-10 px-6 md:px-8 py-2 rounded-full items-center focus:outline-none md:text-sm text-white">Voir plus</a>
+						<div class="flex flex-col justify-between items-end">
+							<p class="text-green text-right"><i class="fas fa-map-marker-alt mr-3"></i>{{ usersBook.user.city }}</p>
+							<button class="bg-pink font-semibold hover:bg-yellow-dark h-10 w-28 px-4 md:px-4 py-2 rounded-full items-center text-center focus:outline-none md:text-sm text-white"><a href="{{ path('library_book_read', {'userSlug': usersBook.user.slug, 'slug': usersBook.book.slug }) }}" >Voir plus</a></button>
 						</div>
 					</div>
 				</div>    
-				<hr class="my-10 border-1 border-blue-900">
+		
 			{% endfor %}
 		</div>
 	</section>

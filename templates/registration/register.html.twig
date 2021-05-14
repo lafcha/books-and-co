@@ -1,6 +1,6 @@
 {% extends "base-non-connecte.html.twig" %}
 
-{% block title %}Register
+{% block title %}Books&amp;Co | Créer un compte
 {% endblock %}
 
 
@@ -18,7 +18,7 @@
 			<div class="text-center p-0 font-sans">
 
 				<h1 class="text-blue text-3xl font-medium font-cursive">Je crée mon compte</h1>
-				<h3 class="p-1 text-green">Créer votre compte et votre bibliothèque pour y mettre vos livres et/ou emprunter des livres !</h3>
+				<h3 class="p-1 text-green">Créez votre compte et votre bibliothèque pour y mettre vos livres et/ou emprunter des livres !</h3>
 			</div>
 
 			{% for flashError in app.flashes('verify_email_error') %}
@@ -28,7 +28,7 @@
 			{{ form_start(registrationForm) }}
 			<div class="mt-5 flex justify-between items-center">
 				{{ form_label(registrationForm.pseudo, null, {
-                    'label': 'MON PSEUDO',
+                    'label': 'Mon pseudo',
                     'label_attr': {'class': 'w-1/2'}    
                 }) 
                 }}
@@ -39,7 +39,7 @@
 			</div>
 			<div class="mt-5 flex justify-between items-center">
 				{{ form_label(registrationForm.email, null, {
-                    'label': 'MON EMAIL',
+                    'label': 'Mon email',
                     'label_attr': {'class': 'w-1/2'}    
                 })  }}
 				{{ form_widget(registrationForm.email, {
@@ -48,14 +48,14 @@
 			</div>
 			<div class="mt-5 flex justify-between items-center">
 				{{ form_label(registrationForm.email, null, {
-                    'label': 'MON MOT DE PASSE',
+                    'label': 'Mon mot de passe',
                     'label_attr': {'class': 'w-1/2'}    
                 })  }}
 				{{ form_widget(registrationForm.password.first) }}
 			</div>
 			<div class="mt-5 flex justify-between items-center">
 				{{ form_label(registrationForm.email, null, {
-                    'label': 'REPETEZ LE MOT DE PASSE',
+                    'label': 'Répétez le mot de passe',
                     'label_attr': {'class': 'w-1/2'}    
                 })  }}
 				{{ form_widget(registrationForm.password.second) }}
@@ -76,9 +76,9 @@
 					</select>
 				</div>
 			</div>
-			<div class="flex justify-between items-center w-full mt-10">
-				<a href="{{ path('app_login') }}" class="inline-block">Vous avez déjà un compte ?</a>
-				<button type="submit" class="custom-btn inline-block focus:outline-none text-base text-white submit">CREER</button>
+			<div class="flex justify-end items-center w-full mt-10">
+				<a href="{{ path('app_login') }}" class="inline-block text-sm text-grey-dark italic hover:underline">Vous avez déjà un compte ?</a>
+				<button type="submit" class="ml-4 custom-btn inline-block focus:outline-none text-base text-white submit">Créer</button>
 			</div>
 			{{ form_end(registrationForm) }}
 		</div>
