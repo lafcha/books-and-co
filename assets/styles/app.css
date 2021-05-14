@@ -30,6 +30,10 @@ body {
     height: 11rem;
 }
 
+.after-opening::after {
+    display: hidden;
+}
+
 .custom-btn{
     background-color: var(--first-accent-color);
     text-transform: uppercase;
