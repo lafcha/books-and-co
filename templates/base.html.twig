@@ -35,7 +35,7 @@
 				{% endif %}
 			</div>
 
-			<div class="w-full pt-28 pb-44">
+			<div class="w-full pt-16 lg:pt-28 pb-44">
 				{#--Navigation -- only when connected#}
 				{% if app.user %}
 					{#--Some tests to set the wanted color used in nav and some pages#}
@@ -59,7 +59,7 @@
 						{% include 'nav.html.twig' %}
 					</div>
 					{#--Main--#}
-					<div class="md:w-full lg:float-right  lg:w-3/4 lg:pt-16"> 
+					<div class="md:w-full lg:float-right lg:w-3/4 lg:pt-16"> 
 						{% block main %}{% endblock %}
 					</div>
 				{% endif %}
