@@ -19,7 +19,7 @@ class MainController extends AbstractController
 
     public function __construct(Security $security)
     {
-       $this->security = $security;
+        $this->security = $security;
     }
 
     /**
@@ -27,7 +27,8 @@ class MainController extends AbstractController
      *
      * @return form
      */
-    protected function navSearchForm(){
+    protected function navSearchForm()
+    {
         $searchForm = $this->createForm(SearchFormType::class, null, [
             'action' => $this->generateUrl('search'),
             'method' => 'GET',
@@ -39,7 +40,8 @@ class MainController extends AbstractController
      *
      * @return Array
      */
-    protected function getNotificationsArray(){
+    protected function getNotificationsArray()
+    {
         $user = $this->security->getUser();
 
         $lengingRepository = $this->getDoctrine()->getRepository(Lending::class);
@@ -55,12 +57,22 @@ class MainController extends AbstractController
      */
     public function index(): Response
     {
-
         return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
             'searchForm' => $this->navSearchForm()->createView(),
             'navSearchForm' => $this->navSearchForm()->createView(),
             'notifications' => $this->getNotificationsArray(),
+        ]);
+    }
+
+    /**
+     * @Route("/apropos", name="apropos")
+     */
+    public function apropos(): Response
+    {
+        return $this->render('main/apropos.html.twig', [
+            'navSearchForm' => $this->navSearchForm()->createView(),
+            'notifications' => $this->getNotificationsArray(),
+
         ]);
     }
 }
