@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Books&amp;Co
+			{% endblock %}
+		</title>
+		<meta
+		name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		{#FONTS#}
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Lily+Script+One&display=swap" rel="stylesheet">
+		<script src="https://kit.fontawesome.com/0434b5e439.js" crossorigin="anonymous"></script>
+
+		{#CSS#}
+		{{ encore_entry_link_tags('app') }}
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</head>
+	<body class="h-full w-full m-0 p-0">
+		<div class="container mx-auto flex flex-col min-h-screen relative">
+
+			{#--Header--#}
+				<div class="fixed mt-0 container z-50">
+				{% if app.user %}
+					{% include 'header-co.html.twig' %}
+				{% else %}
+					{% include 'header.html.twig' %}
+				{% endif %}
+			</div>
+
+				<div class="w-full pt-28 pb-44"> 
+					{% block main %}{% endblock %}
+				</div>
+
+
+			{#--Footer--#}
+			<div class="position w-full">
+				{% include 'footer.html.twig' %}
+			</div>
+		</div>
+</div>
+<script src="{{ asset("assets/js/city.js") }}"></script>
+<script src="{{ asset('assets/js/county.js') }}"></script>
+<script src="{{ asset('assets/js/countyAndCityApp.js') }}"></script></body></html>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+
+</body>
+	</html>

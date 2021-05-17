@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Books&amp;Co | Modifier les détails d'un livre
+{% endblock %}
+
+{% block main %}
+	<div>
+
+		<div class="w-3/4 md:w-1/2 max-w-lg mx-auto lg:my-24 my-8 px-4 py-5 shadow-none">
+			<div class="text-center p-0 font-sans">
+				<h1 class="text-blue text-3xl font-medium font-cursive">Edition d'un livre</h1>
+				<h2 class="pt-4 text-pink">Modifier ici les infos du livre</h2>
+			</div>
+			{{ form_start(form) }}
+            <div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center">
+            <label for="book_isbn" class="lg:w-1/2">Isbn</label>
+            {{ form_widget(form.isbn, {
+                    'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
+                }) 
+            }}
+			</div>
+			<div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center">
+				{{ form_label(form.title, null, {
+                    'label': 'Titre',
+                    'label_attr': {'class': 'lg:w-1/2'}    
+                    }) 
+                }}
+				{{ form_widget(form.title, {
+                    'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
+                    })  
+                }}
+			</div>
+            <div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center">
+				{{ form_label(form.author, null, {
+                    'label': 'Auteur',
+                    'label_attr': {'class': 'lg:w-1/2'}    
+                    }) 
+                }}
+				{{ form_widget(form.author, {
+                    'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
+                    })  
+                }}
+			</div>
+            <div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center">
+				{{ form_label(form.editor, null, {
+                    'label': 'Editeur',
+                    'label_attr': {'class': 'lg:w-1/2'}    
+                    }) 
+                }}
+				{{ form_widget(form.editor, {
+                    'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
+                    })  
+                }}
+			</div>
+            <div class="mt-5 flex lg:flex-row flex-col items-center">
+			{{ form_label(form.coverFile, null, {
+                    'label_attr': {'class': 'lg:w-1/2'}    
+                    }) 
+                }}
+			<div class="flex items-center lg:flex-row flex-col justify-center bg-grey-lighter">
+				<label class="flex flex-col items-center bg-pink text-white rounded-lg tracking-wide uppercase border border-pink cursor-pointer hover:bg-blue hover:text-white">
+					<svg width="50" height="50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20">
+						<path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z"/>
+					</svg>
+					<span class="text-xs p-2">Selectionner un fichier</span>
+					{{ form_widget(form.coverFile, {
+                    'attr': {'class': 'hidden'}    
+                    })   
+                }}
+				</label>
+			</div>
+            </div>
+
+            <div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center">
+				{{ form_label(form.year, null, {
+                    'label': 'Année',
+                    'label_attr': {'class': 'lg:w-1/2'}    
+                    }) 
+                }}
+				{{ form_widget(form.year, {
+                    'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
+                    })  
+                }}
+			</div>
+            <div class="mt-5 flex justify-between lg:flex-row flex-col items-center">
+				{{ form_label(form.description, null, {
+                    'label': 'Description',
+                    'label_attr': {'class': 'lg:w-1/2'}    
+                    }) 
+                }}
+                
+				{{ form_widget(form.description, {
+                    'attr': {'class': 'text-area-resize border-none rounded-lg w-full bg-grey h-40 text-base outline-none py-1 px-3 leading-6'}    
+                    })  
+                }}
+			</div>
+            <div class="flex lg:justify-between lg:flex-row flex-col items-center w-full mt-10">
+				<div></div>
+                <div class="text-center">
+				    <button type="submit" class="custom-btn inline-block focus:outline-none text-base text-white">Modifier</button>
+                </div>
+			</div>
+			{{ form_end(form) }}
+
+		</div>
+	</div>
+{% endblock %}

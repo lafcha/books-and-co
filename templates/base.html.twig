@@ -1,19 +1,86 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Books&amp;Co
+			{% endblock %}
+		</title>
+		<meta
+		name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+		{#FONTS#}
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Lily+Script+One&display=swap" rel="stylesheet">
+		<script src="https://kit.fontawesome.com/0434b5e439.js" crossorigin="anonymous"></script>
+
+		{#CSS#}
+		{{ encore_entry_link_tags('app') }}
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</head>
+	<body class="h-full m-0 p-0">
+		<div class="container mx-auto flex flex-col min-h-screen relative">
+
+			{#--Header--#}
+			<div class="fixed mt-0 container z-50">
+				{% if app.user %}
+					{% include 'header-co.html.twig' %}
+				{% else %}
+					{% include 'header.html.twig' %}
+				{% endif %}
+			</div>
+
+			<div class="w-full pt-20 {{ app.request.attributes.all._route == "lending_read" or app.request.attributes.all._route == "borrowing_read" ? 'pb-0' : 'pb-44' }}">
+				{#--Navigation -- only when connected#}
+				{% if app.user %}
+					{#--Some tests to set the wanted color used in nav and some pages#}
+					{% if app.request.attributes.all._route == "borrowing_form" or app.request.attributes.all._route == "borrowing_browse" or app.request.attributes.all._route == "borrowing_read" %}
+						{% set color_wanted = 'yellow-dark' %}
+						{% set nav_button = 'green' %}
+						{% set button_text = 'blue' %}
+						{% set links = 'blue' %}
+					{% elseif app.request.attributes.all._route == "lending_form" or app.request.attributes.all._route == "lending_browse" or app.request.attributes.all._route == "lending_read" %}
+						{% set color_wanted = 'green' %}
+						{% set nav_button = 'pink' %}
+						{% set button_text = 'white' %}
+						{% set links = 'blue' %}
+					{% else %}
+						{% set color_wanted = 'pink' %}
+						{% set nav_button = 'yellow-dark' %}
+						{% set button_text = 'blue' %}
+						{% set links = 'white' %}
+					{% endif %}
+					<div class="fixed w-full lg:w-1/4 xl:w-1/5 2xl:w-80 z-50">
+						{% include 'nav.html.twig' %}
+					</div>
+					{#--Main--#}
+					<div class="w-full lg:float-right lg:w-3/4 mt-5 lg:pt-16"> 
+						{% block main %}{% endblock %}
+					</div>
+				{% endif %}
+			</div>
+
+			{#--Footer--#}
+			{% if app.request.attributes.all._route == "lending_read" or app.request.attributes.all._route == "borrowing_read" %}
+			<div class="hidden">
+				{% include 'footer.html.twig' %}
+			</div>
+			{% else %}
+			<div class="position w-full">
+				{% include 'footer.html.twig' %}
+			</div>
+			{% endif %}
+		
+		</div>
+		<script src="{{ asset("assets/js/city.js") }}"></script>
+		<script src="{{ asset('assets/js/county.js') }}"></script>
+		<script src="{{ asset('assets/js/countyAndCityApp.js') }}"></script>
+		<script src="{{ asset('assets/js/messages.js') }}"></script>
+		<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+
+
+	</body>
+
 </html>

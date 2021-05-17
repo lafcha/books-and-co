@@ -1,0 +1,88 @@
+{% extends 'base' ~ ((app.user) ? '' : '-non-connecte') ~ '.html.twig' %}
+
+{% block title %}Books&amp;Co | Créer un compte
+{% endblock %}
+
+
+{% block main %}
+
+	<div class="lg:flex bg-white items-center">
+
+		<div class="bg-no-repeat bg-right bg-cover h-auto ">
+			<img class="mx-auto" src="{{ asset('/assets/img/illustrations/') }}register.png" alt="Login image">
+		</div>
+
+
+		<div class="max-w-lg mx-auto lg:my-24 px-4 py-5 shadow-none">
+
+			<div class="text-center p-0 font-sans">
+
+				<h1 class="text-blue text-3xl font-medium font-cursive">Je crée mon compte</h1>
+				<h3 class="md:p-1 p-3 text-green">Créer votre compte et votre bibliothèque pour y mettre vos livres et/ou emprunter des livres !</h3>
+			</div>
+
+			{% for flashError in app.flashes('verify_email_error') %}
+				<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+			{% endfor %}
+
+			{{ form_start(registrationForm) }}
+			<div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center">
+				{{ form_label(registrationForm.pseudo, null, {
+                    'label': 'MON PSEUDO',
+                    'label_attr': {'class': 'lg:w-1/2'}    
+                }) 
+                }}
+				{{ form_widget(registrationForm.pseudo, {
+                    'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-blue focus:border-transparent'}    
+                })  
+                }}
+			</div>
+			<div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center">
+				{{ form_label(registrationForm.email, null, {
+                    'label': 'MON EMAIL',
+                    'label_attr': {'class': 'lg:w-1/2'}    
+                })  }}
+				{{ form_widget(registrationForm.email, {
+                    'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-blue focus:border-transparent'}    
+                })   }}
+			</div>
+			<div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center">
+				{{ form_label(registrationForm.email, null, {
+                    'label': 'MON MOT DE PASSE',
+                    'label_attr': {'class': 'lg:w-1/2'}    
+                })  }}
+				{{ form_widget(registrationForm.password.first) }}
+			</div>
+			<div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center">
+				{{ form_label(registrationForm.email, null, {
+                    'label': 'REPETEZ LE MOT DE PASSE',
+                    'label_attr': {'class': 'lg:w-1/2'}    
+                })  }}
+				{{ form_widget(registrationForm.password.second) }}
+			</div>
+			<div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center">
+				<div id="county-error"></div>
+				<div class="relative inline-flex">
+					<svg class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#FFFFFF" fill-rule="nonzero"/></svg>
+					<select name="registration_form[county]" class="rounded-full text-white h-10 pl-5 pr-10 bg-blue focus:outline-none appearance-none county-form" id="registration_form_county">
+						<option value="00">Département</option>
+					</select>
+				</div>
+				<div id="city-error"></div>
+				<div class="relative inline-flex lg:mt-0 mt-2">
+					<svg class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#FFFFFF" fill-rule="nonzero"/></svg>
+					<select name="registration_form[city]" class="rounded-full text-white h-10 pl-5 pr-10 bg-blue focus:outline-none appearance-none city-form" id="registration_form_city">
+						<option value="00">Commune</option>
+					</select>
+				</div>
+			</div>
+			<div class="flex lg:flex-row flex-col-reverse items-center justify-between md:mt-10 mt-8">
+				<a href="{{ path('app_login') }}" class="inline-block text-sm text-grey-dark italic hover:underline lg:mt-0 mt-4">Vous avez déjà un compte ?</a>
+				<button type="submit" class="custom-btn inline-block focus:outline-none text-base text-white submit">CREER</button>
+			</div>
+			{{ form_end(registrationForm) }}
+		</div>
+
+
+	</div>
+{% endblock %}
