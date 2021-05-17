@@ -14,7 +14,7 @@
 			<div class="bg-{{ color_wanted }} sm:rounded-lg pt-8">
 				<div class="flex flex-col items-center justify-center">
 					<img class="rounded-full h-14 w-14" src="{{ app.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ app.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="Avatar">
-					<p class="sm:mb-2 mt-2 sm:mt-4"><a href="{{ path('account_edit') }}" class="text-yellow-dark font-semibold text-md ">Mon compte</a></p>
+					<p class="sm:mb-2 mt-2 sm:mt-4"><a href="{{ path('account_edit') }}" class="text-{{ links }} font-semibold text-md ">Mon compte</a></p>
 					<p><a href="{{ path('app_logout') }}" class="text-sm sm:text-md underline text-center">Déconnexion</a></p>          	
 				</div>
 				<div class="mx-auto">
