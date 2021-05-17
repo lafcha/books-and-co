@@ -1,16 +1,16 @@
-{% extends 'base' ~ ((app.user) ? '' : '-non-connecte') ~ '.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Livre
+{% block title %}Books&amp;Co | Ajouter un livre
 {% endblock %}
 
 {% block main %}
-<div class="md:w-1/2 max-w-lg mx-auto my-24 px-4 py-5 shadow-none">
-	<div class="text-center p-0 font-sans">
+<div class="md:w-1/2 max-w-lg mx-auto mb-24 px-4 shadow-none">
+	<div class="text-center p-0 mb-12 font-sans">
 
 		<h1 class="text-blue text-3xl font-medium font-cursive">Ajout d'un livre</h1>
-		<h2 class="p-1 text-green">Ajoutez un livre à votre bibliothèque</h2>
-		<h3 class="p-1 text-green italic text-sm">
-			* Les champs munis d'un astérisque sont obligatoires</h3>
+		<h2 class="p-1 text-pink">Ajoutez un livre à votre bibliothèque</h2>
+		<p class="p-1 text-green italic text-sm">
+			* Les champs munis d'un astérisque sont obligatoires</p>
 	</div>
 	<div>
 		{{ form_start(searchForm) }}
@@ -21,18 +21,18 @@
                 }) 
                 }}
 			{{ form_widget(searchForm.isbn, {
-                    'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
+                    'attr': {'class': 'block rounded-full w-full p-2 bg-grey pl-4'}    
                 })  
                 }}
 		</div>
 		<div class="flex justify-between items-center w-full mt-10">
 			<p></p>
-			<button type="submit" class="bg-blue h-10 px-6 md:px-8 py-2 rounded-full items-center focus:outline-none text-xs md:text-sm text-white">Rechercher</button>
+			<button type="submit" class="bg-pink h-10 font-semibold px-6 md:px-8 py-2 rounded-full items-center focus:outline-none text-xs md:text-sm text-white">Rechercher</button>
 		</div>
 		{# {{ form_row(searchForm.isbn) }} #}
 		{% if  searchForm.book is defined %}
 			<div class='{{ error ? 'hidden' : '' }}'>
-				<div class="text-center text-2xl bold mt-5 mb-5">
+				<div class="text-center text-xl bold mt-5 mb-5">
 					{{ form_widget(searchForm.book) }}
 					{{ form_label(searchForm.book, null, {
                         'label_attr' : {'class' : 'text-pink'}
@@ -40,15 +40,15 @@
 				</div>
 				<p class="text-center text-xs mt-5">Ça roule ! On s'occupe de remplir les champs qu'il faut pour vous !</p>
 				<div class="flex justify-between items-center w-full mt-10">
-					<p class="inline-block text-center">Ce n'est pas le livre que vous recherchez ? Vérifiez bien l'isbn !</p>
-					<button type="submit" class="bg-blue h-10 px-6 md:px-8 py-2 rounded-full items-center focus:outline-none text-xs md:text-sm text-white">Ajouter</button>
+					<p class="inline-block text-center italic">Ce n'est pas le livre que vous recherchez ? Vérifiez bien l'isbn !</p>
+					<button type="submit" class="bg-yellow-dark text-blue h-10 px-6 md:px-8 py-2 rounded-full items-center focus:outline-none text-xs md:text-sm font-semibold">Ajouter</button>
 				</div>
 			</div>
 		{% endif %}
 		{{ form_end(searchForm) }}
 		{% if app.request.method == 'POST' and error == 'Ce livre n\'existe pas, ajoutez le !' %}
             <div>
-                {{ error }}
+                <span class="font-semibold">{{ error }}</span>
                 {{form_start(bookForm)}}
                 <div class="mt-5 flex justify-between items-center">
 				{{ form_label(bookForm.isbn, null, {
@@ -138,7 +138,7 @@
 			</div>
             <div class="flex justify-between items-center w-full mt-10">
 				<div></div>
-				<button type="submit" class="custom-btn inline-block focus:outline-none text-base text-white">Ajouter</button>
+				<button type="submit" class="bg-yellow-dark text-blue h-10 px-6 md:px-8 py-2 rounded-full items-center focus:outline-none text-xs md:text-sm font-semibold">Ajouter</button>
 			</div>
                 {{form_end(bookForm)}}
             </div>

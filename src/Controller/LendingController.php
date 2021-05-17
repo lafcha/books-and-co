@@ -7,6 +7,7 @@ use App\Entity\Message;
 use App\Form\MessageType;
 use App\Repository\LendingRepository;
 use App\Repository\MessageRepository;
+use App\Repository\UsersBookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,11 +55,6 @@ class LendingController extends MainController
         //lending list
         $lendingDatas = $lendingRepository->findAllByLenderId($userId, $page, $elementsLimit, $statusFilter);
 
-        if (empty($lendingDatas) && $elementsTotal != 0) {
-            // throw 404 if the page returns an empty array
-            throw $this->createNotFoundException('Cette page n\'existe pas');
-        }
-
         return $this->render('lending/browse.html.twig', [
             'lendingDatas' => $lendingDatas,
             'currentPage' => $page,
@@ -77,10 +73,8 @@ class LendingController extends MainController
     {
         $lending = $lendingRepository->findAllLendingStats($lending->getId());
 
-        //TODO replace this with voters
-        if ($user->getId() != $lending->getUsersBook()->getUser()->getId()) {
-            throw $this->createNotFoundException('Ce prêt n\'est pas disponible');
-        }
+        $this->denyAccessUnlessGranted('LENDER_READ', $lending);
+        
         // when the user arrives on the page, the unread messages becomes readed
         $unreadMessages = $messageRepository->findAllUnreadMessagesByLendingIdAndUserId($lending->getId(), $user->getId());
         if ($unreadMessages != null) {
@@ -124,27 +118,34 @@ class LendingController extends MainController
     /**
      * @Route("/{id}/{action}", name="action")
      */
-    public function action(Lending $lending, $action): Response
+    public function action(Lending $lending, UsersBookRepository $usersBookRepository, $action): Response
     {
+        //get the usersBook to update
+        $usersBook = $usersBookRepository->findOneBy(['id' => $lending->getUsersBook()]);
+        // get status and set isAvailable
         switch ($action) {
             case 'waiting':
                 $newStatus = 0;
+                $usersBook->setIsAvailable(false);
                 break;
             case 'lended':
                 $newStatus = 1;
+                $usersBook->setIsAvailable(false);
                 break;
             case 'archive':
                 $newStatus = 2;
+                $usersBook->setIsAvailable(true);
                 break;
             // throw 404 if this actions isn't above
             default:
                 throw $this->createNotFoundException('action non répertoriée');
         }
-        
+
         //update the lending status in DB
         $lending->setStatus($newStatus);
         $em = $this->getDoctrine()->getManager();
         $em->persist($lending);
+        $em->persist($usersBook);
         $em->flush();
 
         //return to the updated lending page
