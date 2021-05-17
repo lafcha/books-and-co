@@ -12,7 +12,7 @@ Mes emprunts
  
     <div class="flex flex-col flex-grow h-screen">
         {#--CHAT HEADER--#}
-        <div class="fixed top-40 lg:sticky lg:top-24 flex flex-row {{ app.request.attributes.all._route =="borrowing_read" ? 'justify-center' : 'justify-between' }} items-center bg-white w-full h-32 pb-4 pt-4 px-8">
+        <div class="md:sticky md:top-24 lg:top-28 flex flex-row {{ app.request.attributes.all._route =="borrowing_read" ? 'justify-center' : 'justify-between' }} items-center bg-white w-full h-32 pb-6 lg:pb-4 pt-5 px-8">
             <div class="">
             </div>
         {#--PAGE TITLE--#}
@@ -45,12 +45,12 @@ Mes emprunts
                         <div x-show="dropdownOpen" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20">
                             <p class="block px-4 py-2 text-sm">Modifier le statut du prêt en :</p>
                             {% if lendingData.status == 0 %}
-                            <a href="#" class="block px-4 py-2 text-sm capitalize text-yellow-dark hover:bg-blue hover:text-white">
+                            <a href="{{ path('lending_action', {'id':lendingData.id, 'action':'lended'}) }}" class="block px-4 py-2 text-sm capitalize text-yellow-dark hover:bg-blue hover:text-white">
                             Prêté
                             </a>
                             {% endif %}
-                            <a href="#" class="block px-4 py-2 text-sm capitalize text-yellow-dark hover:bg-blue hover:text-white">
-                            Clôturée
+                            <a href="{{ path('lending_action', {'id':lendingData.id, 'action':'archive'}) }}" class="block px-4 py-2 text-sm capitalize text-yellow-dark hover:bg-blue hover:text-white">
+                            Clôturé
                             </a>
                         </div>
                     </div>
@@ -59,18 +59,17 @@ Mes emprunts
             {% endif %}
         </div> 
 
-
         {# CHAT BODY #}
         <div class="w-full flex-grow overflow-y-scroll scrollable-element">
             {% for message in lendingData.linkedWith %}
                 {% if message.sender != app.user %}
                     <div class="flex items-end mt-5 mb-5">
                         {# avatar #}
-                        <div class="avatar avatar-sm ml-4 ml-lg-5 d-none d-lg-block">
+                        <div class="avatar md:avatar-sm mx-2">
                             <img class="rounded-full w-11 flex mr-4" src="{{ lendingData.usersBook.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ lendingData.usersBook.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="user avatar">
                         </div>
                         {# message body #}
-                        <div class="flex items-center rounded-t-lg rounded-br-lg bg-green-light">
+                        <div class="flex items-center rounded-t-lg rounded-br-lg bg-green-light mr-2">
                             {# message content #}
                             <div class="w-max-2/5 p-5">
                                 <div class="text-base">{{ message.content }}
@@ -84,7 +83,7 @@ Mes emprunts
                 {% else %}
                         <div class="flex justify-end items-end mb-5 mt-5">
                             {# message body #}
-                            <div class="flex items-center rounded-t-lg rounded-bl-lg bg-yellow-light">
+                            <div class="flex items-center rounded-t-lg rounded-bl-lg bg-yellow-light ml-2">
                                 {# message content #}
                                 <div class="w-max-2/5 p-5">
                                     <div class="text-base">{{ message.content }}
@@ -95,7 +94,7 @@ Mes emprunts
                                 </div>
                             </div>
                             {# avatar #}
-                            <div class="avatar avatar-sm ml-4 ml-lg-5 d-none d-lg-block">
+                            <div class="avatar md:avatar-sm mx-2">
                                 <img class="rounded-full w-11 flex" src="{{ app.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ app.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="user avatar">
                             </div>
                         </div>

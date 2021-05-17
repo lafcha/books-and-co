@@ -30,6 +30,20 @@ body {
     height: 11rem;
 }
 
+.avatar {
+    height : 2rem;
+    min-height : 2rem;
+    width : 2rem;
+    min-width: 2rem;
+}
+
+.avatar-sm {
+    height : 3.75rem;
+    min-height : 3.75rem;
+    width : 3.75rem;
+    min-width: 3.75rem;
+}
+
 .scrollable-element {
     scrollbar-color : white rgb(1, 1, 29)
 }
