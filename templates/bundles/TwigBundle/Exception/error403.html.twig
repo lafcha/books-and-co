@@ -1,10 +1,21 @@
 {% extends 'base-non-connecte.html.twig' %}
 
-{% block main %}
-    <h1>Page not found</h1>
+{% block title %}Page non trouvée{% endblock %}
 
-    <p>
-        The requested page couldn't be located. Checkout for any URL
-        misspelling or <a href="{{ path('homepage') }}">return to the homepage</a>.
-    </p>
+{% block main %}
+<div class="flex flex-col md:flex-row justify-center items-center mt-20">
+    <div class="bg-no-repeat md:bg-right bg-cover h-full md:h-auto w-full lg:w-1/2">
+        <img class=" mx-auto" src="{{ asset('/assets/img/illustrations/') }}error.jpg" alt="Login image">
+    </div>
+    <div class="md:w-9/12 m-auto flex items-center justify-center">
+        <div class="mt-5 md:mt-0">
+            <div class="text-center mb-5">
+                <h1 class="text-3xl xl:text-6xl font-bold">Bah alors !</h1>
+                <h2 class="text-lg xl:text-3xl font-medium py-8">Désolé, mais vous n'avez pas le droit d'accéder à cette page</h2>
+                <p class="text-base xl:text-2xl pb-8 px-12 font-medium">Mais on est sympa, on vous accompagne. Comme ça, pas besoin de suivre les cailloux blancs pour retrouver votre chemin</p>
+                <a href="{{ path('accueil_browse') }}" class="bg-pink w-4 px-4 py-2 text-center font-semibold rounded-full focus:outline-none md:text-sm text-white">C'est par ici !</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
