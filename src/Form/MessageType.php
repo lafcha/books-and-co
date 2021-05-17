@@ -20,7 +20,6 @@ class MessageType extends AbstractType
                     new Assert\NotBlank(),
                 ],
             ])
-            ->add('submit', SubmitType::class)
         ;
     }
 

@@ -10,6 +10,7 @@ use App\Form\UsersBookType;
 use App\Form\BookSearchType;
 use App\Service\UploaderHelper;
 use App\Repository\BookRepository;
+use App\Repository\LendingRepository;
 use App\Repository\UserRepository;
 use App\Repository\UsersBookRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route("/bibliotheque/{userSlug}", name="library_")
@@ -75,13 +77,16 @@ class LibraryController extends MainController
             throw $this->createNotFoundException('Cet utilisateur n\'existe pas');
         }
 
-
         //error will be displayed in twig if there is many error
         $error = '';
 
+
         $usersBook = new UsersBook;
         $usersBook->setUser($user);
-
+        if ($user->getSlug() !== $libraryUser->getSlug()) {
+            throw new AccessDeniedException();
+        }
+        
         //get the user by slug
         $libraryUser = $userRepository->findOneBy(['slug' => $userSlug]);
 
@@ -182,15 +187,22 @@ class LibraryController extends MainController
     /**
      * @Route("/{slug}", name="book_read")
      */
-    public function book_read($userSlug, $slug, UserRepository $userRepository, BookRepository $bookRepository, UsersBookRepository $usersBookRepository): Response
+    public function book_read($userSlug, $slug, ?UserInterface $user, UserRepository $userRepository, BookRepository $bookRepository, UsersBookRepository $usersBookRepository, LendingRepository $lendingRepository): Response
     {
-        
+
         //get the user by slug
         $libraryUser = $userRepository->findOneBy(['slug' => $userSlug]);
         //get the book by slug
         $book = $bookRepository->findOneBy(['slug' => $slug]);
         
         $usersBook = $usersBookRepository->findOneBy(['user' => $libraryUser, 'book' => $book]);
+
+        if ($user) {
+            $isBorrowingableByUser = $lendingRepository->findByUsersBookIdAndUserHasNoBorrowingOnIt($usersBook->getId(), $user->getId());
+            $isBorrowingableByUser = ($isBorrowingableByUser === []) ? true : false;
+        } else {
+            $isBorrowingableByUser = false;
+        }
         
         //create a form for UsersBook in action to method 'form' in the BorrowingController
         $form = $this->createForm(UsersBookType::class, $usersBook, [
@@ -210,10 +222,12 @@ class LibraryController extends MainController
             // throw 404 if the combination of user and book doesn't exist
             throw $this->createNotFoundException('Cet utilisateur ne possède pas ce livre');
         }
+        
         return $this->render('library/book/read.html.twig', [
-            'book' => $book,
+            'usersBook' => $usersBook,
             'libraryUser' => $libraryUser,
             'form' => $form->createView(),
+            'isBorrowingableByUser' => $isBorrowingableByUser,
             'navSearchForm' => $this->navSearchForm()->createView(),
             'notifications' => $this->getNotificationsArray(),
         ]);
@@ -222,7 +236,7 @@ class LibraryController extends MainController
     /**
      * @Route("/{slug}/modifier", name="book_edit")
      */
-    public function book_edit($userSlug, $slug, UserRepository $userRepository, BookRepository $bookRepository, Request $request, UploaderHelper $uploaderHelper): Response
+    public function book_edit($userSlug, $slug, UserInterface $user, UserRepository $userRepository, UsersBookRepository $usersBookRepository, BookRepository $bookRepository, Request $request, UploaderHelper $uploaderHelper): Response
     {
         //get the user by slug
         $libraryUser = $userRepository->findOneBy(['slug' => $userSlug]);
@@ -232,6 +246,14 @@ class LibraryController extends MainController
         }
         //get the book by slug
         $book = $bookRepository->findOneBy(['slug' => $slug]);
+
+        // access validation
+        $userBook = $usersBookRepository->findOneBy([
+            'user' => $user->getId(),
+            'book' => $book->getId(),
+        ]);
+        
+        $this->denyAccessUnlessGranted('BOOK_EDIT', $userBook);
 
         // create the form
         $form = $this->createForm(BookType::class, $book);
@@ -284,6 +306,7 @@ class LibraryController extends MainController
             'user' => $user->getId(),
             'book' => $book->getId(),
         ]);
+        $this->denyAccessUnlessGranted('BOOK_EDIT', $userBook);
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($userBook);

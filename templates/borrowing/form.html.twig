@@ -1,18 +1,20 @@
-{% extends 'base' ~ ((app.user) ? '' : '-non-connecte') ~ '.html.twig' %}
+{% extends 'base.html.twig' %}
+{% block title %}Books&amp;Co | Demande d'emprunt
+{% endblock %}
 
 {% block main %}
 
-<h1 class="text-3xl font-medium font-cursive text-center">Demande d'emprunt de "{{book}}"</h1>
-<h3 class="p-1 text-green text-center">Vous souhaitez demander le prêt du livre de <span class="text-pink italic">{{userPseudo}}</span></h3>
+<h1 class="text-3xl font-cursive text-center">Demande d'emprunt de "{{book}}"</h1>
+<h3 class="pt-4 text-pink text-center">Vous souhaitez demander le prêt du livre de <span class="text-pink italic">{{ userPseudo }}</span></h2>
 
-<div class="md:w-1/2 max-w-lg mx-auto my-24 px-4 py-5 shadow-none">
+<div class="md:w-1/2 max-w-lg mx-auto my-12 px-4 py-5 shadow-none">
     {{ form_start(borrowingForm) }}
-    <div class="mt-5 flex justify-between">
-				{{ form_label(borrowingForm.message, null, {
-                    'label': 'Message',
-                    'label_attr': {'class': 'w-1/2'}    
-                }) 
-                }}
+    <div class="mt-5 flex md:justify-between">
+        {{ form_label(borrowingForm.message, null, {
+            'label': 'Message',
+            'label_attr': {'class': 'hidden'}    
+        }) 
+        }}
 
         {{ form_widget(borrowingForm.message, {
             'attr': {'class': 'text-area-resize border-none rounded-lg w-full bg-grey h-40 text-base outline-none py-1 px-3 leading-6'}    
