@@ -130,6 +130,7 @@
             "time": "2019-12-14T13:04:14+00:00"
         },
         {
+
             "name": "composer/package-versions-deprecated",
             "version": "1.11.99.1",
             "source": {

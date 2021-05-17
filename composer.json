@@ -8,13 +8,16 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "cocur/slugify": "^4.0",
+
         "composer/package-versions-deprecated": "1.11.99.1",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.3",
         "doctrine/doctrine-migrations-bundle": "^3.1",
         "doctrine/orm": "^2.8",
+
         "fzaninotto/faker": "^1.9",
         "gedmo/doctrine-extensions": "^3.0",
+
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "5.2.*",
@@ -41,6 +44,7 @@
         "symfony/twig-bundle": "^5.2",
         "symfony/validator": "5.2.*",
         "symfony/web-link": "5.2.*",
+
         "symfony/webpack-encore-bundle": "^1.11",
         "symfony/yaml": "5.2.*",
         "symfonycasts/verify-email-bundle": "^1.4",
