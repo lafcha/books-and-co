@@ -36,5 +36,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/mon-compte, roles: ROLE_USER }
+        - { path: ^/bibliotheque/.+/ajout|modifier|supprimer, roles: ROLE_USER }
+        - { path: ^/demande-de-pret, roles: ROLE_USER }
+        - { path: ^/mes-emprunts, roles: ROLE_USER }
+        - { path: ^/mes-prets, roles: ROLE_USER }

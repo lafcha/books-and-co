@@ -30,8 +30,8 @@ body {
     height: 11rem;
 }
 
-.after-opening::after {
-    display: hidden;
+.scrollable-element {
+    scrollbar-color : white rgb(1, 1, 29)
 }
 
 .custom-btn{

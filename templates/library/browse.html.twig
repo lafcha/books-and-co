@@ -1,5 +1,6 @@
 {% extends 'base' ~ ((app.user) ? '' : '-non-connecte') ~ '.html.twig' %}
-{% block title %}Ma bibliothèque
+
+{% block title %}Books&amp;Co | Bibliothèque
 {% endblock %}
 
 
@@ -37,24 +38,21 @@
 
 	{# ------------If library is empty --------------#}
 	{% if usersBooks == null %}
-
-		<p class="text-center text-pink italic mt-8">Oups ! Cette bibliothèque est vide !</p>
-		{# if the user connected is equal to the library's user AND if usersBooks is null #}
-		{% if app.user.slug == app.request.attributes.all['userSlug'] %}
-			<div class="items-center mb-10">
-				<a href="{{ path('library_book_add', {'userSlug': app.user.slug}) }}" role="button" class="bg-pink hover:bg-yellow-dark text-white px-4 py-3 rounded-full">
-					Ajouter un livre
-				</a>
-			</div>
-			
-		{% endif %}
+	<section>
+		<div class="xl:w-1/2 lg:w-3/4 w-full mx-auto text-center mt-12">
+			<i class="fas fa-heart-broken text-pink text-4xl mb-5"></i>
+			<p class="leading-relaxed text-lg">Oups ! {{ (app.user == user.pseudo) ? 'Votre' : 'Cette'}} bibliothèque est vide !</p>
+			<span class="inline-block h-1 w-10 rounded bg-blue mt-8 mb-6"></span>
+		</div>
+	</section>
+	
 	{% else %}
 
 	{# ------------Library books --------------#}
-	<div class="container px-5 sm:py-24 py-16 mx-auto">
+	<section class="container px-5 py-12 mx-auto">
 		{% for usersbook in usersBooks %}
 				<div class="sm:my-8 mt-0 border-b-2 ">
-					<h2 class="sm:text-2xl text-xl title-font mb-2 uppercase text-pink lg:hidden">
+					<h2 class="sm:text-2xl text-xl title-font mb-2 uppercase text-pink lg:hidden pt-2">
 						<a href="">{{ usersbook.book.title }}</a>
 					</h2>
 					<div class="lg:py-8 pb-0 flex flex-wrap flex-nowrap ">
@@ -63,8 +61,8 @@
 								<img src="{{ usersbook.book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ usersbook.book.cover : asset("assets/img/illustrations/book-cover.jpg") }}" class="mx-auto ">
 							</a>
 						</div>
-						<div class="flex-grow items-center">
-							<h2 class="text-2xl title-font mb-2 uppercase text-pink lg:block hidden">
+						<div class="md:flex-grow">
+							<h2 class="text-2xl title-font mb-2 uppercase text-pink tracking-wider  lg:block hidden">
 								<a href="">{{ usersbook.book.title }}</a>
 							</h2>
 							<p class="leading-relaxed sm:text-base text-sm lg:mt-0 mt-2">Auteur : {{ usersbook.book.author }}</p>
@@ -80,7 +78,7 @@
 							{% endif %}
 							</div>
 						</div>
-						<div class="lg:visible invisible flex flex-col justify-between items-end">
+						<div class="lg:block hidden lg:flex lg:flex-col lg:justify-between lg:items-end">
 							{% if app.user == user.pseudo %}
 								{% if usersbook.isAvailable == 0  %}
 									<p class="text-green text-right"><i class="fas fa-bookmark mr-3"></i>Diponible au prêt</p>
@@ -96,9 +94,9 @@
 					</div>
 				</div>
 			{% endfor %}
-	</div>
-	
+	</section>
+
 	{# ------------Pagination --------------#}
 	{% include "pagination.html.twig" %}
-        {% endif %}
+    {% endif %}
 {% endblock %}

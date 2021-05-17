@@ -1,53 +1,54 @@
 {% extends 'base' ~ ((app.user) ? '' : '-non-connecte') ~ '.html.twig' %}
 
-{% block title %}
-	{{ book.title }}
+{% set book = usersBook.book %}
+
+{% block title %}Books&amp;Co | Voir les détails d'un livre
 {% endblock %}
 
 {% block main %}
 
 	<div class="flex flex-col items-center">
-		<h1 class="text-4xl text-blue font-cursive mb-2">{{ book.title }}</h1>
-		<h2 class="italic">{{ book.author }}</h2>
+		<h1 class="text-4xl text-blue font-cursive">{{ book.title }}</h1>
+		<h2 class="pt-4 text-pink">{{ book.author }}</h2>
 	</div>
 	<div class="flex justify-center">
-		<div class="lg:flex margin mt-10">
-			<div class="object-cover rounded-lg book-cover h-auto bg-no-repeat bg-right bg-cover h-auto">
-				<img class="" src="{{ book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ book.cover : asset("assets/img/illustrations/book-cover.jpg") }}" alt="Couverture du livre">
+	<div class="flex margin mt-10">
+		<img
+		class="object-cover rounded-lg book-cover" src="{{ book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ book.cover : asset("assets/img/illustrations/book-cover.jpg") }}" alt="Couverture du livre">
+		{# {{ dump(book) }} #}
+		<div class="md:w-2/3 px-4 rounded-lg">
+			<div class="grid grid-cols-4 gap-y-2">
+				<div class="font-semibold">Isbn</div>
+				<div class="col-span-3">{{ book.isbn }}</div>
+				<div class="font-semibold">Editeur</div>
+				<div class="col-span-3">{{ book.editor }}</div>
+				<div class="font-semibold">Année</div>
+				<div class="col-span-3">{{ book.year }}</div>
+				<div class="font-semibold">Description</div>
+				<div class="text-justify col-span-3 tracking-tight">{{ book.description }}</div>
 			</div>
-			<div class="md:w-2/3 px-4 rounded-lg">
-				<div class="grid grid-cols-4 gap-y-2">
-					<div class="font-semibold">Isbn</div>
-					<div class="col-span-3">{{ book.isbn }}</div>
-					<div class="font-semibold">Editeur</div>
-					<div class="col-span-3">{{ book.editor }}</div>
-					<div class="font-semibold">Année</div>
-					<div class="col-span-3">{{ book.year }}</div>
-					<div class="font-semibold">Description</div>
-					<div class="text-justify col-span-3 tracking-tight">{{ book.description }}</div>
-				</div>
-				<div class="">
-					{% if app.user %}
-						{% if app.user.slug == app.request.attributes.all['userSlug'] %}
-							<div class="flex items-end justify-end mt-4 top-auto">
-								<a href="{{ path('library_book_edit', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-yellow text-white px-4 py-2 rounded hover:underline mr-5">modifier</a>
-								<a href="{{ path('library_book_delete', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-pink text-white px-2 py-2 rounded-md mr-2">supprimer</a>
-							</div>
-						{% elseif usersBook.isAvailable == true and isBorrowingableByUser %}
-								<div class="flex items-end justify-end mt-4 top-auto">
-									{{ form_start(form) }}
-									{{ form_end(form) }}
-								</div>
-						{% else %}
-							<div class="flex items-end justify-end mt-4 top-auto italic text-pink">
-								<p>Ce livre n'est pas disponible pour un prêt</p>
-							</div>
-						{% endif %}
-					{% else %}
-						<div class="flex items-end justify-end mt-4 top-auto italic text-pink">
-							<p>Connectez vous pour emprunter ce livre !</p>
+			<div class="">
+			{% if app.user %}
+				{% if app.user.slug == app.request.attributes.all['userSlug'] %}
+					<div class="flex items-end justify-end mt-4 top-auto">
+						<a href="{{ path('library_book_edit', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-yellow text-white px-4 py-2 rounded hover:underline mr-5">modifier</a>
+						<a href="{{ path('library_book_delete', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-pink text-white px-2 py-2 rounded-md mr-2">supprimer</a>
+					</div>
+				{% elseif usersBook.isAvailable == true and isBorrowingableByUser %}
+						<div class="flex items-end justify-end mt-4 top-auto">
+							{{ form_start(form) }}
+							{{ form_end(form) }}
 						</div>
-					{% endif %}
+				{% else %}
+					<div class="flex items-end justify-end mt-4 top-auto italic text-pink">
+						<p>Ce livre n'est pas disponible pour un prêt</p>
+					</div>
+				{% endif %}
+			{% else %}
+				<div class="flex items-end justify-end mt-4 top-auto italic text-pink">
+					<p>Connectez vous pour emprunter ce livre !</p>
+				</div>
+			{% endif %}
 				</div>
 			</div>
 		</div>
