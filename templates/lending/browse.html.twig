@@ -48,7 +48,8 @@
 
         {# ----------- Content --------------#}
     {% if lendingDatas != null %}
-        <table class="min-w-full leading-normal">
+            {#---If the screen > 640px ---#}
+        <table class="min-w-full hidden sm:block">
             <thead class="border-b-2 border-{{ color_wanted }}">
                 <tr>
                     <th
@@ -83,13 +84,13 @@
         {% for lendingData in lendingDatas %}
                 <tr class="border-b border-{{ color_wanted }}">
                     <td class="px-5 py-4 text-sm  w-5/24">
-                        <p class="text-xl mb-2 whitespace-no-wrap uppercase mt-1">{{ lendingData[0].usersBook.book.title }}</p>
+                        <p class="text-xl mb-2 uppercase mt-1">{{ lendingData[0].usersBook.book.title }}</p>
                     </td>
                     <td class="px-5 py-5  text-sm  w-1/8 italic">
-                        <p class="text-gray-900 whitespace-no-wrap text-center">{{ lendingData[0].usersBook.book.author }}</p>
+                        <p class="text-center">{{ lendingData[0].usersBook.book.author }}</p>
                     </td>
                     <td class="px-5 py-5 text-sm w-1/8">
-                        <p class="text-gray-900 whitespace-no-wrap text-center">
+                        <p class="text-center">
                         {% if currentRoute == 'borrowing_browse' %}
                             {{ lendingData[0].usersBook.user.pseudo }}
                         {% elseif currentRoute == 'lending_browse' %}
@@ -99,15 +100,15 @@
                     <td class="px-5 py-5 text-sm text-center italic w-1/6">
                         {% if (lendingData[0].status == 0) %}
                                 <p class="text-yellow-dark">
-                                    en attente
+                                    En attente
                                 </p>
                             {% elseif (lendingData[0].status == 1) %}
                                 <p class="text-pink">
-                                    prêté
+                                    Prêté
                                 </p>
                             {% else %}
                                 <p class="text-grey-dark">
-                                    archivé
+                                    Archivé
                                 </p>
                             {% endif %}
                     </td>
@@ -118,23 +119,39 @@
                         </div>
                         {% endif %}
                     </td>
-                    <td class="px-5 py-5 text-sm w-1/8">
-                        <div class="flex items-center float-right">
-                            <div class="mr-3">
-                                <p class="text-gray-900 whitespace-no-wrap text-right">
-                                    {% if currentRoute == 'borrowing_browse' %}
-                                    <a href="{{ path('borrowing_read', {'id': lendingData[0].id }) }}#last-message" class="bg-pink w-4 px-4 py-2 text-center  rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
-                                    {% elseif currentRoute == 'lending_browse' %}
-                                    <a href="{{ path('lending_read', {'id': lendingData[0].id }) }}#last-message" class="bg-pink w-4 px-4 py-2 text-center  rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
-                                    {% endif %}
-                                </p>
-                            </div>
-                        </div>
+                    <td class="py-5 text-sm w-1/8">                           
+                        <p class="whitespace-nowrap text-right mr-3">
+                            {% if currentRoute == 'borrowing_browse' %}
+                            <a href="{{ path('borrowing_read', {'id': lendingData[0].id }) }}#last-message" class="bg-pink w-4 px-4 py-2 text-center  rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
+                            {% elseif currentRoute == 'lending_browse' %}
+                            <a href="{{ path('lending_read', {'id': lendingData[0].id }) }}#last-message" class="bg-pink w-4 px-4 py-2 text-center  rounded-full focus:outline-none md:text-sm text-white">Voir plus</a>
+                            {% endif %}
+                        </p>
                     </td>
                 </tr>
         {% endfor %}
             </tbody>
         </table>
+         {#---If the screen < 640px ---#}
+         <div class="sm:hidden">  
+         {% for lendingData in lendingDatas %}
+            <div class="flex flex-col">        
+                <div class="w-full">
+                    <p>Titre</p>
+                </div>
+                <div class="w-full">
+                    <p>{{ lendingData[0].usersBook.book.title }}</p>
+                </div>
+                <div class="w-full flex">
+                
+                
+                </div>
+                
+
+            
+            </div>
+        {% endfor %}
+        </div>
     </div>
     {% include 'pagination.html.twig' %}
     {% else %}
