@@ -32,8 +32,8 @@
 				{% if app.user %}
 					{% if app.user.slug == app.request.attributes.all['userSlug'] %}
 						<div class="flex items-end justify-end mt-4 top-auto">
-							<a href="{{ path('library_book_edit', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-yellow-dark text-blue font-semibold px-4 py-2 rounded-full hover:underline mr-5">Modifier</a>
-							<a href="{{ path('library_book_delete', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-pink text-white font-semibold px-4 py-2 rounded-full mr-2">Supprimer</a>
+							<a href="{{ path('library_book_edit', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-yellow-dark text-blue text-center font-semibold px-4 py-2 rounded-full hover:underline mr-5">Modifier</a>
+							<a href="{{ path('library_book_delete', {'userSlug': libraryUser.slug, 'slug': book.slug}) }}" class="bg-pink text-white text-center font-semibold px-4 py-2 rounded-full mr-2">Supprimer</a>
 						</div>
 					{% elseif usersBook.isAvailable == true and isBorrowingableByUser %}
 							<div class="flex items-end justify-end mt-4 top-auto">

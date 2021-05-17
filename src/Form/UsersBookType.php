@@ -17,7 +17,7 @@ class UsersBookType extends AbstractType
             ->add('id', HiddenType::class)
             ->add('submit', SubmitType::class, [
                 'label' => 'Faire une demande de prêt pour ce livre',
-                'attr' => ['class' => 'bg-pink text-white font-semibold px-4 py-2 rounded-full mr-2']
+                'attr' => ['class' => 'bg-pink text-white text-center font-semibold px-4 py-2 rounded-full']
             ])
         ;
     }
