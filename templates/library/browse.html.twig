@@ -1,5 +1,4 @@
 {% extends 'base' ~ ((app.user) ? '' : '-non-connecte') ~ '.html.twig' %}
-
 {% block title %}Ma bibliothèque
 {% endblock %}
 
@@ -60,7 +59,7 @@
 					</h2>
 					<div class="lg:py-8 pb-0 flex flex-wrap flex-nowrap ">
 						<div class="lg:w-1/12 w-1/3 md:mb-0 mb-6 flex-shrink-0 sm:mr-10 mr-2 flex flex-col h-auto text-center">
-							<a href="" class="max-w-xs place-self-center">
+							<a href="" class="max-w-xs place-self-center my-auto">
 								<img src="{{ usersbook.book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ usersbook.book.cover : asset("assets/img/illustrations/book-cover.jpg") }}" class="mx-auto ">
 							</a>
 						</div>
