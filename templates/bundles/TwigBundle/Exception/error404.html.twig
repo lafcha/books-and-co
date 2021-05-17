@@ -1,0 +1,20 @@
+{% extends 'base' ~ ((app.user) ? '' : '-non-connecte') ~ '.html.twig' %}
+
+{% block title %}Page non trouvée{% endblock %}
+
+{% block main %}
+<div class="flex flex-row">
+    <div class="bg-no-repeat bg-right bg-cover h-auto w-1/2">
+        <img class="mx-auto" src="{{ asset('/assets/img/illustrations/') }}error404.jpg" alt="Login image">
+    </div>
+    <div class="w-9/12 m-auto flex items-center justify-center">
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div class="border-t text-center">
+                <h1 class="text-6xl font-bold ">404</h1>
+                <h1 class="text-3xl font-medium py-8">oops! Page not found</h1>
+                <p class="text-2xl pb-8 px-12 font-medium">Oops! The page you are looking for does not exist. It might have been moved or deleted.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
