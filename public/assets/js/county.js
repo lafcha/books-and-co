@@ -22,7 +22,13 @@ const county = {
                 // initialize the option element with data
                 const optionElement = document.createElement("option");
                 optionElement.value = countyCode;
-                optionElement.textContent = countyCode + " - " + countyName;
+        
+
+                if (countyName.length > 14){
+                    optionElement.textContent = countyCode + " - " + countyName.substr(0,14) + "…";
+                } else {
+                    optionElement.textContent = countyCode + " - " + countyName ;
+                }
                 
                 countyAndCityApp.addSelectedElement(selectElement, optionElement); // implement the option element in the county select
             }
@@ -38,6 +44,8 @@ const county = {
     },
 
     addAllEventListeners: function(){
-        document.querySelector(".county-form").addEventListener('change', city.handleChangeCounty)
+        for (const countySelect of document.querySelectorAll(".county-form")) {
+            countySelect.addEventListener('change', city.handleChangeCounty)
+        }
     },
 }
