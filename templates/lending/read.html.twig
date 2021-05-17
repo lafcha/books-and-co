@@ -71,8 +71,8 @@ Mes emprunts
                         {# message body #}
                         <div class="flex items-center rounded-t-lg rounded-br-lg bg-green-light mr-2">
                             {# message content #}
-                            <div class="w-max-2/5 p-5">
-                                <div class="text-base">{{ message.content }}
+                            <div class="max-w-2/5 p-5">
+                                <div class="text-base break-all">{{ message.content }}
                                 </div>
                                 <div class="mt-1">
                                 <small class="text-xs italic text-grey-dark">le {{ message.createdAt|format_datetime(pattern="dd/MM/YYYY' à' hh:mm:ss") }}</small>
@@ -85,8 +85,8 @@ Mes emprunts
                             {# message body #}
                             <div class="flex items-center rounded-t-lg rounded-bl-lg bg-yellow-light ml-2">
                                 {# message content #}
-                                <div class="w-max-2/5 p-5">
-                                    <div class="text-base">{{ message.content }}
+                                <div class="max-w-2/5 p-5">
+                                    <div class="text-base break-all">{{ message.content }}
                                     </div>
                                     <div class="mt-1">
                                     <small class="text-xs text-grey-dark italic">le {{ message.createdAt|format_datetime(pattern="dd/MM/YYYY' à' hh:mm:ss") }}</small>
