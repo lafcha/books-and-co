@@ -13,9 +13,6 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<link href="https://fonts.googleapis.com/css2?family=Lily+Script+One&display=swap" rel="stylesheet">
 		<script src="https://kit.fontawesome.com/0434b5e439.js" crossorigin="anonymous"></script>
-		<script src="{{ asset("assets/js/city.js") }}"></script>
-		<script src="{{ asset('assets/js/county.js') }}"></script>
-		<script src="{{ asset('assets/js/countyAndCityApp.js') }}"></script>
 
 		{#CSS#}
 		{{ encore_entry_link_tags('app') }}
@@ -35,7 +32,7 @@
 				{% endif %}
 			</div>
 
-			<div class="w-full pt-28 {{ app.request.attributes.all._route == "lending_read" or app.request.attributes.all._route == "borrowing_read" ? 'pb-0' : 'pb-44' }}">
+			<div class="w-full pt-20 {{ app.request.attributes.all._route == "lending_read" or app.request.attributes.all._route == "borrowing_read" ? 'pb-0' : 'pb-44' }}">
 				{#--Navigation -- only when connected#}
 				{% if app.user %}
 					{#--Some tests to set the wanted color used in nav and some pages#}
@@ -55,11 +52,11 @@
 						{% set button_text = 'blue' %}
 						{% set links = 'white' %}
 					{% endif %}
-					<div class="fixed w-full lg:w-1/5 2xl:w-80">
+					<div class="fixed w-full lg:w-1/5 2xl:w-80 z-50">
 						{% include 'nav.html.twig' %}
 					</div>
 					{#--Main--#}
-					<div class="md:w-full lg:float-right lg:w-3/4 mt-5 lg:pt-16"> 
+					<div class="w-full lg:float-right lg:w-3/4 mt-5 lg:pt-16"> 
 						{% block main %}{% endblock %}
 					</div>
 				{% endif %}
