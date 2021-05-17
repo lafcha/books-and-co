@@ -1,0 +1,21 @@
+{% extends 'base-non-connecte.html.twig' %}
+
+{% block title %}Page non trouvée{% endblock %}
+
+{% block main %}
+<div class="flex flex-col md:flex-row justify-center items-center mt-20">
+    <div class="bg-no-repeat md:bg-right bg-cover h-full md:h-auto w-full lg:w-1/2">
+        <img class=" mx-auto" src="{{ asset('/assets/img/illustrations/') }}error.jpg" alt="Login image">
+    </div>
+    <div class="md:w-9/12 m-auto flex items-center justify-center">
+        <div class="mt-5 md:mt-0">
+            <div class="text-center mb-5">
+                <h1 class="text-3xl xl:text-6xl font-bold ">Oups !</h1>
+                <h2 class="text-lg xl:text-3xl font-medium py-8">Le serveur a rencontré une erreur interne qui l’a empêché de satisfaire la requête</h2>
+                <p class="text-base xl:text-2xl pb-8 px-12 font-medium">Mais ne vous inquiétez pas, on a une superbe équipe sur le coup !</p>
+                <a href="{{ path('accueil_browse') }}" class="bg-pink w-4 px-4 py-2 text-center font-semibold rounded-full focus:outline-none md:text-sm text-white">Vous pouvez revenir par là</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
