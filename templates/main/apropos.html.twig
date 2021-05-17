@@ -1,0 +1,107 @@
+{% extends 'base' ~ ((app.user) ? '' : '-non-connecte') ~ '.html.twig' %}
+
+{% block title %}Books&amp;Co | A propos
+{% endblock %}
+
+{% block main %}
+<section class="">
+  <div class="w-full mb-24 px-2 py-5 mx-auto">
+    <div class="flex flex-wrap mx-auto">
+      <div class="p-4 mx-auto lg:w-1/3 w-full">    
+        <div class="flex flex-col items-center h-full bg-pink-light px-8 pt-16 pb-16 lg:rounded-lg overflow-hidden text-center relative">          
+          <div>
+            <img src="{{ asset("assets/img/illustrations/rocky.jpg") }}" alt="Photo de chat" class="rounded-full h-24 w-24 text-center mx-auto mb-4">
+            <h1 class=" font-cursive sm:text-2xl text-xl mb-3">Charlotte</h1> 
+            <h2 class="tracking-widest text-xs text-pink mb-1 uppercase">Product Owner</h2>       
+          </div>
+          <div class="flex-grow flex flex-col justify-center">
+            <p class="">
+              <i class="fas fa-quote-left text-right transform -translate-x-20 text-xs text-grey-dark"></i> 
+            </p>
+            <p>        
+              <span class="italic text-grey-dark">J'ai trouvé ça !</span>
+            </p>
+            <p>
+              <i class="fas fa-quote-right transform translate-x-20 text-xs text-grey-dark"></i>
+            </p>            
+          </div>
+          <div class="justify-self-end">
+            <ul class="text-left">
+                <li>
+                  <a href="https://github.com/lafcha"><i class="fab fa-github text-pink "></i><span> Lafcha</span></a>
+                </li>
+                <li>
+                  <a href="www.linkedin.com/in/charlotte-lafarge"><i class="fab fa-linkedin-in text-pink"></i><span> Charlotte Lafarge</span></a>
+                </li>
+              </ul>
+          </div>
+         </div>
+      </div>
+      <div class="p-4 mx-auto lg:w-1/3 w-full">    
+        <div class="flex flex-col items-center h-full bg-yellow-light px-8 pt-16 pb-16 lg:rounded-lg overflow-hidden text-center relative ">          
+          <div>
+            <img src="{{ asset("assets/img/illustrations/moji.jpg") }}" alt="Photo de chat" class="rounded-full h-24 w-24 text-center mx-auto mb-4">
+            <h1 class=" font-cursive sm:text-2xl text-xl mb-3">Michelle</h1> 
+            <h2 class="tracking-widest text-xs text-yellow-dark mb-1 uppercase">Scrum Master <br>Git Master</h2>       
+          </div>
+          <div class="flex-grow flex flex-col justify-center">
+            <p class="">
+              <i class="fas fa-quote-left text-right transform -translate-x-20 text-xs text-grey-dark"></i> 
+            </p>
+            <p>        
+              <span class="italic text-grey-dark">Et <span class="font-semibold">BIM</span>, ça marche !</span>
+            </p>
+            <p>
+              <i class="fas fa-quote-right transform translate-x-20 text-xs text-grey-dark"></i>
+            </p>            
+          </div>
+          <div class="justify-self-end">
+            <ul class="text-left">
+                <li>
+                  <a href="https://github.com/Ikimoo"><i class="fab fa-github text-yellow-dark"></i><span> Ikimoo</span></a>
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com/in/michelle-peugeot/"><i class="fab fa-linkedin-in text-yellow-dark"></i><span> Michelle Peugeot</span></a>
+                </li>
+              </ul>
+          </div>
+         </div>
+      </div>
+    <div class="p-4 mx-auto lg:w-1/3 w-full">    
+        <div class="flex flex-col items-center h-full bg-green-light px-8 pt-16 pb-16 lg:rounded-lg overflow-hidden text-center relative ">          
+          <div>
+            <img src="{{ asset("assets/img/illustrations/celeste-pepper.jpg") }}" alt="Photo de chat" class="rounded-full h-24 w-24 text-center mx-auto mb-4">
+            <h1 class=" font-cursive sm:text-2xl text-xl mb-3">Sylvain</h1> 
+            <h2 class="tracking-widest text-xs text-green mb-1 uppercase">Lead Dev</h2>       
+          </div>
+          <div class="flex-grow flex flex-col justify-center">
+            <p class="">
+              <i class="fas fa-quote-left text-right transform -translate-x-20 text-xs text-grey-dark"></i> 
+            </p>
+            <p>        
+              <span class="italic text-grey-dark">J'ai fait une pull request !</span>
+            </p>
+            <p>
+              <i class="fas fa-quote-right transform translate-x-20 text-xs text-grey-dark"></i>
+            </p>            
+          </div>
+          <div class="justify-self-end">
+            <ul class="text-left">
+                <li>
+                  <a href="https://github.com/JKawnN"><i class="fab fa-github text-green"></i><span> JKawnN</span></a>
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com/in/sylvain-auer/"><i class="fab fa-linkedin-in text-green"></i><span> Sylvain Auer</span></a>
+                </li>
+              </ul>
+          </div>
+         </div>
+      </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

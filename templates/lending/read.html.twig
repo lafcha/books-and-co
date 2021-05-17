@@ -1,43 +1,128 @@
 {% extends 'base' ~ ((app.user) ? '' : '-non-connecte') ~ '.html.twig' %}
 
-{% block title %}Hello LendingController!{% endblock %}
+{% block title %}
+{% if app.request.attributes.all._route == "lending_read"%}
+Mes prêts
+{% elseif app.request.attributes.all._route == "borrowing_read" %}
+Mes emprunts
+{% endif %}
+{% endblock %}
 
 {% block main %}
-    <h1>Ma demande d'emprunts du livre {{ lendingData.usersBook.book.title }} auprès de {{ lendingData.usersBook.user.pseudo }}</h1>
+ 
+    <div class="flex flex-col flex-grow h-screen">
+        {#--CHAT HEADER--#}
+        <div class="fixed top-40 lg:sticky lg:top-24 flex flex-row {{ app.request.attributes.all._route =="borrowing_read" ? 'justify-center' : 'justify-between' }} items-center bg-white w-full h-32 pb-4 pt-4 px-8">
+            <div class="">
+            </div>
+        {#--PAGE TITLE--#}
+            <div class="text-center">
+                <h1 class="font-cursive text-xl lg:text-3xl">Ma demande {{ app.request.attributes.all._route == "lending_read" ? 'prêt' : 'emprunt' }} du livre "{{ lendingData.usersBook.book.title }}"</h1>
+                <h2 class="text-sm lg:text-base">Un livre prêté par <span class="">{{ lendingData.usersBook.user.pseudo }}</span></h2>
 
-    {# use lendingData.linkedWith to get an array of messages #}
-    {% for message in lendingData.linkedWith %}
-        <div class="{{ (message.sender == app.user ) ? 'droite' : 'gauche' }}">
-            {{ message.content }}
-            par {{ message.sender.pseudo }}
-            à {{ message.createdAt|format_datetime(pattern="hh:mm:ss', le' dd/MM/YYYY") }}
-        </div>
-    {% endfor %}
+                <div class="py-3 text-sm lg:text-base ">
+                    Status du prêt : 
+                        {% if (lendingData.status == 0) %}
+                            <span class ="bg-yellow w-4 px-4 py-2 text-center rounded-full focus:outline-none md:text-sm text-blue">En attente</span>
+                        {% elseif (lendingData.status == 1) %}
+                            <span class ="bg-pink w-4 px-4 py-2 text-center rounded-full focus:outline-none md:text-sm text-white">En prêt</span>
+                        {% else %}
+                            <span class ="bg-grey w-4 px-4 py-2 text-center rounded-full focus:outline-none md:text-sm text-blue">Clôturé</span>
+                        {% endif %}      
+                </div>
+            </div>
+        {# SMALL BUTTON FOR CHANGING THE STATUS #}
+            {% if app.request.attributes.all._route == "lending_read" %}
+            <div>
+                <div class="flex justify-center">
+                    <div x-data="{ dropdownOpen: false }" class="relative my-32">
+                        <button @click="dropdownOpen = !dropdownOpen" class="relative z-10 block rounded-md p-2 focus:outline-none">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
 
-    <div>
-        status du prêt :
-        {% if (lendingData.status == 0) %}
-            en attente
-        {% elseif (lendingData.status == 1) %}
-            en prêt
-        {% else %}
-            archivé
-        {% endif %}
+                        <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-10"></div>
+
+                        <div x-show="dropdownOpen" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20">
+                            <p class="block px-4 py-2 text-sm">Modifier le statut du prêt en :</p>
+                            {% if lendingData.status == 0 %}
+                            <a href="#" class="block px-4 py-2 text-sm capitalize text-yellow-dark hover:bg-blue hover:text-white">
+                            Prêté
+                            </a>
+                            {% endif %}
+                            <a href="#" class="block px-4 py-2 text-sm capitalize text-yellow-dark hover:bg-blue hover:text-white">
+                            Clôturée
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div> 
+
+
+        {# CHAT BODY #}
+        <div class="w-full flex-grow overflow-y-scroll scrollable-element">
+            {% for message in lendingData.linkedWith %}
+                {% if message.sender != app.user %}
+                    <div class="flex items-end mt-5 mb-5">
+                        {# avatar #}
+                        <div class="avatar avatar-sm ml-4 ml-lg-5 d-none d-lg-block">
+                            <img class="rounded-full w-11 flex mr-4" src="{{ lendingData.usersBook.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ lendingData.usersBook.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="user avatar">
+                        </div>
+                        {# message body #}
+                        <div class="flex items-center rounded-t-lg rounded-br-lg bg-green-light">
+                            {# message content #}
+                            <div class="w-max-2/5 p-5">
+                                <div class="text-base">{{ message.content }}
+                                </div>
+                                <div class="mt-1">
+                                <small class="text-xs italic text-grey-dark">le {{ message.createdAt|format_datetime(pattern="dd/MM/YYYY' à' hh:mm:ss") }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                        <div class="flex justify-end items-end mb-5 mt-5">
+                            {# message body #}
+                            <div class="flex items-center rounded-t-lg rounded-bl-lg bg-yellow-light">
+                                {# message content #}
+                                <div class="w-max-2/5 p-5">
+                                    <div class="text-base">{{ message.content }}
+                                    </div>
+                                    <div class="mt-1">
+                                    <small class="text-xs text-grey-dark italic">le {{ message.createdAt|format_datetime(pattern="dd/MM/YYYY' à' hh:mm:ss") }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            {# avatar #}
+                            <div class="avatar avatar-sm ml-4 ml-lg-5 d-none d-lg-block">
+                                <img class="rounded-full w-11 flex" src="{{ app.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ app.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="user avatar">
+                            </div>
+                        </div>
+                {% endif %}
+            {% endfor %}
+        <div class="h-1" id="last-message"></div>
+        </div> 
+        {# CHAT FOOTER#}
+        <div class="flex w-full h-14 border-t-2 border-grey py-4 mb-2">
+            <div class="w-11/12">
+                {{ form_start(sendMessageForm) }}
+        		{{ form_label(sendMessageForm.content, null, {
+                    'label_attr': {'class': 'hidden'}    
+                }) 
+                }}
+                {{ form_widget(sendMessageForm.content, {
+                'attr': {'class': 'w-11/12 text-area-resize py-auto focus:outline-none',
+                        'placeholder' : 'Écrire un message ici',}
+                })  
+                }}
+            </div>
+            <div class="w-1/12 py-auto text-center">
+                <button type="submit"><i class="fas fa-paper-plane"></i></button>
+            </div>
+                {{ form_end(sendMessageForm) }}
+        </div> 
     </div>
-        <form action="{{ path('lending_action', {'id': lendingData.id, 'action': 'waiting' }) }}" method="post" class="d-inline">
-            <button class="btn btn-danger">Mettre en attente</button>
-            <input type="hidden" name="_method" value="PATCH">
-        </form>
-        <form action="{{ path('lending_action', {'id': lendingData.id, 'action': 'lended' }) }}" method="post" class="d-inline">
-            <button class="btn btn-danger">Mettre en prêt</button>
-            <input type="hidden" name="_method" value="PATCH">
-        </form>
-        <form action="{{ path('lending_action', {'id': lendingData.id, 'action': 'archive' }) }}" method="post" class="d-inline">
-            <button class="btn btn-danger">Archiver</button>
-            <input type="hidden" name="_method" value="PATCH">
-        </form>
-    <div>
-        {{ form_start(sendMessageForm) }}
-        {{ form_end(sendMessageForm) }}
-    </div>
+
+
 {% endblock %}
