@@ -44,6 +44,8 @@ const county = {
     },
 
     addAllEventListeners: function(){
-        document.querySelector(".county-form").addEventListener('change', city.handleChangeCounty)
+        for (const countySelect of document.querySelectorAll(".county-form")) {
+            countySelect.addEventListener('change', city.handleChangeCounty)
+        }
     },
 }
