@@ -20,7 +20,4 @@
         "watch": "encore dev --watch",
         "build": "encore production --progress"
     },
-    "engines" : { 
-        "node" : ">=0.12"
-    }
 }
