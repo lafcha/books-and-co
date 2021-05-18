@@ -17,7 +17,7 @@
     "scripts": {
         "dev-server": "encore dev-server",
         "dev": "encore dev",
-        "prod": "npm run production",
+        "prod": "encore prod",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
     }
