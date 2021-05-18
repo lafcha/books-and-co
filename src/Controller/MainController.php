@@ -45,11 +45,9 @@ class MainController extends AbstractController
         $user = $this->security->getUser();
 
         $lengingRepository = $this->getDoctrine()->getRepository(Lending::class);
-        $lenderMsg = $lengingRepository->findNotificationNumber($user->getId(), 'lender');
-        $borrowerMsg = $lengingRepository->findNotificationNumber($user->getId(), 'borrower');
         $notifications = [
-            'lendingNotifications' => $user ? (isset($lenderMsg[0]['nbNewMessages']) ? $lenderMsg[0]['nbNewMessages'] : null) : null,
-            'borrowingNotifications' => $user ? (isset($borrowerMsg[0]['nbNewMessages']) ? $borrowerMsg[0]['nbNewMessages'] : null) : null,
+            'lendingNotifications' => $user ? $lengingRepository->findNotificationNumber($user->getId(), 'lender')[0]['nbNewMessages'] : null,
+            'borrowingNotifications' => $user ? $lengingRepository->findNotificationNumber($user->getId(), 'borrower')[0]['nbNewMessages'] : null,
         ];
         return $notifications;
     }

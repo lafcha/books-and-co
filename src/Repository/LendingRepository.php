@@ -80,6 +80,7 @@ class LendingRepository extends ServiceEntityRepository
             ->leftJoin('ub.book', 'b')
             ->addSelect('b')
             ->addSelect('lw')
+            ->groupBy('l.id')
             ->orderBy('max(lw.createdAt)', 'DESC')
             ->addSelect('COUNT(CASE WHEN lw.isRead = 0 and lw.sender != :lenderId THEN 0 ELSE :null end) AS nbNewMessages')
             ->where('ub.user = :lenderId')
@@ -93,9 +94,7 @@ class LendingRepository extends ServiceEntityRepository
             ->setParameter('statusFilter', $statusFilter)
             ;
         }
-        return $qb->groupBy('l.id')
-            ->distinct()
-            ->getQuery()
+        return $qb->getQuery()
             ->getResult()
         ;
     }
@@ -176,6 +175,7 @@ class LendingRepository extends ServiceEntityRepository
             ->leftJoin('l.linkedWith', 'lw')
             ->leftJoin('l.usersBook', 'ub')
             ->addSelect('COUNT(CASE WHEN lw.isRead = 0 and lw.sender != :lenderId THEN 0 ELSE :null end) AS nbNewMessages')
+
             ->setParameter('lenderId', $lenderId)
             ->setParameter('null', NULL)
         ;
@@ -184,8 +184,7 @@ class LendingRepository extends ServiceEntityRepository
         } elseif ($userType === 'lender') {
             $qb->where('ub.user = :lenderId');
         }
-        return $qb->groupBy('l.id')
-            ->getQuery()
+        return $qb->getQuery()
             ->getResult()
         ;
     }
