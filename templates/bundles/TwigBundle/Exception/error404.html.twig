@@ -1,18 +1,19 @@
-{% extends 'base' ~ ((app.user) ? '' : '-non-connecte') ~ '.html.twig' %}
+{% extends 'base-non-connecte.html.twig' %}
 
 {% block title %}Page non trouvée{% endblock %}
 
 {% block main %}
-<div class="flex flex-row">
-    <div class="bg-no-repeat bg-right bg-cover h-auto w-1/2">
-        <img class="mx-auto" src="{{ asset('/assets/img/illustrations/') }}error404.jpg" alt="Login image">
+<div class="flex flex-col md:flex-row justify-center items-center mt-20">
+    <div class="bg-no-repeat md:bg-right bg-cover h-full md:h-auto w-full lg:w-1/2">
+        <img class=" mx-auto" src="{{ asset('/assets/img/illustrations/') }}error.jpg" alt="Login image">
     </div>
-    <div class="w-9/12 m-auto flex items-center justify-center">
-        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-            <div class="border-t text-center">
-                <h1 class="text-6xl font-bold ">404</h1>
-                <h1 class="text-3xl font-medium py-8">oops! Page not found</h1>
-                <p class="text-2xl pb-8 px-12 font-medium">Oops! The page you are looking for does not exist. It might have been moved or deleted.</p>
+    <div class="md:w-9/12 m-auto flex items-center justify-center">
+        <div class="mt-5 md:mt-0">
+            <div class="text-center mb-5">
+                <h1 class="text-3xl xl:text-6xl font-bold">Erreur 404</h1>
+                <h2 class="text-lg xl:text-3xl font-medium py-8">Oups ! Nous n'avons pas pu trouver la page que vous recherchez</h2>
+                <p class="text-base xl:text-2xl pb-8 px-12 font-medium">Il se peut qu'elle soit entre les mains d'un méchant sorcier ou perdue dans les bois...</p>
+                <a href="{{ path('accueil_browse') }}" class="bg-pink w-4 px-4 py-2 text-center font-semibold rounded-full focus:outline-none md:text-sm text-white">Et si on tentait par là ?</a>
             </div>
         </div>
     </div>
