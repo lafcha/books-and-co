@@ -175,7 +175,6 @@ class LendingRepository extends ServiceEntityRepository
             ->leftJoin('l.linkedWith', 'lw')
             ->leftJoin('l.usersBook', 'ub')
             ->addSelect('COUNT(CASE WHEN lw.isRead = 0 and lw.sender != :lenderId THEN 0 ELSE :null end) AS nbNewMessages')
-
             ->setParameter('lenderId', $lenderId)
             ->setParameter('null', NULL)
         ;
@@ -184,7 +183,8 @@ class LendingRepository extends ServiceEntityRepository
         } elseif ($userType === 'lender') {
             $qb->where('ub.user = :lenderId');
         }
-        return $qb->getQuery()
+        return $qb->groupBy('l.id')
+            ->getQuery()
             ->getResult()
         ;
     }
