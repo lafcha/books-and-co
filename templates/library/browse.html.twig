@@ -58,7 +58,7 @@
 					</h2>
 					<div class="mb-2 ">
 							{% if app.user == user.pseudo %}
-								{% if usersbook.isAvailable == 0  %}
+								{% if usersbook.isAvailable == 1  %}
 									<p class="text-green text-sm text-right"><i class="fas fa-bookmark mr-3"></i>Diponible au prêt</p>
 								{% else %}
 									<p class="text-yellow-dark text-sm text-right"><i class="far fa-bookmark mr-3"></i>En prêt ou en attente</p>

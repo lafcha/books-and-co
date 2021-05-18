@@ -114,6 +114,8 @@ class LendingRepository extends ServiceEntityRepository
             ->addSelect('b')
             ->leftJoin('ub.user', 'lender')
             ->addSelect('lender')
+            ->addSelect('borrower')
+            ->leftJoin('l.borrower', 'borrower')
             ->where('l.id = :lendingId')
             ->setParameter('lendingId', $lendingId)
             ->getQuery()
