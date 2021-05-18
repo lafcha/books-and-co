@@ -94,6 +94,7 @@ class LendingRepository extends ServiceEntityRepository
             ;
         }
         return $qb->groupBy('l.id')
+            ->distinct()
             ->getQuery()
             ->getResult()
         ;
