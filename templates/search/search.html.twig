@@ -45,32 +45,36 @@
 	<section class="overflow-hidden">
 		<div class="container px-5 mx-auto">
 			{% for usersBook in book %}
-				<div class="my-8 border-b-2 border-grey-dark ">
+				<div class="sm:my-8 mt-0 border-b-2 border-grey ">
 					<div class="py-8 flex flex-wrap md:flex-nowrap">
-						<div class="md:w-1/12 md:mb-0 mb-6 flex-shrink-0 mr-10 flex flex-col">
-							<a href=""><img src="{{ usersBook.book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ usersBook.book.cover : asset("assets/img/illustrations/book-cover.jpg") }}"></a>
+						<div class="sm:w-1/12 w-full sm:mb-0 mb-6 flex-shrink-0 sm:mr-10 mr-2 flex flex-col h-auto text-center">
+							<a href="{{ path('library_book_read', {'userSlug': usersBook.user.slug, 'slug': usersBook.book.slug }) }}" class="max-w-xs place-self-center my-auto">			
+								<img src="{{ usersBook.book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ usersBook.book.cover : asset("assets/img/illustrations/book-cover.jpg") }}">
+							</a>
 						</div>
-						<div class="md:flex-grow">
-							<h2 class="text-2xl title-font mb-2 uppercase text-pink tracking-wider">
-								<a href="">{{ usersBook.book.title }}</a>
-								<span class="text-sm text-yellow-dark">
-									<i class="fas fa-user mr-3 ml-3"></i>
-									{{ usersBook.user.pseudo }}</span>
+						<div class="flex-grow">
+							<h2 class="text-2xl title-font mb-2 uppercase text-pink tracking-wider block sm:inline-block">
+								<a href="{{ path('library_book_read', {'userSlug': usersBook.user.slug, 'slug': usersBook.book.slug }) }}">{{ usersBook.book.title }}</a>
 							</h2>
+							<div class="text-sm text-yellow-dark block sm:inline-block">
+								<i class="fas fa-user sm:mr-3 sm:ml-3 py-2 sm:py-0"></i>
+									{{ usersBook.user.pseudo }}
+							</div>
+							<p class="sm:hidden text-green"><i class="fas fa-map-marker-alt mr-3"></i>{{ usersBook.user.city }}</p>
+							
 							<p class="leading-relaxed font-semibold">Auteur :
 								{{ usersBook.book.author }}</p>
-							<p >Editeur :
+							<p class="t">Editeur :
 								{{ usersBook.book.editor }}</p>
-							<p class="text-sm text-grey-dark italic">ISBN :
+							<p class="text-sm text-grey-dark italic ">ISBN :
 								{{ usersBook.book.isbn }}</p>
 						</div>
-						<div class="flex flex-col justify-between items-end">
-							<p class="text-green text-right"><i class="fas fa-map-marker-alt mr-3"></i>{{ usersBook.user.city }}</p>
-							<button class="bg-pink font-semibold hover:bg-yellow-dark h-10 w-28 px-4 md:px-4 py-2 rounded-full items-center text-center focus:outline-none md:text-sm text-white"><a href="{{ path('library_book_read', {'userSlug': usersBook.user.slug, 'slug': usersBook.book.slug }) }}" >Voir plus</a></button>
+						<div class="flex flex-col justify-between items-center sm:items-end mb-6 text-center w-full md:w-1/6">
+							<p class=" hidden sm:block text-green text-right"><i class="fas fa-map-marker-alt mr-3"></i>{{ usersBook.user.city }}</p>
+							<button class="bg-pink font-semibold hover:bg-yellow-dark w-28 mt-4 px-4 py-2 rounded-full items-center text-center focus:outline-none text-sm text-white"><a href="{{ path('library_book_read', {'userSlug': usersBook.user.slug, 'slug': usersBook.book.slug }) }}" >Voir plus</a></button>
 						</div>
 					</div>
-				</div>    
-		
+				</div>    	
 			{% endfor %}
 		</div>
 	</section>
