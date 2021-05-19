@@ -7,15 +7,13 @@
 
 {% block main %}
 
-	<div class="flex flex-col items-center md:mt-10 lg:mt-0">
+	<div class="flex flex-col items-center md:mt-10 lg:mt-0 ">
 		<h1 class="text-4xl text-blue font-cursive text-center mx-2">{{ book.title }}</h1>
 		<h2 class="pt-4 text-pink text-center mx-2">{{ book.author }}</h2>
 	</div>
-	<div class="flex flex-nowrap mt-10 ml-4">
-		<div class="flex flex-col lg:flex-row margin ">
-			<img class="object-contain rounded-lg h-48 md:w-2/4 xl:w-auto md:mx-auto" src="{{ book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ book.cover : asset("assets/img/illustrations/book-cover.jpg") }}" alt="Couverture du livre">
-		</div>			
-			
+	<div class="flex lg:flex-nowrap mt-10 sm:ml-4 mb-4">
+		<div class="flex flex-col lg:flex-row min-w-24">
+			<img class="object-contain w-80 mx-auto" src="{{ book.cover != null ?  asset("assets/img/uploads/book_cover/") ~ book.cover : asset("assets/img/illustrations/book-cover.jpg") }}" alt="Couverture du livre">		
 			<div class="px-4 rounded-lg mt-3 xl:mt-0  flex-grow">
 				<div class="grid grid-cols-4 gap-y-2">
 					<div class="font-semibold">Isbn</div>
@@ -52,7 +50,7 @@
 					</div>
 				{% endif %}
 				</div>
-				<div class="flex items-end justify-end mt-10 top-auto">
+				<div class="flex items-end justify-end my-10 top-auto">
 					<a href="{{ path('library_browse', {'userSlug': libraryUser.slug}) }}" class=" bg-green text-blue text-center font-semibold px-4 py-2 rounded-full hover:bg-blue hover:text-white mr-5">Retour</a>
 				</div>
 			</div>
