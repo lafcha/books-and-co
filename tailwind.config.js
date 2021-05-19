@@ -7,12 +7,6 @@ module.exports = {
       sans: ['Raleway', 'sans-serif'],
       cursive :['"Lily Script One"', 'cursive'],
     },
-    screens: {
-      sm: '640px',
-      md: '768px',
-      lg: '1024px',
-      xl: '1280px',
-    },
     extend: {
 
     },
