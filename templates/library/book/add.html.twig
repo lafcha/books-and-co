@@ -50,10 +50,14 @@
 		{% if  searchForm.book is defined %}
 			<div class='{{ error ? 'hidden' : '' }}'>
 				<div class="text-center lg:text-2xl bold mt-5 mb-5">
-					{{ form_widget(searchForm.book) }}
+					{{ form_widget(searchForm.book, {
+                        'value': ((submitedIsbn is defined) ? submitedIsbn : ''),
+                    })
+                    }}
 					{{ form_label(searchForm.book, null, {
-                        'label_attr' : {'class' : 'text-pink'}
-                    }) }}
+                        'label_attr' : {'class' : 'text-pink'},
+                        }) 
+                    }}
 				</div>
 				<p class="text-center text-xs mt-5">Ça roule ! On s'occupe de remplir les champs qu'il faut pour vous !</p>
 				<div class="flex lg:justify-between flex-col-reverse items-center w-full mt-10">
@@ -62,9 +66,8 @@
 				</div>
 			</div>
 		{% endif %}
-
 		{{ form_end(searchForm) }}
-		{% if app.request.method == 'POST' and error == 'Ce livre n\'existe pas, ajoutez le !' %}
+		{% if (app.request.method == 'POST' and error == 'Ce livre n\'existe pas, ajoutez le !') or error == 'Le formulaire est invalide' %}
             <div>
                 <span class="font-semibold">{{ error }}</span>
                 {{form_start(bookForm)}}
@@ -72,51 +75,51 @@
 				{{ form_label(bookForm.isbn, null, {
                     'label': 'ISBN*',
                     'label_attr': {'class': 'lg:w-1/2'},
-                }) 
+                    }) 
                 }}
 				{{ form_widget(bookForm.isbn, {
-                    'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent',},
-                    'value': ((searchForm.vars.value['isbn']) ? searchForm.vars.value['isbn'] : '' ),
-                })  
+                        'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent',},
+                        'value': ((submitedIsbn is defined) ? submitedIsbn : ''),
+                    })
                 }}
 			</div>
             <div class="mt-5 flex justify-between lg:flex-row flex-col items-center">
 				{{ form_label(bookForm.title, null, {
                     'label': 'Titre*',
                     'label_attr': {'class': 'lg:w-1/2'}    
-                }) 
+                    }) 
                 }}
 				{{ form_widget(bookForm.title, {
                     'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
-                })  
+                    })  
                 }}
 			</div>
              <div class="mt-5 flex justify-between lg:flex-row flex-col items-center">
 				{{ form_label(bookForm.author, null, {
                     'label': 'Auteur*',
                     'label_attr': {'class': 'lg:w-1/2'}    
-                }) 
+                    }) 
                 }}
 				{{ form_widget(bookForm.author, {
                     'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
-                })  
+                    })  
                 }}
 			</div>
              <div class="mt-5 flex justify-between lg:flex-row flex-col items-center">
 				{{ form_label(bookForm.editor, null, {
-                    'label': 'Editeur',
+                    'label': 'Editeur*',
                     'label_attr': {'class': 'lg:w-1/2'}    
-                }) 
+                    }) 
                 }}
 				{{ form_widget(bookForm.editor, {
                     'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:border-transparent'}    
-                })  
+                    })  
                 }}
 			</div>
             <div class="mt-5 flex justify-between lg:flex-row flex-col items-center">
 			{{ form_label(bookForm.coverFile, null, {
                     'label_attr': {'class': 'lg:w-1/2'}    
-                }) 
+                    }) 
                 }}
 			<div class="flex items-center justify-center bg-grey-lighter lg:ml-6">
 				<label class="flex flex-col items-center bg-pink text-white rounded-lg tracking-wide uppercase border border-pink cursor-pointer hover:bg-blue hover:text-white">
@@ -125,8 +128,9 @@
 					</svg>
 					<span class="text-xs p-2">Selectionner un fichier</span>
 					{{ form_widget(bookForm.coverFile, {
-                    'attr': {'class': 'hidden'}    
-                })   }}
+                        'attr': {'class': 'hidden'}    
+                        })
+                    }}
 				</label>
 			</div>
             </div>

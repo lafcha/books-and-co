@@ -80,7 +80,12 @@ class LibraryController extends MainController
         //error will be displayed in twig if there is many error
         $error = '';
 
-
+        if (isset($_POST['book']['isbn'])) {
+            $submitedIsbn = $_POST['book']['isbn'];
+        } elseif (isset($_POST['book_search']['isbn'])) {
+            $submitedIsbn = $_POST['book_search']['isbn'];
+        }
+        
         $usersBook = new UsersBook;
         $usersBook->setUser($user);
         if ($user->getSlug() !== $libraryUser->getSlug()) {
@@ -144,8 +149,8 @@ class LibraryController extends MainController
         $bookForm = $this->createForm(BookType::class, $book);
         $bookForm->handleRequest($request);
 
-        if ($bookForm->isSubmitted()) {
-            if ($bookForm->isValid() === true) {
+        if ($bookForm->isSubmitted() && $bookForm['editor']->getData() && $bookForm['author']->getData() && $bookForm['title']->getData()) {
+            if ($bookForm->isValid()) {
                 $slugger = new Slugify();
                 // set slug with title and isbn
                 $book->setSlug($slugger->slugify($book->getTitle() . '-' . $book->getIsbn()));
@@ -169,15 +174,16 @@ class LibraryController extends MainController
                 return $this->redirectToRoute('library_browse', [
                     'userSlug'=> $userSlug,
                 ]);
-            } else {
-                // if the form is submitted and not valid, we add an error 
-                $error = 'Le formulaire est invalide';
             }
+        } else {
+            // if the form is submitted and not valid, we add an error 
+            $error = 'Le formulaire est invalide';
         }
         return $this->render('library/book/add.html.twig', [
             'searchForm' => $searchForm->createView(),
             'bookForm' => $bookForm->createView(),
             'libraryUser' => $libraryUser,
+            'submitedIsbn' => $submitedIsbn,
             'error' => $error,
             'navSearchForm' => $this->navSearchForm()->createView(),
             'notifications' => $this->getNotificationsArray(),
