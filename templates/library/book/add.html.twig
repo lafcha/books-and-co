@@ -14,17 +14,32 @@
 	</div>
 	<div>
 		{{ form_start(searchForm) }}
-		<div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center mb-5">
-			{{ form_label(searchForm.isbn, null, {
-                    'label': 'ISBN*',
-                    'label_attr': {'class': 'lg:w-1/2'}    
-                }) 
-                }}
-			{{ form_widget(searchForm.isbn, {
-                    'attr': {'class': 'lg:w-1/2 rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
-                })  
-                }}
-		</div>
+        <div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center mb-5">
+            <div x-data="{ tooltip: false }" class="relative z-30">
+                <div x-on:mouseover="tooltip = true" x-on:mouseleave="tooltip = false">
+                <i class="far fa-question-circle text-yellow-dark"></i>
+                    {{ form_label(searchForm.isbn, null, {
+                            'label': 'ISBN-13*',
+                            'label_attr': {'class': 'lg:w-1/2'}    
+                        }) 
+                        }}
+                    <div class="relative" x-cloak x-show.transition.origin.top="tooltip">
+                        <div class="absolute top-0 z-10 w-48 p-2 -mt-1 text-sm text-center leading-tight text-white transform -translate-x-4 -translate-y-20 bg-yellow-dark rounded-lg shadow-lg">
+                            <p class="italic">
+                                par exemple : <br>978-2877306416
+                            </p>
+                        </div>
+                        <svg class="absolute z-10 w-6 h-6 text-yellow-dark transform -translate-x-2 -translate-y-11 fill-current stroke-current" width="10" height="10">
+                            <rect x="12" y="-10" width="10" height="10" transform="rotate(45)"/>
+                        </svg>
+                    </div>
+                </div>
+            </div> 
+            {{ form_widget(searchForm.isbn, {
+                'attr': {'class': 'lg:w-1/2 rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
+            })  
+            }}
+        </div>
 		<div class="flex lg:justify-between lg:flex-row flex-col items-center w-full lg:my-10 mb-10">
 			<div></div>
             <div class="text-center">
