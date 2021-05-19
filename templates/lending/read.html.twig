@@ -17,8 +17,9 @@ Mes emprunts
             </div>
         {#--PAGE TITLE--#}
             <div class="text-center">
-                <h1 class="font-cursive text-xl lg:text-3xl">Ma demande {{ app.request.attributes.all._route == "lending_read" ? 'prêt' : 'emprunt' }} du livre "{{ lendingData.usersBook.book.title }}"</h1>
-                <h2 class="text-sm lg:text-base">Un livre prêté par <span class="">{{ lendingData.usersBook.user.pseudo }}</span></h2>
+                <h1 class="font-cursive text-xl lg:text-3xl">{{ app.request.attributes.all._route == "lending_read" ? 'Prêt' : 'Demande d\'emprunt' }} du livre "{{ lendingData.usersBook.book.title }}"</h1>
+                <h2 class="text-sm lg:text-base text-{{ color_wanted }} italic">Un livre prêté <span class="italic-none">{{ app.request.attributes.all._route == "lending_read" ? 'à ' ~ lendingData.borrower.pseudo : 'par ' ~ lendingData.usersBook.user.pseudo }}</span></h2>
+        
 
                 <div class="py-3 text-sm lg:text-base ">
                     Status du prêt : 
@@ -63,6 +64,7 @@ Mes emprunts
         <div class="w-full flex-grow overflow-y-scroll scrollable-element">
             {% for message in lendingData.linkedWith %}
                 {% if message.sender != app.user %}
+                    {# {{ dump(message) }} #}
                     <div class="flex items-end mt-5 mb-5">
                         {# avatar #}
                         <div class="avatar md:avatar-sm mx-2">
@@ -122,6 +124,4 @@ Mes emprunts
                 {{ form_end(sendMessageForm) }}
         </div> 
     </div>
-
-
 {% endblock %}
