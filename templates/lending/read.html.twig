@@ -64,10 +64,11 @@ Mes emprunts
         <div class="w-full flex-grow overflow-y-scroll scrollable-element">
             {% for message in lendingData.linkedWith %}
                 {% if message.sender != app.user %}
+                    {# {{ dump(message) }} #}
                     <div class="flex items-end mt-5 mb-5">
                         {# avatar #}
                         <div class="avatar md:avatar-sm mx-2">
-                            <img class="rounded-full w-11 flex mr-4" src="{{ lendingData.usersBook.user.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ lendingData.usersBook.user.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="user avatar">
+                            <img class="rounded-full w-11 flex mr-4" src="{{ message.sender.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ message.sender.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="user avatar">
                         </div>
                         {# message body #}
                         <div class="flex items-center rounded-t-lg rounded-br-lg bg-green-light mr-2">
