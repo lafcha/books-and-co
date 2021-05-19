@@ -50,6 +50,7 @@ module.exports = {
     extend: {
       borderColor: ['focus-visible'],
       opacity: ['disabled'],
+      fontWeight: ['hover', 'focus'],
     }
   },
   minWidth: {

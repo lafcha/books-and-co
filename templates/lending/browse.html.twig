@@ -49,7 +49,7 @@
         {# ----------- Content --------------#}
     {% if lendingDatas != null %}
             {#---If the screen > 640px ---#}
-        <table class="w-full hidden sm:block">
+        <table class="w-full hidden sm:table sm:ml-2">
             <thead class="border-b-2 border-{{ color_wanted }}">
                 <tr>
                     <th
@@ -83,7 +83,7 @@
             <tbody>
         {% for lendingData in lendingDatas %}
                 <tr class="border-b border-{{ color_wanted }}">
-                    <td class="px-5 py-4 text-sm  w-5/24">
+                    <td class="px-5 py-4 text-sm w-5/24">
                         <p class="text-xl mb-2 uppercase mt-1">{{ lendingData[0].usersBook.book.title }}</p>
                     </td>
                     <td class="px-5 py-5 text-sm w-1/8 italic">
