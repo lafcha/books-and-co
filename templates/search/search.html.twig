@@ -58,7 +58,7 @@
 							</h2>
 							<div class="text-sm text-yellow-dark block sm:inline-block">
 								<i class="fas fa-user sm:mr-3 sm:ml-3 py-2 sm:py-0"></i>
-									{{ usersBook.user.pseudo }}
+									<a href="{{ path('library_browse', {'userSlug': usersBook.user.slug}) }}" class="hover:underline">{{ usersBook.user.pseudo }}</a>
 							</div>
 							<p class="sm:hidden text-green"><i class="fas fa-map-marker-alt mr-3"></i>{{ usersBook.user.city }}</p>
 							
