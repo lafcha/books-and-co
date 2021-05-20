@@ -30,6 +30,7 @@ class UsersBookRepository extends ServiceEntityRepository
             ->setParameter('userId', $userId)
             ->leftJoin('ub.book', 'b')
             ->addSelect('b')
+            ->orderBy('ub.id', 'DESC')
             ->setFirstResult(($page * $limit) -$limit)
             ->setMaxResults($limit)
             ->getQuery()

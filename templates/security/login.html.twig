@@ -22,7 +22,7 @@
 				<form method="post" class="p-0">
 
 					{% if error %}
-						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+						<div class="py-3 px-5 mb-4 bg-yellow-light text-yellow text-sm rounded-md border border-yellow" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 					{% endif %}
 
 					{% if app.user %}
