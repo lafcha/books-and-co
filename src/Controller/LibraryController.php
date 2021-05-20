@@ -78,9 +78,16 @@ class LibraryController extends MainController
         }
 
         //error will be displayed in twig if there is many error
-        $error = '';
+        $error = null;
 
-
+        if (isset($_POST['book']['isbn'])) {
+            $submitedIsbn = $_POST['book']['isbn'];
+        } elseif (isset($_POST['book_search']['isbn'])) {
+            $submitedIsbn = $_POST['book_search']['isbn'];
+        }
+        else {
+            $submitedIsbn = '';
+        }
         $usersBook = new UsersBook;
         $usersBook->setUser($user);
         if ($user->getSlug() !== $libraryUser->getSlug()) {
@@ -110,8 +117,8 @@ class LibraryController extends MainController
                 }
             } else {
                 //the isbn isn't correct
-                $bookSearchTypeOtion = 'isbn invalide';
-                $error = 'isbn invalide';
+                $bookSearchTypeOtion = 'Isbn invalide';
+                $error = 'ISBN invalide';
             }
         }
         //creating the form with informative sentence about the book
@@ -144,8 +151,8 @@ class LibraryController extends MainController
         $bookForm = $this->createForm(BookType::class, $book);
         $bookForm->handleRequest($request);
 
-        if ($bookForm->isSubmitted()) {
-            if ($bookForm->isValid() === true) {
+        if ($bookForm->isSubmitted() && $bookForm->isValid()) {
+            if ($bookForm->isValid()) {
                 $slugger = new Slugify();
                 // set slug with title and isbn
                 $book->setSlug($slugger->slugify($book->getTitle() . '-' . $book->getIsbn()));
@@ -178,6 +185,7 @@ class LibraryController extends MainController
             'searchForm' => $searchForm->createView(),
             'bookForm' => $bookForm->createView(),
             'libraryUser' => $libraryUser,
+            'submitedIsbn' => $submitedIsbn,
             'error' => $error,
             'navSearchForm' => $this->navSearchForm()->createView(),
             'notifications' => $this->getNotificationsArray(),

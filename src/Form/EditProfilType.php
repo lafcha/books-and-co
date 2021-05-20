@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class EditProfilType extends AbstractType
 {
@@ -21,7 +22,10 @@ class EditProfilType extends AbstractType
                 'label' => 'Mon pseudo'
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Mon email'
+                'label' => 'Mon email',
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ])
             ->add('imageFile', FileType::class, [
                 'label' => 'Image de profil',
