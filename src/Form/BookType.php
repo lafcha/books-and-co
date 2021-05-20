@@ -21,14 +21,16 @@ class BookType extends AbstractType
         $builder
             ->add('title', null, [
                 'constraints'=>[
-                    new NotBlank( [
+                    new NotBlank([
                         'message'=> 'Merci de remplir le titre !'
                     ]),
                 ]
             ])
             ->add('author',null, [
                 'constraints'=>[
-                    new NotBlank(),
+                    new NotBlank([
+                        'message'=> 'Merci de remplir l\'auteur !'
+                    ]),
                 ]
             ])
             ->add('coverFile', FileType::class, [
@@ -47,7 +49,9 @@ class BookType extends AbstractType
             ])
             ->add('editor', null, [
                 'constraints'=>[
-                    new NotBlank(),
+                    new NotBlank([
+                        'message'=> 'Merci de remplir l\'éditeur !'
+                    ]),
                 ]
             ])
             ->add('year', null, [
