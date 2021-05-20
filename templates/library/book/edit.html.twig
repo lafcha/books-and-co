@@ -20,7 +20,7 @@
             }}
 			</div>
             </div>
-                <div class="text-xs italic text-pink">{{ form_errors(bookForm.isbn)}}</div>
+                <div class="text-xs italic text-pink">{{ form_errors(form.isbn)}}</div>
             <div>
 			<div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center">
 				{{ form_label(form.title, null, {
@@ -34,7 +34,7 @@
                 }}
 			</div>
             </div>
-                <div class="text-xs italic text-pink">{{ form_errors(bookForm.title)}}</div>
+                <div class="text-xs italic text-pink">{{ form_errors(form.title)}}</div>
             <div>
             <div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center">
 				{{ form_label(form.author, null, {
@@ -48,7 +48,7 @@
                 }}
 			</div>
             </div>
-                <div class="text-xs italic text-pink">{{ form_errors(bookForm.author)}}</div>
+                <div class="text-xs italic text-pink">{{ form_errors(form.author)}}</div>
             <div>
             <div class="mt-5 flex lg:justify-between lg:flex-row flex-col items-center">
 				{{ form_label(form.editor, null, {
@@ -62,7 +62,7 @@
                 }}
 			</div>
             </div>
-                <div class="text-xs italic text-pink">{{ form_errors(bookForm.editor)}}</div>
+                <div class="text-xs italic text-pink">{{ form_errors(form.editor)}}</div>
             <div>
             <div class="mt-5 flex lg:flex-row flex-col items-center">
 			{{ form_label(form.coverFile, null, {
