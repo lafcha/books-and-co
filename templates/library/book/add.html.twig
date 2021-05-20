@@ -93,6 +93,7 @@
                     'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
                     })  
                 }}
+                {{ form_errors(bookForm.title)}}
 			</div>
              <div class="mt-5 flex justify-between lg:flex-row flex-col items-center">
 				{{ form_label(bookForm.author, null, {

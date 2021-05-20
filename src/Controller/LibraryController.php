@@ -85,7 +85,9 @@ class LibraryController extends MainController
         } elseif (isset($_POST['book_search']['isbn'])) {
             $submitedIsbn = $_POST['book_search']['isbn'];
         }
-        
+        else {
+            $submitedIsbn = '';
+        }
         $usersBook = new UsersBook;
         $usersBook->setUser($user);
         if ($user->getSlug() !== $libraryUser->getSlug()) {
