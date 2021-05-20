@@ -78,7 +78,7 @@ class LibraryController extends MainController
         }
 
         //error will be displayed in twig if there is many error
-        $error = '';
+        $error = null;
 
         if (isset($_POST['book']['isbn'])) {
             $submitedIsbn = $_POST['book']['isbn'];
@@ -117,8 +117,8 @@ class LibraryController extends MainController
                 }
             } else {
                 //the isbn isn't correct
-                $bookSearchTypeOtion = 'isbn invalide';
-                $error = 'isbn invalide';
+                $bookSearchTypeOtion = 'Isbn invalide';
+                $error = 'ISBN invalide';
             }
         }
         //creating the form with informative sentence about the book
@@ -151,7 +151,7 @@ class LibraryController extends MainController
         $bookForm = $this->createForm(BookType::class, $book);
         $bookForm->handleRequest($request);
 
-        if ($bookForm->isSubmitted() && $bookForm['editor']->getData() && $bookForm['author']->getData() && $bookForm['title']->getData()) {
+        if ($bookForm->isSubmitted() && $bookForm->isValid()) {
             if ($bookForm->isValid()) {
                 $slugger = new Slugify();
                 // set slug with title and isbn
@@ -176,10 +176,10 @@ class LibraryController extends MainController
                 return $this->redirectToRoute('library_browse', [
                     'userSlug'=> $userSlug,
                 ]);
+            } else {
+                // if the form is submitted and not valid, we add an error 
+                $error = 'Le formulaire est invalide';
             }
-        } else {
-            // if the form is submitted and not valid, we add an error 
-            $error = 'Le formulaire est invalide';
         }
         return $this->render('library/book/add.html.twig', [
             'searchForm' => $searchForm->createView(),

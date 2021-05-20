@@ -62,12 +62,17 @@ class BookType extends AbstractType
             ])
             ->add('description')
             ->add('isbn', null, [
-                'constraints' => new Assert\Regex([
-                    'pattern' => '/^\d{13}$/i',
-                    'message' => 'L\'isbn doit être de 13 chiffres',
-                ])
+                'constraints' => [
+                    new Assert\Regex([
+                        'pattern' => '/^\d{13}$/i',
+                        'message' => 'L\'ISBN doit être de 13 chiffres',
+                    ]),
+                    new NotBlank([
+                        'message' =>'Merci de rentrer un ISBN'
+                    ]) 
+                ]
             ])
-        ;
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

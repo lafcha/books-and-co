@@ -68,8 +68,9 @@
 				</div>
 			</div>
 		{% endif %}
+
 		{{ form_end(searchForm) }}
-		{% if (app.request.method == 'POST' and error == 'Ce livre n\'existe pas, ajoutez le !') or error == 'Le formulaire est invalide' %}
+		{% if (app.request.method == 'POST' and error == "Ce livre n\'existe pas, ajoutez le !") %}
             <div>
                 <span class="font-semibold">{{ error }}</span>
                 {{form_start(bookForm)}}
@@ -95,7 +96,7 @@
                     'attr': {'class': 'block rounded-full w-full p-2 bg-grey focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent'}    
                     })  
                 }}
-			</div class="mt-5 flex justify-between lg:flex-row flex-col items-center">
+			</div>
                 <div class="text-xs italic text-pink">{{ form_errors(bookForm.title)}}</div>
             <div>
             </div>
@@ -110,7 +111,7 @@
                     })  
                 }}
 			</div>
-            </div class="mt-5 flex justify-between lg:flex-row flex-col items-center">
+            </div>
                 <div class="text-xs italic text-pink">{{ form_errors(bookForm.author)}}</div>
             <div>
              <div class="mt-5 flex justify-between lg:flex-row flex-col items-center">
@@ -124,7 +125,7 @@
                     })  
                 }}
 			</div>
-            </div class="mt-5 flex justify-between lg:flex-row flex-col items-center">
+            </div>
                 <div class="text-xs italic text-pink">{{ form_errors(bookForm.editor)}}</div>
             <div>
             <div class="mt-5 flex justify-between lg:flex-row flex-col items-center">
