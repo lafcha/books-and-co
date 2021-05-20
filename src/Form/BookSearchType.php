@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class BookSearchType extends AbstractType
 {
@@ -17,10 +18,15 @@ class BookSearchType extends AbstractType
     {
         $builder
             ->add('isbn', null, [
-                'constraints' => new Assert\Regex([
-                    'pattern' => '/^\d{13}$/i',
-                    'message' => 'L\'isbn doit être de 13 chiffres',
-                ])
+                'constraints' => [
+                    new Assert\Regex([
+                        'pattern' => '/^\d{13}$/i',
+                        'message' => 'L\'ISBN doit être de 13 chiffres',
+                    ]),
+                    new NotBlank([
+                        'message' =>'Merci de rentrer un ISBN'
+                    ]) 
+                ]
             ])
             //this event listener add a checkboxtype field with the book name for the user to validate his choice
             ->get('isbn')->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) use ($options) {
