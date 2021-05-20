@@ -79,7 +79,7 @@ class LibraryController extends MainController
 
         //error will be displayed in twig if there is many error
         $error = '';
-
+ dd($_POST);
         if (isset($_POST['book']['isbn'])) {
             $submitedIsbn = $_POST['book']['isbn'];
         } elseif (isset($_POST['book_search']['isbn'])) {
