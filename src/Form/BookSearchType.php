@@ -18,20 +18,29 @@ class BookSearchType extends AbstractType
     {
     
         $builder
-        ->add('isbn')
+        ->add('isbn', null, [
+            'constraints' => [
+                new Assert\Regex([
+                    'pattern' => '/^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/i',
+                ])
+            ]
+        ])
         //this event listener add a checkboxtype field with the book name for the user to validate his choice
         ->get('isbn')
             ->addModelTransformer(new CallbackTransformer(
                 function ($isbn) {
-                    // transform the array to a string
+                    // transform the integer from db to a string
                     return $isbn;
                 },
-                function ($isbnFromView) {
-                    // reverse transform view to db
-                    $isbnFromView->trim('-');
-                    $isbnToint = intval($isbnFromView);
+                function ($isbnFromView) {                  
+                    // reverse transform => from view to db
+
+                    $isbnWithoutDashes = str_replace("-","", $isbnFromView);
+    
+                    $isbnToint = intval($isbnWithoutDashes);
 
                     return $isbnToint;
+                   
                 }
             ))
             //this event listener add a checkboxtype field with the book name for the user to validate his choice

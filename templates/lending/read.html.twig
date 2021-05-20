@@ -68,7 +68,9 @@ Mes emprunts
                     <div class="flex items-end mt-5 mb-5">
                         {# avatar #}
                         <div class="avatar md:avatar-sm mx-2">
-                            <img class="rounded-full w-11 flex mr-4" src="{{ message.sender.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ message.sender.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="user avatar">
+                            <a href="{{ path('library_browse', {'userSlug': message.sender.slug}) }}">
+                                <img class="rounded-full w-11 flex mr-4" src="{{ message.sender.avatar != null ? (asset("assets/img/uploads/user_avatar/")) ~ message.sender.avatar : asset("assets/img/illustrations/avatar.png") }}" alt="user avatar">
+                            </a>
                         </div>
                         {# message body #}
                         <div class="flex items-center rounded-t-lg rounded-br-lg bg-green-light mr-2">
