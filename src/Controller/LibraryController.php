@@ -70,37 +70,29 @@ class LibraryController extends MainController
      */
     public function book_add($userSlug, UserRepository $userRepository, BookRepository $bookRepository, UserInterface $user, Request $request, UploaderHelper $uploaderHelper): Response
     {
+        //---- RETRIEVING THE LIBRARY OF THE USER ----//
+
         //get the user by slug
         $libraryUser = $userRepository->findOneBy(['slug' => $userSlug]);
         if (!$libraryUser) {
             // throw 404 if the book doesn't exist
             throw $this->createNotFoundException('Cet utilisateur n\'existe pas');
         }
-
+ 
         //error will be displayed in twig if there is many error
-        $error = null;
+        $error = '';
 
-        if (isset($_POST['book']['isbn'])) {
-            $submitedIsbn = $_POST['book']['isbn'];
-        } elseif (isset($_POST['book_search']['isbn'])) {
-            $submitedIsbn = $_POST['book_search']['isbn'];
-        }
-        else {
-            $submitedIsbn = '';
-        }
         $usersBook = new UsersBook;
         $usersBook->setUser($user);
         if ($user->getSlug() !== $libraryUser->getSlug()) {
             throw new AccessDeniedException();
         }
-        
-        //get the user by slug
-        $libraryUser = $userRepository->findOneBy(['slug' => $userSlug]);
+        //---- SEARCHING IF THE BOOK ALREADY EXISTS IN THE DB ----//
 
         //set the bookSearchTypeOtion because we can't have empty array of options
         $bookSearchTypeOtion = '';
-        //set the $bookIsbn with an isbn if the isbn is in post
-        $bookIsbn = empty($request->request->all('book_search')['isbn']) ? false : $request->request->all('book_search')['isbn'];
+        //Verify if the isbn is in request & standardized 
+        $bookIsbn = empty($request->request->all('book_search')['isbn']) ? false : str_replace("-","", $request->request->all('book_search')['isbn']);
         // if $bookIsbn exists
         if ($bookIsbn) {
             //if the isbn validation is correct
@@ -121,6 +113,8 @@ class LibraryController extends MainController
                 $error = 'ISBN invalide';
             }
         }
+        //---- THE BOOK EXISTS IN DB : FILLING USERSBOOKS WITH THE BOOKS INFO COLLECTED ABOVE ----//
+        
         //creating the form with informative sentence about the book
         $searchForm = $this->createForm(BookSearchType::class, null, [
             'label' => $bookSearchTypeOtion,
@@ -128,8 +122,8 @@ class LibraryController extends MainController
         $searchForm->handleRequest($request);
 
         if ($searchForm->isSubmitted() && $searchForm->isValid() && $searchForm->getData()['book']) {
-
-            //get the book id founded by the isbn
+            
+            //get the book id found by the isbn
             $book = $bookRepository->findOneBy(['isbn' => $searchForm->getData()['isbn']]);
             //if the books exists
             if ($book !== null) {
@@ -144,8 +138,9 @@ class LibraryController extends MainController
                     'userSlug'=> $userSlug,
                 ]);
             }
-            $error = 'Ce livre n\'existe pas, ajoutez le !';
         }
+
+         //---- THE BOOK DOES NOT EXISTS : ADDING A NEW BOOK TO THE LIBRARY & DB ----//
         $book = new Book();
 
         $bookForm = $this->createForm(BookType::class, $book);
@@ -181,11 +176,12 @@ class LibraryController extends MainController
                 $error = 'Le formulaire est invalide';
             }
         }
+
         return $this->render('library/book/add.html.twig', [
             'searchForm' => $searchForm->createView(),
             'bookForm' => $bookForm->createView(),
             'libraryUser' => $libraryUser,
-            'submitedIsbn' => $submitedIsbn,
+            'submitedIsbn' => $bookIsbn,
             'error' => $error,
             'navSearchForm' => $this->navSearchForm()->createView(),
             'notifications' => $this->getNotificationsArray(),
