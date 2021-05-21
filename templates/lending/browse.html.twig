@@ -84,18 +84,27 @@
         {% for lendingData in lendingDatas %}
                 <tr class="border-b border-{{ color_wanted }}">
                     <td class="px-5 py-4 text-sm w-5/24">
-                        <p class="text-xl mb-2 uppercase mt-1">{{ lendingData[0].usersBook.book.title }}</p>
+                        <a href="{{ path('library_book_read', {"userSlug": lendingData[0].usersBook.user.slug, "slug": lendingData[0].usersBook.book.slug}) }}">
+                            <p class="text-xl mb-2 uppercase mt-1 hover:text-{{ color_wanted }}">{{ lendingData[0].usersBook.book.title }}</p>
+                        </a>
                     </td>
                     <td class="px-5 py-5 text-sm w-1/8 italic">
                         <p class="text-center">{{ lendingData[0].usersBook.book.author }}</p>
                     </td>
                     <td class="px-5 py-5 text-sm w-1/8">
-                        <p class="text-center">
                         {% if currentRoute == 'borrowing_browse' %}
-                            {{ lendingData[0].usersBook.user.pseudo }}
+                            <a href="{{ path('library_browse', {"userSlug": lendingData[0].usersBook.user.slug}) }}">
+                                <p class="text-center hover:text-{{ color_wanted }}">
+                                    {{ lendingData[0].usersBook.user.pseudo }}
+                                </p>
+                            </a>
                         {% elseif currentRoute == 'lending_browse' %}
-                            {{ lendingData[0].borrower.pseudo }}
-                        {% endif %}</p>
+                            <a href="{{ path('library_browse', {"userSlug": lendingData[0].borrower.slug}) }}">
+                                <p class="text-center hover:text-{{ color_wanted }}">
+                                    {{ lendingData[0].borrower.pseudo }}
+                                </p>
+                            </a>
+                        {% endif %}
                     </td>
                     <td class="px-5 py-5 text-sm text-center italic w-1/6">
                         {% if (lendingData[0].status == 0) %}
