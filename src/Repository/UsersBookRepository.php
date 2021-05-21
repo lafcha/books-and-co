@@ -41,18 +41,24 @@ class UsersBookRepository extends ServiceEntityRepository
     /**
     * return all avalaible books by city 
     */
-    public function findAllAvalaibleBooksByCity($county, $page, $limit){
-        return $this->createQueryBuilder('ub')
+    public function findAllAvalaibleBooksByCity($county, $page, $limit, $userId = null){
+        $qb = $this->createQueryBuilder('ub')
             ->leftJoin('ub.user', 'u')
             ->leftJoin('ub.book', 'b')
-            ->where('u.county = :county')
+            ->andWhere('u.county = :county')
             ->andWhere('ub.isAvailable = 1')
             ->setParameter('county', $county)
             ->addSelect('b')
             ->addSelect('u')
             ->setFirstResult(($page * $limit) -$limit)
             ->setMaxResults($limit)
-            ->getQuery()
+        ;
+        if ($userId) {
+            $qb->andWhere('ub.user != :userId')
+                ->setParameter('userId', $userId)
+            ;
+        }
+        return $qb->getQuery()
             ->getResult()
         ;
     }
@@ -61,14 +67,20 @@ class UsersBookRepository extends ServiceEntityRepository
      * Returns number of usersBookById
      * @return int 
      */
-    public function findAllAvalaibleBooksByCityCount($county){
+    public function findAllAvalaibleBooksByCityCount($county, $userId = null){
         
-        return $this->createQueryBuilder('ub')
+        $qb = $this->createQueryBuilder('ub')
             ->select('COUNT(ub)')
             ->leftJoin('ub.user', 'u')
-            ->where('u.county = :county')
+            ->andWhere('u.county = :county')
             ->setParameter('county', $county)
-            ->getQuery()
+        ;
+        if ($userId) {
+            $qb->andWhere('ub.user != :userId')
+                ->setParameter('userId', $userId)
+            ;
+        }
+        return $qb->getQuery()
             ->getSingleScalarResult()
         ;
     }
@@ -110,13 +122,13 @@ class UsersBookRepository extends ServiceEntityRepository
 
     public function findUserByUsersBookId($usersBookId){
         return $this->createQueryBuilder('ub')
-        -> leftJoin('ub.user','u')
-        -> addSelect('u.pseudo')
-        -> addSelect('ub.id')
-        -> where('ub.id = :usersbookid')
-        -> setParameter('usersbookid', $usersBookId)
-        -> getQuery()
-        -> getResult()
+            -> leftJoin('ub.user','u')
+            -> addSelect('u.pseudo')
+            -> addSelect('ub.id')
+            -> where('ub.id = :usersbookid')
+            -> setParameter('usersbookid', $usersBookId)
+            -> getQuery()
+            -> getResult()
         ;
     }
 
@@ -127,13 +139,13 @@ class UsersBookRepository extends ServiceEntityRepository
 
     public function findBookByUsersBookId($usersBookId){
         return $this->createQueryBuilder('ub')
-        -> leftJoin('ub.book','b')
-        -> addSelect('b.title')
-        -> addSelect('ub.id')
-        -> where('ub.id = :usersbookid')
-        -> setParameter('usersbookid', $usersBookId)
-        -> getQuery()
-        -> getResult()
+            -> leftJoin('ub.book','b')
+            -> addSelect('b.title')
+            -> addSelect('ub.id')
+            -> where('ub.id = :usersbookid')
+            -> setParameter('usersbookid', $usersBookId)
+            -> getQuery()
+            -> getResult()
         ;
     }
 
