@@ -1,0 +1,29 @@
+# Learn how to configure the Mercure.rocks Hub on https://mercure.rocks/docs/hub/config
+:3000
+
+log
+
+route {
+    redir / /.well-known/mercure/ui/
+
+    encode zstd gzip
+
+    mercure {
+        # Transport to use (default to Bolt)
+        transport_url {$MERCURE_TRANSPORT_URL:bolt://mercure.db}
+        # Publisher JWT key
+        publisher_jwt 9E87256C84634E3FA4634F1132D57
+        # Subscriber JWT key
+        subscriber_jwt 9E87256C84634E3FA4634F1132D57
+        # Permissive configuration for the development environment
+        cors_origins *
+        publish_origins *
+        subscriptions *
+        # Extra directives
+        {$MERCURE_EXTRA_DIRECTIVES}
+    }
+
+    respond /healthz 200
+
+    respond "Not Found" 404
+}
