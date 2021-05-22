@@ -73,6 +73,7 @@ class UsersBookRepository extends ServiceEntityRepository
             ->select('COUNT(ub)')
             ->leftJoin('ub.user', 'u')
             ->andWhere('u.county = :county')
+            ->andWhere('ub.isAvailable = 1')
             ->setParameter('county', $county)
         ;
         if ($userId) {
